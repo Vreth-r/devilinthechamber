@@ -71,6 +71,7 @@ public class PlayerMotor : MonoBehaviour
 
     Vector3 velocity;
     Vector3 planarVelocity;
+    public Vector3 PlanarVelocity => planarVelocity;
 
     float coyoteTimer;
     float jumpBufferTimer;
