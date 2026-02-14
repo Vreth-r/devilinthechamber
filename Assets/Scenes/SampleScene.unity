@@ -592,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a406e4c5e2e7c747b5ecb4c58c780c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
+  behaviour: {fileID: 11400000, guid: 6b3a3d7986b15444ea982bf57cae61e8, type: 2}
   target: {fileID: 2140585736}
   aggroRange: 25
   attackRange: 2
@@ -599,6 +600,11 @@ MonoBehaviour:
   repathRateHz: 10
   faceTargetWhenStopped: 1
   faceTurnSpeed: 12
+  firePoint: {fileID: 0}
+  fireRate: 3
+  damage: 10
+  preferredRange: 12
+  rangeTolerance: 2
 --- !u!1 &733540371
 GameObject:
   m_ObjectHideFlags: 0
