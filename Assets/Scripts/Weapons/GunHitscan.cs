@@ -7,6 +7,7 @@ public class GunHitscan : MonoBehaviour
     public Transform muzzle;
 
     public Animator animator;
+    public Camera cam;
 
     [Header("Fire")]
     public float fireRate = 3f;
@@ -39,32 +40,36 @@ public class GunHitscan : MonoBehaviour
 
     void Fire()
     {
-        Vector3 origin = muzzle.position;
-        Vector3 dir = muzzle.forward;
+        if (!cam) cam = Camera.main;
 
-        Vector3 hitPoint = origin + dir * range;
+        Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Vector3 aimPoint;
+        if (Physics.Raycast(aimRay, out RaycastHit aimHit, range, hitMask, QueryTriggerInteraction.Ignore))
+            aimPoint = aimHit.point;
+        else
+            aimPoint = aimRay.origin + aimRay.direction * range;
+
+        Vector3 origin = muzzle.position;
+        Vector3 dir = (aimPoint - origin).normalized;
+
+        Vector3 endPoint = origin + dir * range;
 
         if (Physics.Raycast(origin, dir, out RaycastHit hit, range, hitMask, QueryTriggerInteraction.Ignore))
         {
-            hitPoint = hit.point;
+            endPoint = hit.point;
 
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
             if (dmg != null)
-            {
                 dmg.TakeDamage(damage, hit.point, hit.normal);
-                Debug.Log("Hit enemy for " + damage);
-            }
         }
 
         if (muzzleFlash) muzzleFlash.Play();
+        if (muzzleLight) StartCoroutine(FlashLight());
         AudioEvents.Play("Gunshot");
         animator.SetTrigger("Fire");
-        //recoil
-        //transform.localRotation *= Quaternion.Euler(-2f, Random.Range(-0.5f, 0.5f), 0f);
 
-        if (muzzleLight) StartCoroutine(FlashLight());
-
-        if (tracerPrefab) SpawnTracer(origin, hitPoint);
+        if (tracerPrefab) SpawnTracer(origin, endPoint);
     }
 
     IEnumerator FlashLight()

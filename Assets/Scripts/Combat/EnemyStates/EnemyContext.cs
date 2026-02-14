@@ -13,6 +13,17 @@ public class EnemyContext
     public float stopRange;
     public float repathRateHz;
 
+    // combat
+    public Transform firePoint;
+    public float fireRate;
+    public float projectileSpeed;
+    public float lastFireTime;
+    public int damage;
+
+    // ranged spacing
+    public float preferredRange;
+    public float rangeTolerance;
+
     public bool faceTargetWhenStopped;
     public float faceTurnSpeed;
 
