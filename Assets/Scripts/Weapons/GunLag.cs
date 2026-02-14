@@ -21,7 +21,7 @@ public class GunLag : MonoBehaviour
     [Tooltip("How much the weapon rotates due to movement (pitch,yaw,roll).")]
     public Vector3 rotResponse = new Vector3(0.0f, 0.0f, 1.0f);
 
-    [Header("Optional Bob (later-friendly)")]
+    [Header("Bob")]
     public bool enableBob = false;
     public float bobAmount = 0.02f;
     public float bobSpeed = 10f;
