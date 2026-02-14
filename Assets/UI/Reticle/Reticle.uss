@@ -1,5 +1,25 @@
-.custom-label {
-    font-size: 20px;
-    -unity-font-style: bold;
-    color: rgb(68, 138, 255);
+.reticle-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.pip {
+    position: absolute;
+    background-color: white;
+}
+
+.vertical {
+    width: 3px;
+    height: 14px;
+}
+
+.horizontal {
+    width: 14px;
+    height: 3px;
 }

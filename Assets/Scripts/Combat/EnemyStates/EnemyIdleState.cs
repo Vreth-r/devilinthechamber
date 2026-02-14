@@ -1,16 +1,17 @@
 using UnityEngine;
+using System;
 
 public class EnemyIdleState : IEnemyState
 {
     readonly EnemyContext ctx;
     readonly EnemyStateMachine fsm;
+    readonly Func<IEnemyState> nextOnAggro;
 
     public string Name => "Idle";
 
-    public EnemyIdleState(EnemyContext ctx, EnemyStateMachine fsm)
+    public EnemyIdleState(EnemyContext ctx, EnemyStateMachine fsm, Func<IEnemyState> nextOnAggro)
     {
-        this.ctx = ctx;
-        this.fsm = fsm;
+        this.ctx = ctx; this.fsm = fsm; this.nextOnAggro = nextOnAggro;
     }
 
     public void Enter()
@@ -25,11 +26,8 @@ public class EnemyIdleState : IEnemyState
     public void Tick(float dt)
     {
         if (!ctx.HasTarget) return;
-
         if (ctx.DistanceToTarget() <= ctx.aggroRange)
-        {
-            fsm.SetState(new EnemyChaseState(ctx, fsm));
-        }
+            fsm.SetState(nextOnAggro());
     }
 
     public void Exit() { }

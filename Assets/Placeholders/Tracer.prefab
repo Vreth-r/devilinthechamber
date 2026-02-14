@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TracerFX
   extendTime: 0.02
-  holdTime: 0.05
-  fadeTime: 0.03
+  holdTime: 0.07
+  fadeTime: 0.05
   fadeWidth: 1
   startWidth: 0.02

@@ -1,4 +1,10 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Reticle/Reticle.uss?fileID=7433441132597879392&amp;guid=6938c7c51556df34995d798a786a2aac&amp;type=3#Reticle" />
-    <ui:VisualElement style="flex-grow: 1;" />
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Reticle.uss" />
+
+    <ui:VisualElement name="reticle-root" class="reticle-root">
+        <ui:VisualElement name="pip-top" class="pip vertical" />
+        <ui:VisualElement name="pip-bottom" class="pip vertical" />
+        <ui:VisualElement name="pip-left" class="pip horizontal" />
+        <ui:VisualElement name="pip-right" class="pip horizontal" />
+    </ui:VisualElement>
 </ui:UXML>

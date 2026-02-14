@@ -4,6 +4,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBrain : MonoBehaviour
 {
+    [Header("Behaviour")]
+    public EnemyBehaviour behaviour;
+
     [Header("Target")]
     public Transform target;
 
@@ -19,12 +22,22 @@ public class EnemyBrain : MonoBehaviour
     public bool faceTargetWhenStopped = true;
     public float faceTurnSpeed = 12f;
 
+    [Header("Combat")]
+    public Transform firePoint;
+    public float fireRate = 3f;
+    public int damage = 10;
+
+    [Header("Ranged Spacing")]
+    public float preferredRange = 12f;
+    public float rangeTolerance = 2f;
+
     EnemyStateMachine fsm;
     EnemyContext ctx;
+    NavMeshAgent agent;
 
     void Awake()
     {
-        var agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         if (!target)
         {
@@ -49,7 +62,12 @@ public class EnemyBrain : MonoBehaviour
 
     void OnEnable()
     {
-        fsm.SetState(new EnemyIdleState(ctx, fsm));
+        if (!behaviour)
+        {
+            Debug.LogError($"{name}: No EnemyBehaviour assigned #stupidbitch");
+            return;
+        }
+        fsm.SetState(behaviour.CreateInitialState(ctx, fsm));
     }
 
     void Update()
@@ -61,6 +79,13 @@ public class EnemyBrain : MonoBehaviour
         ctx.repathRateHz = repathRateHz;
         ctx.faceTargetWhenStopped = faceTargetWhenStopped;
         ctx.faceTurnSpeed = faceTurnSpeed;
+
+        ctx.firePoint = firePoint;
+        ctx.fireRate = fireRate;
+        ctx.damage = damage;
+
+        ctx.preferredRange = preferredRange;
+        ctx.rangeTolerance = rangeTolerance;
 
         fsm.Tick(Time.deltaTime);
     }
