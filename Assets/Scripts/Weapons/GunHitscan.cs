@@ -6,6 +6,8 @@ public class GunHitscan : MonoBehaviour
 {
     public Transform muzzle;
 
+    public Animator animator;
+
     [Header("Fire")]
     public float fireRate = 3f;
     public float range = 120f;
@@ -46,12 +48,17 @@ public class GunHitscan : MonoBehaviour
         {
             hitPoint = hit.point;
 
-            var health = hit.collider.GetComponentInParent<Health>();
-            if (health) health.TakeDamage(damage);
+            var dmg = hit.collider.GetComponentInParent<IDamageable>();
+            if (dmg != null)
+            {
+                dmg.TakeDamage(damage, hit.point, hit.normal);
+                Debug.Log("Hit enemy for " + damage);
+            }
         }
 
         if (muzzleFlash) muzzleFlash.Play();
         AudioEvents.Play("Gunshot");
+        animator.SetTrigger("Fire");
         //recoil
         //transform.localRotation *= Quaternion.Euler(-2f, Random.Range(-0.5f, 0.5f), 0f);
 
