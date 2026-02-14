@@ -1140,6 +1140,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1822049727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822049729}
+  - component: {fileID: 1822049728}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1822049728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822049727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b57c7eb88fa6e549acbe4ec8237dbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  soundLibrary: {fileID: 11400000, guid: 17f03c4f318e83944ba548ba034bf092, type: 2}
+  masterVolume: 1
+  uiVolume: 1
+  musicVolume: 1
+  gameplayVolume: 1
+--- !u!4 &1822049729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822049727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.22398, y: 0.85, z: 21.30942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1902392548 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6906671069161690592, guid: adf753b3ce9b69843ab7355ebc259316, type: 3}
@@ -1206,7 +1255,7 @@ MonoBehaviour:
   crouchHeight: 0.5
   crouchSpeedMultiplier: 0.75
   slideDuration: 0.75
-  slideBurstSpeed: 20
+  slideBurstSpeed: 30
   slideMinStartSpeed: 6
   slideDecayHalfLife: 0.2
   slideMinEndSpeed: 2.5
@@ -1346,7 +1395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunHitscan
   muzzle: {fileID: 6305904016076245747}
   fireRate: 1.5
-  range: 120
+  range: 20
   damage: 25
   muzzleFlash: {fileID: 394190234}
   muzzleLight: {fileID: 394190233}
@@ -1367,3 +1416,4 @@ SceneRoots:
   - {fileID: 1547406129}
   - {fileID: 1317952568}
   - {fileID: 2140585736}
+  - {fileID: 1822049729}

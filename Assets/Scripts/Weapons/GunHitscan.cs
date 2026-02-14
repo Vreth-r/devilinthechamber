@@ -51,6 +51,7 @@ public class GunHitscan : MonoBehaviour
         }
 
         if (muzzleFlash) muzzleFlash.Play();
+        AudioEvents.Play("Gunshot");
         //recoil
         //transform.localRotation *= Quaternion.Euler(-2f, Random.Range(-0.5f, 0.5f), 0f);
 
