@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(UIDocument))]
 public class Reticle : MonoBehaviour
 {
-    public float baseGap = 10f;
+    public float baseGap = 1f;
 
     private VisualElement root;
     private VisualElement top, bottom, left, right;
@@ -15,7 +15,7 @@ public class Reticle : MonoBehaviour
         var r = doc.rootVisualElement;
 
         root = r.Q<VisualElement>("reticle-root");
-        
+
         top = root.Q<VisualElement>("pip-top");
         bottom = root.Q<VisualElement>("pip-bottom");
         left = root.Q<VisualElement>("pip-left");
@@ -23,7 +23,7 @@ public class Reticle : MonoBehaviour
 
         ForceVisibleFallback(root, top, bottom, left, right);
 
-        //SetSpread(0);
+        // SetSpread(0); // do this later
     }
 
     void ForceVisibleFallback(VisualElement root, VisualElement top, VisualElement bottom, VisualElement left, VisualElement right)
