@@ -4,7 +4,7 @@ public class CrawlingHealthDegenAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.CRAWLING_HEALTH_DEGEN; // cringe but whatever
+        abilityName = AbilityName.CRAWLING_HEALTH_DEGEN;
     }
 
     public override bool startFunction()

@@ -1,19 +1,21 @@
 using UnityEngine;
 
-public class ExplodingEnemiesAbility : AbilityBase
+public class NoJumpAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.EXPLODING_ENEMIES;
+        abilityName = AbilityName.NO_JUMPING;
     }
     public override bool startFunction()
     {
+        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = false;
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
+        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = true;
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

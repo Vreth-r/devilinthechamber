@@ -4,7 +4,7 @@ public class BlindnessAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.BLINDNESS; // cringe but whatever
+        abilityName = AbilityName.BLINDNESS;
     }
     public override bool startFunction()
     {

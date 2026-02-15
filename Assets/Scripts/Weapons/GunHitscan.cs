@@ -13,6 +13,21 @@ public class GunHitscan : MonoBehaviour
     public float fireRate = 3f;
     public float range = 120f;
     public int damage = 25;
+    public float headShotDamageBonus = 2f;
+    public float fireRateMod = 1f; // stat mods
+    public float damageMod = 1f; // stat mods
+    public float headShotDamageMod = 1f; // stat mods
+
+    public int magazineSize = 3;
+    public int currentMagazine = 3;
+    public int magazineSizeMod = 0; // stat mods
+
+    public bool reloading = false;
+    private float reloadSpeed = 1.25f;
+    public float reloadSpeedMod = 1f; // stat mods
+    public bool autoFireMod = false; // stat mods
+    public bool aoeOnReload = false;
+
 
     [Header("FX")]
     public ParticleSystem muzzleFlash;
@@ -31,9 +46,13 @@ public class GunHitscan : MonoBehaviour
 
     void Update()
     {
-        if (controls.Player.Fire.IsPressed() && Time.time >= nextFireTime)
+        if (controls.Player.Reload.IsPressed() && !reloading)
         {
-            nextFireTime = Time.time + (1f / fireRate);
+            StartCoroutine(Reload());
+        }
+        if ((controls.Player.Fire.IsPressed() || autoFireMod) && Time.time >= nextFireTime && !reloading)
+        {
+            nextFireTime = Time.time + (1f / (fireRate * fireRateMod));
             Fire();
         }
     }
@@ -61,15 +80,19 @@ public class GunHitscan : MonoBehaviour
 
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
             if (dmg != null)
-                dmg.TakeDamage(damage, hit.point, hit.normal);
+                dmg.TakeDamage((int)(damage * damageMod), hit.point, hit.normal);
         }
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
         AudioEvents.Play("Gunshot");
         animator.SetTrigger("Fire");
+        animator.speed = fireRate * fireRateMod;
 
         if (tracerPrefab) SpawnTracer(origin, endPoint);
+
+        currentMagazine -= 1;
+        if (currentMagazine == 0) StartCoroutine(Reload());
     }
 
     IEnumerator FlashLight()
@@ -98,5 +121,24 @@ public class GunHitscan : MonoBehaviour
             }
             Destroy(tracer, 0.08f);
         }
+    }
+
+    IEnumerator Reload()
+    {
+        reloading = true;
+        animator.SetTrigger("Reload");
+        animator.speed = reloadSpeed * reloadSpeedMod;
+        yield return new WaitForSeconds(1 / (reloadSpeed * reloadSpeedMod));
+        if (aoeOnReload)
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(gameObject.transform.position, 10, Vector3.zero, out hit))
+            {   
+            }
+            Debug.Log("boom!");
+        }
+        animator.speed = 1;
+        currentMagazine = magazineSize + magazineSizeMod;
+        reloading = false;
     }
 }

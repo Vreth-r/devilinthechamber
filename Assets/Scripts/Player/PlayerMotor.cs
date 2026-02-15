@@ -12,12 +12,15 @@ public class PlayerMotor : MonoBehaviour
     public float groundAcceleration = 60f;
     public float airAcceleration = 25f;
     public float groundFriction = 14f;
+    public float movementSpeedMod = 1f; // from stat mods
 
     [Header("Jump")]
     public float jumpHeight = 1.2f;
     public float gravity = 22f;
     public float coyoteTime = 0.08f;
     public float jumpBuffer = 0.08f;
+    public float jumpHeightMod = 1f; // stat mods
+    public bool canJumpMod = true; // ability mods
 
     [Header("Crouch")]
     public float standingHeight = 1.8f;
@@ -41,6 +44,7 @@ public class PlayerMotor : MonoBehaviour
 
     public float slideFriction = 2.5f;
     public float slideCooldown = 0.12f;
+    public bool canSlideMod = true; // ability mods
 
     [Header("Air -> Slide Buffer")]
     public float slideLandBuffer = 0.20f;
@@ -207,22 +211,22 @@ public class PlayerMotor : MonoBehaviour
             if (grounded)
             {
                 planarVelocity = ApplyFriction(planarVelocity, groundFriction, Time.deltaTime);
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult, groundAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult * movementSpeedMod, groundAcceleration, Time.deltaTime);
             }
             else
             {
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult, airAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult * movementSpeedMod, airAcceleration, Time.deltaTime);
             }
         }
 
-        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide)
+        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide && canJumpMod)
         {
             jumpBufferTimer = 0f;
             coyoteTimer = 0f;
 
             if (stance == Stance.Crouch) TryStandUp(force: true);
 
-            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight);
+            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight) * jumpHeightMod;
         }
 
         velocity.y -= gravity * Time.deltaTime;
@@ -275,7 +279,7 @@ public class PlayerMotor : MonoBehaviour
         if (!grounded) return false;
         if (stance == Stance.Slide) return false;
         if (slideCooldownTimer > 0f) return false;
-        return planarVelocity.magnitude >= slideMinStartSpeed;
+        return planarVelocity.magnitude >= slideMinStartSpeed && canSlideMod;
     }
 
     void EndSlide(bool crouchHeldAfter)
