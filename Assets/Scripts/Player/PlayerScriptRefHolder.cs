@@ -8,7 +8,7 @@ public class PlayerScriptRefHolder : MonoBehaviour
     public FovKick fovKick;
     public CameraMovement cameraMovement;
     public GunHitscan gunHitscan;
-    public Health health;
+    public PlayerHealth health;
 
     void Awake()
     {

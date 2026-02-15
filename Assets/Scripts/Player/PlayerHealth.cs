@@ -5,6 +5,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public int maxHealth = 100;
     public int currentHealth;
 
+    public bool invincible = false;
+
     void Awake()
     {
         currentHealth = maxHealth;
@@ -12,6 +14,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
     {
+        if (invincible) return;
         currentHealth -= amount;
         currentHealth = Mathf.Max(0, currentHealth);
 
@@ -21,7 +24,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             Die();
         }
-
     }
 
     void Die()

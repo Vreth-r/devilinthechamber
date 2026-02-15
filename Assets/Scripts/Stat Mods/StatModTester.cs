@@ -12,7 +12,7 @@ public class StatModTester : MonoBehaviour
         //StatModManager.Instance.AddStatModifier(StatName.MOVEMENT_SPEED, -1f);
         //StatModManager.Instance.AddStatModifier(StatName.MOVEMENT_SPEED, 3f);
 
-        AbilityModManager.Instance.StartAbility(AbilityName.PHANTOM_NOISES);
+        //AbilityModManager.Instance.StartAbility(AbilityName.PHANTOM_NOISES);
         //AbilityModManager.Instance.StartAbility(AbilityName.BLINDNESS);
     }
 
