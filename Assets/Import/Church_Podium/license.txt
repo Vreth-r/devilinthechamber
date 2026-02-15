@@ -1,0 +1,11 @@
+Model Information:
+* title:	Church Podium
+* source:	https://sketchfab.com/3d-models/church-podium-9a3ae9391b644eff88e674b0b91d854f
+* author:	max_sukhin (https://sketchfab.com/max_sukhin)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Church Podium" (https://sketchfab.com/3d-models/church-podium-9a3ae9391b644eff88e674b0b91d854f) by max_sukhin (https://sketchfab.com/max_sukhin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

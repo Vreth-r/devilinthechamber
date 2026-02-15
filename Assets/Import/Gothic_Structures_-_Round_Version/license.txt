@@ -1,0 +1,11 @@
+Model Information:
+* title:	Gothic Structures - Round Version
+* source:	https://sketchfab.com/3d-models/gothic-structures-round-version-88cdaa95723449d4ab8ee64632a2c91a
+* author:	Samuel Francis Johnson (Oneironauticus) (https://sketchfab.com/oneironauticus)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Gothic Structures - Round Version" (https://sketchfab.com/3d-models/gothic-structures-round-version-88cdaa95723449d4ab8ee64632a2c91a) by Samuel Francis Johnson (Oneironauticus) (https://sketchfab.com/oneironauticus) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

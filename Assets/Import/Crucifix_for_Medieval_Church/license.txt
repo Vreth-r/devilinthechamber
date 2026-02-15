@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crucifix for Medieval Church
+* source:	https://sketchfab.com/3d-models/crucifix-for-medieval-church-70b5272b4e52425fb0e05d9250d777c0
+* author:	bgivenb (https://sketchfab.com/bgivenb)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crucifix for Medieval Church" (https://sketchfab.com/3d-models/crucifix-for-medieval-church-70b5272b4e52425fb0e05d9250d777c0) by bgivenb (https://sketchfab.com/bgivenb) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

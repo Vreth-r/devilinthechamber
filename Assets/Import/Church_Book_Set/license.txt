@@ -1,0 +1,11 @@
+Model Information:
+* title:	Church Book Set
+* source:	https://sketchfab.com/3d-models/church-book-set-2a7c5be3beef4dc0bde1d3382fd09f57
+* author:	Pickle55100 (https://sketchfab.com/Pickle55100)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Church Book Set" (https://sketchfab.com/3d-models/church-book-set-2a7c5be3beef4dc0bde1d3382fd09f57) by Pickle55100 (https://sketchfab.com/Pickle55100) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
