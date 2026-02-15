@@ -43,6 +43,10 @@ public class GunHitscan : MonoBehaviour
     void Awake() => controls = new PlayerControls();
     void OnEnable() => controls.Player.Enable();
     void OnDisable() => controls.Player.Disable();
+    void Start()
+    {
+        UIEvents.SetAmmo(currentMagazine, magazineSize);
+    }
 
     void Update()
     {
@@ -92,6 +96,7 @@ public class GunHitscan : MonoBehaviour
         if (tracerPrefab) SpawnTracer(origin, endPoint);
 
         currentMagazine -= 1;
+        UIEvents.SetAmmo(currentMagazine, magazineSize);
         if (currentMagazine == 0) StartCoroutine(Reload());
     }
 

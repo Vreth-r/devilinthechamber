@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD/HUD.uss?fileID=7433441132597879392&amp;guid=23c46774e553cb041a383f91a35be994&amp;type=3#HUD" />
+    <ui:VisualElement name="hud-root" class="hud-root">
+        <ui:VisualElement name="health-panel" class="panel health-panel">
+            <ui:Label name="health-label" text="HP" class="label small" />
+            <ui:VisualElement name="health-bar-bg" class="bar-bg">
+                <ui:VisualElement name="health-bar-fill" class="bar-fill" />
+            </ui:VisualElement>
+            <ui:Label name="health-text" text="100 / 100" class="label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="perks-panel" class="panel perks-panel">
+            <ui:Label text="PERKS" class="label small" />
+            <ui:VisualElement name="perks-row" class="perks-row" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ammo-panel" class="panel ammo-panel">
+            <ui:Label text="AMMO" class="label small right" />
+            <ui:Label name="ammo-text" text="12 / 60" class="ammo-text" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

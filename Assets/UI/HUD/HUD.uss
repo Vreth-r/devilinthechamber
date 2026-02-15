@@ -1,0 +1,75 @@
+.hud-root {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    padding: 16px;
+}
+
+.panel {
+    background-color: rgba(0,0,0,0.45);
+    border-radius: 10px;
+    padding: 10px 12px;
+    min-width: 180px;
+}
+
+
+.label {
+    color: white;
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+.label.small { font-size: 11px; opacity: 0.85; }
+.label.right { -unity-text-align: upper-right; }
+
+.health-panel {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 260px;
+}
+.bar-bg {
+    height: 14px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    background-color: rgba(255,255,255,0.12);
+    border-radius: 7px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(80, 220, 120, 0.95);
+}
+
+.ammo-panel {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    min-width: 160px;
+    align-items: flex-end;
+}
+.ammo-text {
+    color: white;
+    -unity-font-style: bold;
+    font-size: 22px;
+}
+
+.perks-panel {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    min-width: 260px;
+}
+.perks-row {
+    flex-direction: row;
+    margin-top: 8px;
+}
+
+
+.perk-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgba(255,255,255,0.15);
+}
