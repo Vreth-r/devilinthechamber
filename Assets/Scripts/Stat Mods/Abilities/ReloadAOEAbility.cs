@@ -4,7 +4,7 @@ public class ReloadAOEAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.AOE_RELOAD; // cringe but whatever
+        abilityName = AbilityName.AOE_RELOAD;
     }
     public override bool startFunction()
     {

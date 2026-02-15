@@ -4,7 +4,7 @@ public class NoSlideAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.NO_SLIDING; // cringe but whatever
+        abilityName = AbilityName.NO_SLIDING;
     }
     public override bool startFunction()
     {

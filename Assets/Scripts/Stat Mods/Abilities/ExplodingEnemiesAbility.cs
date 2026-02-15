@@ -4,7 +4,7 @@ public class ExplodingEnemiesAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.EXPLODING_ENEMIES; // cringe but whatever
+        abilityName = AbilityName.EXPLODING_ENEMIES;
     }
     public override bool startFunction()
     {

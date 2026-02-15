@@ -10,7 +10,7 @@ public enum StatName {
     MAGAZINE_SIZE,
     JUMP_HEIGHT,
     HEADSHOT_BONUS,
-    ENEMY_SATURATION, // idk what this means lol
+    ENEMY_PROJECTILE_SPEED, // idk what this means lol
 }
 
 public class StatModManager : MonoBehaviour
@@ -18,7 +18,7 @@ public class StatModManager : MonoBehaviour
     public static StatModManager Instance;
 
     // stat modifiers
-    private Dictionary<StatName, List<float>> StatModifiers = new Dictionary<StatName, List<float>>
+    public Dictionary<StatName, List<float>> StatModifiers = new Dictionary<StatName, List<float>>
     {
         { StatName.MOVEMENT_SPEED, new List<float>() },
         { StatName.DAMAGE_OUTPUT, new List<float>() },
@@ -27,7 +27,7 @@ public class StatModManager : MonoBehaviour
         { StatName.MAGAZINE_SIZE, new List<float>() },
         { StatName.JUMP_HEIGHT, new List<float>() },
         { StatName.HEADSHOT_BONUS, new List<float>() },
-        { StatName.ENEMY_SATURATION, new List<float>() },
+        { StatName.ENEMY_PROJECTILE_SPEED, new List<float>() },
     };
 
     void Awake()
@@ -51,7 +51,7 @@ public class StatModManager : MonoBehaviour
             TimerHandler.Instance.CreateTimerHandle(timerLength, timerEndFunction);
         }
 
-        PlayerScriptRefHolder.Instance.SetStatMod(statName);
+        GameManager.Instance.SetStatMod(statName);
         
     }
 
@@ -61,17 +61,15 @@ public class StatModManager : MonoBehaviour
         return StatModifiers[statName];
     }
 
-    // gets the total stat mods, can be changed to multiplicative iyw
-    // when used call like this:
-    // jumpHeight + StatModManager.Instance.GetTotalStatMod(StatName.JUMP_HEIGHT)
-    // add to all uses of variable
     public float GetStatSum (StatName statName)
     {
+        if (StatModifiers[statName].Count == 0) return 1f;
         return StatModifiers[statName].Sum(x => x); 
     }
     public float GetStatProduct (StatName statName)
     {
-        return StatModifiers[statName].Sum(x => x); 
+        if (StatModifiers[statName].Count == 0) return 1f;
+        return StatModifiers[statName].Aggregate(1f, (current, value) => current * value);
     }
 
 }

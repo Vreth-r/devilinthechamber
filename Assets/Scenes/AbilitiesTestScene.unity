@@ -432,6 +432,55 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+--- !u!1 &581960181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 581960183}
+  - component: {fileID: 581960182}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &581960182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581960181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b57c7eb88fa6e549acbe4ec8237dbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  soundLibrary: {fileID: 11400000, guid: 17f03c4f318e83944ba548ba034bf092, type: 2}
+  masterVolume: 1
+  uiVolume: 1
+  musicVolume: 1
+  gameplayVolume: 1
+--- !u!4 &581960183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581960181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.48949, y: -1.42765, z: 6.74413}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &626792759
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +943,7 @@ GameObject:
   - component: {fileID: 1491494208}
   - component: {fileID: 1491494207}
   - component: {fileID: 1491494211}
+  - component: {fileID: 1491494212}
   m_Layer: 0
   m_Name: Ability Stuff
   m_TagString: Untagged
@@ -964,6 +1014,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02cac066c029c64ab902243bed1d238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerHandler
+--- !u!114 &1491494212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491494206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae64c0789cb4724b86aa71c724e89e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  enemiesKilled: 0
+  bulletRestoreMod: 0
 --- !u!4 &2055036456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6946927732796266146, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
@@ -993,3 +1057,4 @@ SceneRoots:
   - {fileID: 1491494210}
   - {fileID: 1294930932}
   - {fileID: 7391685}
+  - {fileID: 581960183}

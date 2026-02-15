@@ -4,7 +4,7 @@ public class FullAutoAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.FULL_AUTO; // cringe but whatever
+        abilityName = AbilityName.FULL_AUTO;
     }
     public override bool startFunction()
     {

@@ -25,7 +25,7 @@ public class PlayerScriptRefHolder : MonoBehaviour
                 gunHitscan.damageMod = StatModManager.Instance.GetStatProduct(stat);
                 return;
 
-            case StatName.ENEMY_SATURATION:
+            case StatName.ENEMY_PROJECTILE_SPEED:
                 Debug.Log("enemy sat");
                 return;
 

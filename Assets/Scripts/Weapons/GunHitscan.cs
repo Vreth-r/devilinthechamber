@@ -46,9 +46,13 @@ public class GunHitscan : MonoBehaviour
 
     void Update()
     {
+        if (controls.Player.Reload.IsPressed() && !reloading)
+        {
+            StartCoroutine(Reload());
+        }
         if ((controls.Player.Fire.IsPressed() || autoFireMod) && Time.time >= nextFireTime && !reloading)
         {
-            nextFireTime = Time.time + (1f / fireRate);
+            nextFireTime = Time.time + (1f / (fireRate * fireRateMod));
             Fire();
         }
     }
@@ -83,6 +87,7 @@ public class GunHitscan : MonoBehaviour
         if (muzzleLight) StartCoroutine(FlashLight());
         AudioEvents.Play("Gunshot");
         animator.SetTrigger("Fire");
+        animator.speed = fireRate * fireRateMod;
 
         if (tracerPrefab) SpawnTracer(origin, endPoint);
 
@@ -122,13 +127,13 @@ public class GunHitscan : MonoBehaviour
     {
         reloading = true;
         animator.SetTrigger("Reload");
-        animator.speed = reloadSpeed * (1 / reloadSpeedMod);
-        yield return new WaitForSeconds(reloadSpeed * reloadSpeedMod);
+        animator.speed = reloadSpeed * reloadSpeedMod;
+        yield return new WaitForSeconds(1 / (reloadSpeed * reloadSpeedMod));
         if (aoeOnReload)
         {
             RaycastHit hit;
             if (Physics.SphereCast(gameObject.transform.position, 10, Vector3.zero, out hit))
-            {
+            {   
             }
             Debug.Log("boom!");
         }

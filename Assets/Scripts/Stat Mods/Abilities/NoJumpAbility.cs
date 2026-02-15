@@ -4,7 +4,7 @@ public class NoJumpAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.NO_JUMPING; // cringe but whatever
+        abilityName = AbilityName.NO_JUMPING;
     }
     public override bool startFunction()
     {

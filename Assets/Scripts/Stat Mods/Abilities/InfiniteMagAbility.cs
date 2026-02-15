@@ -5,7 +5,7 @@ public class InfiniteMagAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.INFINITE_MAG; // cringe but whatever
+        abilityName = AbilityName.INFINITE_MAG;
     }
     public override bool startFunction()
     {

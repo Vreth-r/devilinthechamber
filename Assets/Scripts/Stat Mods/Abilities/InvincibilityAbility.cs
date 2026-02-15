@@ -4,7 +4,7 @@ public class InvincibilityAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.INVINCIBILITY; // cringe but whatever
+        abilityName = AbilityName.INVINCIBILITY;
     }
     public override bool startFunction()
     {
