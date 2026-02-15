@@ -8,7 +8,9 @@ public enum StatName {
     FIRE_SPEED,
     RELOAD_SPEED,
     MAGAZINE_SIZE,
-    JUMP_HEIGHT
+    JUMP_HEIGHT,
+    HEADSHOT_BONUS,
+    ENEMY_SATURATION, // idk what this means lol
 }
 
 public class StatModManager : MonoBehaviour
@@ -24,6 +26,8 @@ public class StatModManager : MonoBehaviour
         { StatName.RELOAD_SPEED, new List<float>() },
         { StatName.MAGAZINE_SIZE, new List<float>() },
         { StatName.JUMP_HEIGHT, new List<float>() },
+        { StatName.HEADSHOT_BONUS, new List<float>() },
+        { StatName.ENEMY_SATURATION, new List<float>() },
     };
 
     void Awake()
@@ -46,6 +50,8 @@ public class StatModManager : MonoBehaviour
             StatModifiers[statName].Add(modifier);
             TimerHandler.Instance.CreateTimerHandle(timerLength, timerEndFunction);
         }
+
+        PlayerScriptRefHolder.Instance.SetStatMod(statName);
         
     }
 
@@ -59,7 +65,11 @@ public class StatModManager : MonoBehaviour
     // when used call like this:
     // jumpHeight + StatModManager.Instance.GetTotalStatMod(StatName.JUMP_HEIGHT)
     // add to all uses of variable
-    public float GetTotalStatMod (StatName statName)
+    public float GetStatSum (StatName statName)
+    {
+        return StatModifiers[statName].Sum(x => x); 
+    }
+    public float GetStatProduct (StatName statName)
     {
         return StatModifiers[statName].Sum(x => x); 
     }

@@ -1,3 +1,4 @@
+using System.Dynamic;
 using UnityEngine;
 
 public class PhantomNoisesAbility : AbilityBase

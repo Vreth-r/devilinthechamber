@@ -10,7 +10,9 @@ public enum AbilityName {
     BLINDNESS,
     EXPLODING_ENEMIES,
     CRAWLING_HEALTH_DEGEN,
-    PHANTOM_NOISES
+    PHANTOM_NOISES,
+    NO_SLIDING,
+    NO_JUMPING
 }
 
 public abstract class AbilityBase

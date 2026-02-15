@@ -1,21 +1,21 @@
 using UnityEngine;
 
-public class InvincibilityAbility : AbilityBase
+public class NoJumpAbility : AbilityBase
 {
     public override void initialize ()
     {
-        abilityName = AbilityName.INVINCIBILITY; // cringe but whatever
+        abilityName = AbilityName.NO_JUMPING; // cringe but whatever
     }
     public override bool startFunction()
     {
-        PlayerScriptRefHolder.Instance.health.invincible = true;
+        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = false;
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        PlayerScriptRefHolder.Instance.health.invincible = false;
+        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = true;
         Debug.Log($"STOP: {abilityName}");
         return true;
     }
