@@ -49,12 +49,23 @@ public class EnemyRangedKiteState : IEnemyState
         }
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
-
-        if (ctx.firePoint && EnemyCombatUtil.CanFire(ctx, Time.time))
+        if (EnemyCombatUtil.CanFire(ctx, Time.time))
         {
             ctx.lastFireTime = Time.time;
-            // TODO later: shoot from ctx.firePoint at player
-            Debug.Log("Ranged enemy fired");
+
+            // heres the first real "game jam jank" lmao these are scriptables
+            // so i cant initialize them without doing a bunch of stupid shit to get the 
+            // proper references so it needs to find the weapon every time.
+            // should be super fast because theres not a lot of components on each enemy
+            var weapon = ctx.self.GetComponent<EnemyProjectileWeapon>();
+            if (weapon)
+            {
+                Vector3 playerVel = Vector3.zero;
+                var pm = ctx.target.GetComponent<PlayerMotor>();
+                playerVel = pm ? pm.FullVelocity : Vector3.zero;
+
+                weapon.TryFireAt(ctx.target, playerVel);
+            }
         }
 
         float min = ctx.preferredRange - ctx.rangeTolerance;
