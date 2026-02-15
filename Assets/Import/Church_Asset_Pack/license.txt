@@ -1,0 +1,11 @@
+Model Information:
+* title:	Church Asset Pack
+* source:	https://sketchfab.com/3d-models/church-asset-pack-e460517379e44313bf4a81817881cf11
+* author:	Caboose3d (https://sketchfab.com/caboose3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Church Asset Pack" (https://sketchfab.com/3d-models/church-asset-pack-e460517379e44313bf4a81817881cf11) by Caboose3d (https://sketchfab.com/caboose3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

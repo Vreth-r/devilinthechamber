@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stone Angel Statue
+* source:	https://sketchfab.com/3d-models/stone-angel-statue-8fb337ce55554209a2978c7b2fb9d1cc
+* author:	Jim Wing (https://sketchfab.com/JimWing)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stone Angel Statue" (https://sketchfab.com/3d-models/stone-angel-statue-8fb337ce55554209a2978c7b2fb9d1cc) by Jim Wing (https://sketchfab.com/JimWing) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

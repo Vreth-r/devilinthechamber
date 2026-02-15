@@ -1,0 +1,11 @@
+Model Information:
+* title:	Large Roche Stained Glass Window
+* source:	https://sketchfab.com/3d-models/large-roche-stained-glass-window-d014b6cbf1b4419d9f4b4ceae821b292
+* author:	mnaglak (https://sketchfab.com/mnaglak)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Large Roche Stained Glass Window" (https://sketchfab.com/3d-models/large-roche-stained-glass-window-d014b6cbf1b4419d9f4b4ceae821b292) by mnaglak (https://sketchfab.com/mnaglak) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
