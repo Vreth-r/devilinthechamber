@@ -1,0 +1,11 @@
+Model Information:
+* title:	Bronze Corpus
+* source:	https://sketchfab.com/3d-models/bronze-corpus-d15b0a6ba84d40268b9304e4779b0a36
+* author:	The Hunt Museum (https://sketchfab.com/TheHuntMuseum)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Bronze Corpus" (https://sketchfab.com/3d-models/bronze-corpus-d15b0a6ba84d40268b9304e4779b0a36) by The Hunt Museum (https://sketchfab.com/TheHuntMuseum) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

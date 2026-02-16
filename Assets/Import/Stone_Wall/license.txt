@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stone Wall
+* source:	https://sketchfab.com/3d-models/stone-wall-b5abfa01022948a19d7bc4a2ad212cf4
+* author:	Hezanin (https://sketchfab.com/hezanina)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stone Wall" (https://sketchfab.com/3d-models/stone-wall-b5abfa01022948a19d7bc4a2ad212cf4) by Hezanin (https://sketchfab.com/hezanina) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
