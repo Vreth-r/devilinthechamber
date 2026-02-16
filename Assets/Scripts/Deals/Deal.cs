@@ -20,4 +20,22 @@ public class Deal : ScriptableObject
     public List<StatMod> statDeals;
     public List<Ability> abilityDeals;
 
+    public void ApplyDeal ()
+    {
+        foreach (StatMod statDeal in statDeals)
+        {
+            StatModManager.Instance.AddStatModifier(statDeal.statName, statDeal.dealType);
+        }
+
+        foreach (Ability abilityDeals in abilityDeals)
+        {
+            AbilityModManager.Instance.StartAbility(abilityDeals.AbilityName, abilityDeals.duration);
+        }
+    }
+}
+
+[CreateAssetMenu(menuName = "Deals/Deal Database")]
+public class DealDatabase : ScriptableObject
+{
+    public List<Deal> dealDeck;
 }

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Deals/DealMenu.uss?fileID=7433441132597879392&amp;guid=23d4675c23f720744b96bce3472655a1&amp;type=3#DealMenu" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.54); justify-content: center; align-items: center; align-content: flex-start; width: auto;">
+        <ui:VisualElement name="Panel" style="flex-grow: 0.75; width: 75%; background-color: rgb(0, 0, 0); justify-content: space-evenly; align-items: center; align-self: center; height: auto; flex-direction: row;">
+            <ui:Button text="Deal 1" name="Deal1" style="background-image: url(&quot;project://database/Assets/Environment/altar/textures/altar-crushed-2.png?fileID=2800000&amp;guid=7fcfb83d186df4a1f904402810b0338e&amp;type=3#altar-crushed-2&quot;); background-size: 100% 100%; justify-content: center; align-items: stretch; align-self: auto; width: 25%; height: 75%;" />
+            <ui:Button text="Deal 2" name="Deal2" style="width: 25%; height: 75%; background-image: url(&quot;project://database/Assets/Import/Church_Asset_Pack/textures/AltarWood_metallicRoughness_1.png?fileID=2800000&amp;guid=06ebed729b89f4d898c7f3b85ba6ed0d&amp;type=3#AltarWood_metallicRoughness_1&quot;);" />
+            <ui:Button text="Deal 3" name="Deal3" style="width: 25%; height: 75%; background-image: url(&quot;project://database/Assets/Environment/church-pew/source/ChurchPew001.zip/ChurchPew001D.tga?fileID=2800000&amp;guid=be5377df31e0143b98587df98022a616&amp;type=3#ChurchPew001D&quot;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
