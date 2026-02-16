@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=ffe25490563c0f2418286ac9e68eae40&amp;type=3#MainMenu" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(255, 255, 255); justify-content: space-around;">
+        <ui:VisualElement name="TitleButtonPanel" style="flex-grow: 0.5; background-color: rgb(0, 0, 0); align-items: center; justify-content: space-evenly; align-self: center; align-content: center; background-size: 100% 100%; width: auto; height: auto; border-left-color: rgb(0, 0, 0); flex-direction: column; opacity: 1; bottom: auto; top: auto; flex-shrink: 1;">
+            <ui:Label text="Devil in the Chamber&#10;" name="Title" class="custom-label" style="height: auto; width: auto; align-items: stretch; align-self: center; color: rgb(255, 0, 0); font-size: 32px; -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=068f89c6ac1dc75479de1108359b3fe0&amp;type=3#NotInter-Regular&quot;); -unity-text-align: middle-center;" />
+            <ui:Button text="Play" name="Play" style="-unity-text-align: middle-center; white-space: nowrap; text-overflow: clip;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
