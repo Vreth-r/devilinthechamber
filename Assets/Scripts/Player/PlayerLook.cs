@@ -33,6 +33,8 @@ public class PlayerLook : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.gamePaused) return;
+
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             LockCursor(false);
 

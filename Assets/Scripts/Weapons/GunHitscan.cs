@@ -50,6 +50,8 @@ public class GunHitscan : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.gamePaused) return;
+        
         if (controls.Player.Reload.IsPressed() && !reloading)
         {
             StartCoroutine(Reload());

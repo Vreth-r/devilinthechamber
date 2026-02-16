@@ -8,13 +8,26 @@ public class GameManager : MonoBehaviour
     public bool bulletRestoreMod = false;
 
     public float enemyProjectileSpeedMod = 1f;
-
+    public GameObject pauseMenu;
+    public bool gamePaused;
+    public PlayerControls controls;
     void Awake()
     {
         if (Instance == null)
             Instance = this;
 
+        controls = new PlayerControls();
+        controls.Player.Enable();
         DontDestroyOnLoad(this);
+    }
+
+    void Update()
+    {
+        if (controls.Player.Pause.WasPressedThisFrame())
+        {
+            if (pauseMenu != null)
+                Instantiate(pauseMenu);
+        }
     }
 
     public void enemyKilled ()
