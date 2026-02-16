@@ -105,6 +105,8 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.gamePaused) return;
+        
         slideCooldownTimer -= Time.deltaTime;
 
         Vector2 moveInput = Vector2.ClampMagnitude(controls.Player.Move.ReadValue<Vector2>(), 1f);

@@ -2017,6 +2017,7 @@ MonoBehaviour:
   enemiesKilled: 0
   bulletRestoreMod: 0
   enemyProjectileSpeedMod: 1
+  pauseMenu: {fileID: 320752814500508156, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
 --- !u!1 &1515692868
 GameObject:
   m_ObjectHideFlags: 0
