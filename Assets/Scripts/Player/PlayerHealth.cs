@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     void Awake()
     {
         currentHealth = maxHealth;
+        UIEvents.SetHealth(currentHealth, maxHealth);
     }
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
@@ -18,8 +19,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentHealth -= amount;
         currentHealth = Mathf.Max(0, currentHealth);
 
-        Debug.Log($"YOWCH! -{amount} HP = {currentHealth}");
-
+        UIEvents.SetHealth(currentHealth, maxHealth);
         if (currentHealth <= 0)
         {
             Die();

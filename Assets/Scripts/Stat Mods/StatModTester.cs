@@ -7,7 +7,7 @@ public class StatModTester : MonoBehaviour
     {
         //addStat();
         Invoke(nameof(addReloadSpeed), 5f);
-        Invoke(nameof(addFireRate), 5f);
+        //Invoke(nameof(addFireRate), 5f);
         //AbilityModManager.Instance.StartAbility(AbilityName.AOE_RELOAD);
         //StatModManager.Instance.AddStatModifier(StatName.MOVEMENT_SPEED, -1f);
         //StatModManager.Instance.AddStatModifier(StatName.MOVEMENT_SPEED, 3f);
@@ -25,6 +25,4 @@ public class StatModTester : MonoBehaviour
     {
         StatModManager.Instance.AddStatModifier(StatName.FIRE_SPEED, 4f); 
     }
-
-
 }

@@ -23,7 +23,7 @@ public class GunHitscan : MonoBehaviour
     public int magazineSizeMod = 0; // stat mods
 
     public bool reloading = false;
-    private float reloadSpeed = 1.25f;
+    public float reloadSpeed = 1.25f;
     public float reloadSpeedMod = 1f; // stat mods
     public bool autoFireMod = false; // stat mods
     public bool aoeOnReload = false;
@@ -63,6 +63,7 @@ public class GunHitscan : MonoBehaviour
 
     void Fire()
     {
+        if (reloading) return;
         if (!cam) cam = Camera.main;
 
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -133,7 +134,7 @@ public class GunHitscan : MonoBehaviour
         reloading = true;
         animator.SetTrigger("Reload");
         animator.speed = reloadSpeed * reloadSpeedMod;
-        yield return new WaitForSeconds(1 / (reloadSpeed * reloadSpeedMod));
+        yield return new WaitForSeconds(reloadSpeed / reloadSpeedMod);
         if (aoeOnReload)
         {
             RaycastHit hit;
@@ -144,6 +145,7 @@ public class GunHitscan : MonoBehaviour
         }
         animator.speed = 1;
         currentMagazine = magazineSize + magazineSizeMod;
+        UIEvents.SetAmmo(currentMagazine, magazineSize);
         reloading = false;
     }
 }
