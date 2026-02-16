@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Lady-Mask
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/root
+    m_Weight: 0
+  - m_Path: Armature/root/chest
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.L
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.L/Bone.005.L
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.L/Bone.005.L/Bone.006.L
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.R
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.R/Bone.005.R
+    m_Weight: 1
+  - m_Path: Armature/root/chest/arm.R/Bone.005.R/Bone.006.R
+    m_Weight: 1
+  - m_Path: Armature/root/chest/head
+    m_Weight: 1
+  - m_Path: Armature/root/chest/head/top head.R
+    m_Weight: 1
+  - m_Path: Armature/root/chest/head/top head.R/mid headdress.R
+    m_Weight: 1
+  - m_Path: Armature/root/chest/head/top head.R/mid headdress.R/lwo headdress.R
+    m_Weight: 1
+  - m_Path: Armature/root/knees
+    m_Weight: 0
+  - m_Path: Armature/root/knees/feet.L
+    m_Weight: 0
+  - m_Path: Armature/root/knees/feet.R
+    m_Weight: 0
+  - m_Path: Cube
+    m_Weight: 0
+  - m_Path: dress
+    m_Weight: 1
+  - m_Path: feet
+    m_Weight: 1
+  - m_Path: headdress
+    m_Weight: 1
+  - m_Path: shawl
+    m_Weight: 1
