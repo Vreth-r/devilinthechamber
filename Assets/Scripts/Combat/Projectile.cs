@@ -50,14 +50,15 @@ public class Projectile : MonoBehaviour
     {
         var col = collision.collider;
 
-        if (((1 << col.gameObject.layer) & hitMask.value) == 0)
-            return;
-
         Vector3 hitPoint = collision.GetContact(0).point;
         Vector3 hitNormal = collision.GetContact(0).normal;
 
-        var dmg = col.GetComponentInParent<IDamageable>();
-        if (dmg != null)
+        var dmg =
+            col.GetComponentInParent<IDamageable>() ??
+            col.GetComponent<IDamageable>() ??
+            col.transform.root.GetComponentInChildren<IDamageable>();
+
+        if (dmg != null && damage > 0)
             dmg.TakeDamage(damage, hitPoint, hitNormal);
 
         if (impactPrefab)

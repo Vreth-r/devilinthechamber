@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6755529254949167870}
   - component: {fileID: 6873007495049795472}
   - component: {fileID: 2021965342627534742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,8 +155,8 @@ MonoBehaviour:
   damage: 5
   hitMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 65
   speed: 25
   useGravity: 0
-  lifetime: 5
+  lifetime: 3
   impactPrefab: {fileID: 0}
