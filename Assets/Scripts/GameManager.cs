@@ -36,41 +36,73 @@ public class GameManager : MonoBehaviour
         enemiesKilled += 1;
     }
 
+    public void FourNegativeDeals (StatName statName)
+    {
+        Debug.Log($"Too many negative deals {statName}");
+    }
+
     // not good! idk where to put this lol
+    // MOVEMENT_SPEED,
+    // DAMAGE_OUTPUT,
+    // FIRE_SPEED,
+    // RELOAD_SPEED,
+    // MAGAZINE_SIZE,
+    // JUMP_HEIGHT,
+    // SLIDE_DISTANCE,
+    // HEADSHOT_BONUS,
+    // LADY_PROJECTILE_SPEED,
+    // DOG_RECOVERY_SPEED
     public void SetStatMod(StatName stat)
     {
         switch (stat)
         {
-            case StatName.DAMAGE_OUTPUT:
-                enemyProjectileSpeedMod = StatModManager.Instance.GetStatProduct(stat);
+            case StatName.MOVEMENT_SPEED:
+                PlayerScriptRefHolder.Instance.playerMotor.movementSpeedMod = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
 
-            case StatName.ENEMY_PROJECTILE_SPEED:
-                Debug.Log("enemy sat");
+            case StatName.DAMAGE_OUTPUT:
+                PlayerScriptRefHolder.Instance.gunHitscan.damageMod = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.FIRE_SPEED:
-                PlayerScriptRefHolder.Instance.gunHitscan.fireRate = StatModManager.Instance.GetStatProduct(stat);
+                PlayerScriptRefHolder.Instance.gunHitscan.fireRate = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
-                
-            case StatName.HEADSHOT_BONUS:
-                PlayerScriptRefHolder.Instance.gunHitscan.headShotDamageBonus = StatModManager.Instance.GetStatProduct(stat);
-                return;
-
-            case StatName.JUMP_HEIGHT:
-                PlayerScriptRefHolder.Instance.playerMotor.jumpHeightMod = StatModManager.Instance.GetStatProduct(stat);
+            
+            case StatName.RELOAD_SPEED:
+                PlayerScriptRefHolder.Instance.gunHitscan.reloadSpeedMod = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.MAGAZINE_SIZE:
-                PlayerScriptRefHolder.Instance.gunHitscan.magazineSize = (int)StatModManager.Instance.GetStatSum(stat);
+                PlayerScriptRefHolder.Instance.gunHitscan.magazineSize = (int)
+                    (StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat));
+                return;
+                
+
+            case StatName.JUMP_HEIGHT:
+                PlayerScriptRefHolder.Instance.playerMotor.jumpHeightMod = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
 
-            case StatName.MOVEMENT_SPEED:
-                PlayerScriptRefHolder.Instance.playerMotor.movementSpeedMod = StatModManager.Instance.GetStatProduct(stat);
+            case StatName.SLIDE_DISTANCE:
+                PlayerScriptRefHolder.Instance.playerMotor.slideDistMod = 
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
                 return;
 
-            case StatName.RELOAD_SPEED:
-                PlayerScriptRefHolder.Instance.gunHitscan.reloadSpeedMod = StatModManager.Instance.GetStatProduct(stat);
+            case StatName.HEADSHOT_BONUS:
+                PlayerScriptRefHolder.Instance.gunHitscan.headShotDamageBonus =
+                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                return;
+                
+            case StatName.LADY_PROJECTILE_SPEED:
+                Debug.Log("enemy sat");
+                return;
+            
+            case StatName.DOG_RECOVERY_SPEED:
+                Debug.Log("enemy sat");
                 return;
             
             default:

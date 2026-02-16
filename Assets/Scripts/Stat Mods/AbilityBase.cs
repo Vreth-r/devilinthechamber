@@ -18,8 +18,8 @@ public enum AbilityName {
 public abstract class AbilityBase
 {
     public AbilityName abilityName; // prob remove
-    public float length = 1f;
-    public abstract void initialize(); // prob remove, unless length is variable
+    public float duration = 1f;
+    public abstract void initialize(float duration); // prob remove, unless length is variable
     public abstract bool startFunction ();
     public abstract bool endFunction ();
 }

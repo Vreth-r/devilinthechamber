@@ -24,10 +24,10 @@ public class AbilityModManager : MonoBehaviour
             Instance = this;
     }
 
-    public void StartAbility (AbilityName abilityName)
+    public void StartAbility (AbilityName abilityName, float duration)
     {   
-        abilities[abilityName].initialize(); // set name (i dont think this needs to exist)
+        abilities[abilityName].initialize(duration); // set name (i dont think this needs to exist)
         abilities[abilityName].startFunction(); // run the start function (the effect)
-        TimerHandler.Instance.CreateTimerHandle(abilities[abilityName].length, abilities[abilityName].endFunction); // set timer to remove effect
+        TimerHandler.Instance.CreateTimerHandle(abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
     }
 }

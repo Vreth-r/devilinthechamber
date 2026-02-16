@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class ReloadAOEAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.AOE_RELOAD;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

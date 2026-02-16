@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class InvincibilityAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.INVINCIBILITY;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

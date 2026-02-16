@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class FullAutoAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.FULL_AUTO;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

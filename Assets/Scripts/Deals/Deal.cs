@@ -5,14 +5,19 @@ using UnityEngine;
 public class StatMod
 {
     public StatName statName;
-    public float percent;
+    public DealType dealType;
+}
+[System.Serializable]
+public class Ability
+{
+    public AbilityName AbilityName;
+    public float duration;
 }
 
 [CreateAssetMenu(menuName = "Deals/Deal")]
 public class Deal : ScriptableObject
 {
     public List<StatMod> statDeals;
-    public List<AbilityName> abilityDeals;
-    
+    public List<Ability> abilityDeals;
 
 }

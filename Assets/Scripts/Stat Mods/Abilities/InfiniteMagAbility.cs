@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class InfiniteMagAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.INFINITE_MAG;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

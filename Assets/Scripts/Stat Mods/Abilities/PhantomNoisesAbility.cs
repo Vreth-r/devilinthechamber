@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PhantomNoisesAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.PHANTOM_NOISES;
-        length = 10f;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

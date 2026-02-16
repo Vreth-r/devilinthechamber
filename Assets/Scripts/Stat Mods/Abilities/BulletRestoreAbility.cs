@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class BulletRestoreAbility : AbilityBase
 {
-    public override void initialize ()
+    public override void initialize (float duration)
     {
         abilityName = AbilityName.KILL_BULLET_RESTORE;
+        this.duration = duration;
     }
     public override bool startFunction()
     {

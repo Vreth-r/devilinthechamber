@@ -6,7 +6,11 @@ public class StatModTester : MonoBehaviour
     void Start()
     {
         //addStat();
-        Invoke(nameof(addReloadSpeed), 5f);
+        //Invoke(nameof(addReloadSpeed), 5f);
+        addReloadSpeed();
+        addReloadSpeed();
+        addReloadSpeed();
+
         //Invoke(nameof(addFireRate), 5f);
         //AbilityModManager.Instance.StartAbility(AbilityName.AOE_RELOAD);
         //StatModManager.Instance.AddStatModifier(StatName.MOVEMENT_SPEED, -1f);
@@ -19,10 +23,11 @@ public class StatModTester : MonoBehaviour
     // Update is called once per frame
     void addReloadSpeed()
     {
-        StatModManager.Instance.AddStatModifier(StatName.RELOAD_SPEED, 1.5f); 
+        Debug.Log("eh");
+        StatModManager.Instance.AddStatModifier(StatName.RELOAD_SPEED, DealType.NEGATIVE); 
     }
     void addFireRate()
     {
-        StatModManager.Instance.AddStatModifier(StatName.FIRE_SPEED, 4f); 
+        StatModManager.Instance.AddStatModifier(StatName.FIRE_SPEED, DealType.POSITIVE); 
     }
 }
