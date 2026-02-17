@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class NoSlideAbility : AbilityBase
+public class BlinkingAbility : AbilityBase
 {
     public override void initialize (float duration)
     {
-        abilityName = AbilityName.NO_SLIDING;
+        abilityName = AbilityName.BLINDNESS;
         this.duration = duration;
     }
     public override bool startFunction()
     {
-        PlayerManager.Instance.playerMotor.canSlideMod = false;
+        UIEvents.SetBlind(true);
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        PlayerManager.Instance.playerMotor.canSlideMod = true;
+        UIEvents.SetBlind(false);
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

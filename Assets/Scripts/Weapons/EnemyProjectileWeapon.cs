@@ -30,6 +30,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
     public bool TryFireAt(Transform target, Vector3 targetVelocity = default)
     {
+        float speedMod = StatModManager.GetNegativeStatModifier(StatName.LADY_PROJECTILE_SPEED);
         Vector3 shooterVel = Vector3.zero;
 
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -62,14 +63,14 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
         if (leadTarget)
         {
-            if (TryGetInterceptPoint(origin, projectileSpeed, targetPos, relVel, maxLeadTime, out Vector3 intercept))
+            if (TryGetInterceptPoint(origin, projectileSpeed * speedMod, targetPos, relVel, maxLeadTime, out Vector3 intercept))
             {
                 aimPoint = intercept;
             }
             else
             {
                 float dist = Vector3.Distance(origin, targetPos);
-                float t = Mathf.Clamp(dist / Mathf.Max(0.01f, projectileSpeed), 0f, 0.20f);
+                float t = Mathf.Clamp(dist / Mathf.Max(0.01f, projectileSpeed * speedMod), 0f, 0.20f);
                 Vector3 partial = targetPos + targetVelocity * t;
 
                 aimPoint = Vector3.Lerp(targetPos, partial, Mathf.Clamp01(fallbackLeadBlend));
@@ -84,7 +85,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
         IgnoreShooterCollisions(p.gameObject, transform);
         p.damage = damage;
         p.hitMask = projectileHitMask;
-        p.Launch(origin, dir, projectileSpeed);
+        p.Launch(origin, dir, projectileSpeed * speedMod);
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());

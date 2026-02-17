@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public enum StatName {
@@ -9,45 +10,78 @@ public enum StatName {
     RELOAD_SPEED,
     MAGAZINE_SIZE,
     JUMP_HEIGHT,
+    SLIDE_DISTANCE,
     HEADSHOT_BONUS,
-    ENEMY_PROJECTILE_SPEED, // idk what this means lol
+    LADY_PROJECTILE_SPEED,
+    DOG_RECOVERY_SPEED,
+    BULLET_RANGE,
+    LADY_FIRE_RATE,
+    LADY_MOVEMENT_SPEED,
+    DOG_MOVEMENT_SPEED
 }
 
-public class StatModManager : MonoBehaviour
+public enum DealType
 {
-    public static StatModManager Instance;
+    POSITIVE,
+    NEGATIVE
+}
 
-    // stat modifiers
-    public Dictionary<StatName, List<float>> StatModifiers = new Dictionary<StatName, List<float>>
+public class StatDescription
+{
+    public float positiveIncrement;
+    public int positiveDealsTaken;
+    public List<float> negativeIncrements;
+    public int negativeDealsTaken;
+
+    public StatDescription(float posInc, int posDeals, List<float> negIncs, int negDeals)
     {
-        { StatName.MOVEMENT_SPEED, new List<float>() },
-        { StatName.DAMAGE_OUTPUT, new List<float>() },
-        { StatName.FIRE_SPEED, new List<float>() },
-        { StatName.RELOAD_SPEED, new List<float>() },
-        { StatName.MAGAZINE_SIZE, new List<float>() },
-        { StatName.JUMP_HEIGHT, new List<float>() },
-        { StatName.HEADSHOT_BONUS, new List<float>() },
-        { StatName.ENEMY_PROJECTILE_SPEED, new List<float>() },
+        positiveIncrement = posInc;
+        positiveDealsTaken = posDeals;
+        negativeIncrements = negIncs;
+        negativeDealsTaken = negDeals;
+    }
+}
+
+public class StatModManager
+{
+    // stat modifiers
+    public static Dictionary<StatName, StatDescription> StatModifiers = new Dictionary<StatName, StatDescription>
+    {
+        // Stat                      |    % increase (1 = only negative), increments, negative %s, increments
+        { StatName.MOVEMENT_SPEED,         new StatDescription(1.05f, 0, null, 0)},
+        { StatName.DAMAGE_OUTPUT,          new StatDescription(1.35f, 0, null, 0) },
+        { StatName.FIRE_SPEED,             new StatDescription(1.2f,  0, null, 0) },
+        { StatName.RELOAD_SPEED,           new StatDescription(1.2f,  0, new List<float>{0.9f, 0.7f, 0.3f}, 0) },
+        { StatName.MAGAZINE_SIZE,          new StatDescription(2,     0, null, 0) },
+        { StatName.JUMP_HEIGHT,            new StatDescription(1.2f,  0, null, 0) },
+        { StatName.SLIDE_DISTANCE,         new StatDescription(1,     0, new List<float>{0.75f, 0.5f, 0f}, 0) },
+        { StatName.HEADSHOT_BONUS,         new StatDescription(1,     0, new List<float>{0.75f, 0.5f, 0f}, 0) },
+        { StatName.LADY_PROJECTILE_SPEED,  new StatDescription(1,     0, new List<float>{1.05f, 1.15f, 1.35f}, 0) },
+        { StatName.DOG_RECOVERY_SPEED,     new StatDescription(1,     0, new List<float>{0.9f, 0.75f, 0.5f}, 0) },
+        { StatName.BULLET_RANGE,           new StatDescription(1.05f, 0, new List<float>{0.9f, 0.8f, 0.7f}, 0) },
+        { StatName.LADY_FIRE_RATE,         new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
+        { StatName.LADY_MOVEMENT_SPEED,    new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
+        { StatName.DOG_MOVEMENT_SPEED,     new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
     };
 
-    void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
-
     // add a stat modifier, can be timed but idk if that would be used for stats
-    public void AddStatModifier (StatName statName, float modifier, float timerLength = -1f, System.Func<bool> timerEndFunction = null)
+    public static void AddStatModifier (StatName statName, DealType dealType, float timerLength = -1f, System.Func<bool> timerEndFunction = null)
     {
         // permanently add stat modifier
         if (timerLength == -1f || timerEndFunction == null)
         {
-            StatModifiers[statName].Add(modifier);
+            if (dealType == DealType.POSITIVE)
+                StatModifiers[statName].positiveDealsTaken += 1;
+            else
+                StatModifiers[statName].positiveDealsTaken -= 1;
         }
         // temporarily add stat modifier (must have both length and end function) 
         else
         {
-            StatModifiers[statName].Add(modifier);
+            if (dealType == DealType.POSITIVE)
+                StatModifiers[statName].positiveDealsTaken += 1;
+            else
+                StatModifiers[statName].positiveDealsTaken -= 1;
             TimerHandler.Instance.CreateTimerHandle(timerLength, timerEndFunction);
         }
 
@@ -55,21 +89,24 @@ public class StatModManager : MonoBehaviour
         
     }
 
-    // gets all the stat mods for a stat
-    public List<float> GetStatModsRaw (StatName statName)
+    public static float GetPositiveStatModifier (StatName statName)
     {
-        return StatModifiers[statName];
+        if (statName == StatName.MAGAZINE_SIZE) // bc magazine size is additive
+        {
+            if (StatModifiers[statName].positiveDealsTaken == 0) return 0;
+            return StatModifiers[statName].positiveIncrement * StatModifiers[statName].positiveDealsTaken;
+        }
+        return math.pow(StatModifiers[statName].positiveIncrement, StatModifiers[statName].positiveDealsTaken);
     }
-
-    public float GetStatSum (StatName statName)
+    public static float GetNegativeStatModifier (StatName statName)
     {
-        if (StatModifiers[statName].Count == 0) return 1f;
-        return StatModifiers[statName].Sum(x => x); 
-    }
-    public float GetStatProduct (StatName statName)
-    {
-        if (StatModifiers[statName].Count == 0) return 1f;
-        return StatModifiers[statName].Aggregate(1f, (current, value) => current * value);
+        if (StatModifiers[statName].negativeIncrements == null) return 1f;
+        if (StatModifiers[statName].negativeDealsTaken == 0) return 1f;
+        if (StatModifiers[statName].negativeDealsTaken == 4) { 
+            GameManager.Instance.FourNegativeDeals(statName);
+            return 0; 
+        }
+        return StatModifiers[statName].negativeIncrements[StatModifiers[statName].negativeDealsTaken - 1]; 
     }
 
 }

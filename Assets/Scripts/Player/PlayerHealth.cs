@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentHealth = Mathf.Max(0, currentHealth);
 
         UIEvents.SetHealth(currentHealth, maxHealth);
+        UIEvents.IndicateHit();
         if (currentHealth <= 0)
         {
             Die();

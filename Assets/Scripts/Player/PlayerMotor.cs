@@ -44,6 +44,7 @@ public class PlayerMotor : MonoBehaviour
 
     public float slideFriction = 2.5f;
     public float slideCooldown = 0.12f;
+    public float slideDistMod = 1f;
     public bool canSlideMod = true; // ability mods
 
     [Header("Air -> Slide Buffer")]
@@ -258,7 +259,7 @@ public class PlayerMotor : MonoBehaviour
 
         slideJumpUsed = false;
 
-        slideTimer = slideDuration;
+        slideTimer = slideDuration * slideDistMod;
         slideCooldownTimer = slideCooldown;
 
         // direction prefer current velocity, else wishDir, else forward

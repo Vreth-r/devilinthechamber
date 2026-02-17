@@ -12,6 +12,7 @@ public class GunHitscan : MonoBehaviour
     [Header("Fire")]
     public float fireRate = 3f;
     public float range = 120f;
+    public float rangeMod = 1f;
     public int damage = 25;
     public float headShotDamageBonus = 2f;
     public float fireRateMod = 1f; // stat mods
@@ -71,17 +72,17 @@ public class GunHitscan : MonoBehaviour
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 aimPoint;
-        if (Physics.Raycast(aimRay, out RaycastHit aimHit, range, hitMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(aimRay, out RaycastHit aimHit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
             aimPoint = aimHit.point;
         else
-            aimPoint = aimRay.origin + aimRay.direction * range;
+            aimPoint = aimRay.origin + aimRay.direction * range * rangeMod;
 
         Vector3 origin = muzzle.position;
         Vector3 dir = (aimPoint - origin).normalized;
 
-        Vector3 endPoint = origin + dir * range;
+        Vector3 endPoint = origin + dir * range * rangeMod;
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, range, hitMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
         {
             endPoint = hit.point;
 
