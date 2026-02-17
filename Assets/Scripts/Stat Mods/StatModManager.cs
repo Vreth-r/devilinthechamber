@@ -13,8 +13,11 @@ public enum StatName {
     SLIDE_DISTANCE,
     HEADSHOT_BONUS,
     LADY_PROJECTILE_SPEED,
-    DOG_RECOVERY_SPEED
-    
+    DOG_RECOVERY_SPEED,
+    BULLET_RANGE,
+    LADY_FIRE_RATE,
+    LADY_MOVEMENT_SPEED,
+    DOG_MOVEMENT_SPEED
 }
 
 public enum DealType
@@ -39,13 +42,12 @@ public class StatDescription
     }
 }
 
-public class StatModManager : MonoBehaviour
+public class StatModManager
 {
-    public static StatModManager Instance;
-
     // stat modifiers
-    public Dictionary<StatName, StatDescription> StatModifiers = new Dictionary<StatName, StatDescription>
+    public static Dictionary<StatName, StatDescription> StatModifiers = new Dictionary<StatName, StatDescription>
     {
+        // Stat                      |    % increase (1 = only negative), increments, negative %s, increments
         { StatName.MOVEMENT_SPEED,         new StatDescription(1.05f, 0, null, 0)},
         { StatName.DAMAGE_OUTPUT,          new StatDescription(1.35f, 0, null, 0) },
         { StatName.FIRE_SPEED,             new StatDescription(1.2f,  0, null, 0) },
@@ -53,19 +55,17 @@ public class StatModManager : MonoBehaviour
         { StatName.MAGAZINE_SIZE,          new StatDescription(2,     0, null, 0) },
         { StatName.JUMP_HEIGHT,            new StatDescription(1.2f,  0, null, 0) },
         { StatName.SLIDE_DISTANCE,         new StatDescription(1,     0, new List<float>{0.75f, 0.5f, 0f}, 0) },
-        { StatName.HEADSHOT_BONUS,         new StatDescription(0.2f,  0, new List<float>{0.75f, 0.5f, 0f}, 0) },
+        { StatName.HEADSHOT_BONUS,         new StatDescription(1,     0, new List<float>{0.75f, 0.5f, 0f}, 0) },
         { StatName.LADY_PROJECTILE_SPEED,  new StatDescription(1,     0, new List<float>{1.05f, 1.15f, 1.35f}, 0) },
-        { StatName.DOG_RECOVERY_SPEED,     new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
+        { StatName.DOG_RECOVERY_SPEED,     new StatDescription(1,     0, new List<float>{0.9f, 0.75f, 0.5f}, 0) },
+        { StatName.BULLET_RANGE,           new StatDescription(1.05f, 0, new List<float>{0.9f, 0.8f, 0.7f}, 0) },
+        { StatName.LADY_FIRE_RATE,         new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
+        { StatName.LADY_MOVEMENT_SPEED,    new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
+        { StatName.DOG_MOVEMENT_SPEED,     new StatDescription(1,     0, new List<float>{1.1f, 1.25f, 1.5f}, 0) },
     };
 
-    void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
-
     // add a stat modifier, can be timed but idk if that would be used for stats
-    public void AddStatModifier (StatName statName, DealType dealType, float timerLength = -1f, System.Func<bool> timerEndFunction = null)
+    public static void AddStatModifier (StatName statName, DealType dealType, float timerLength = -1f, System.Func<bool> timerEndFunction = null)
     {
         // permanently add stat modifier
         if (timerLength == -1f || timerEndFunction == null)
@@ -89,17 +89,16 @@ public class StatModManager : MonoBehaviour
         
     }
 
-    public float GetPositiveStatModifier (StatName statName)
+    public static float GetPositiveStatModifier (StatName statName)
     {
         if (statName == StatName.MAGAZINE_SIZE) // bc magazine size is additive
         {
             if (StatModifiers[statName].positiveDealsTaken == 0) return 0;
             return StatModifiers[statName].positiveIncrement * StatModifiers[statName].positiveDealsTaken;
         }
-        if (StatModifiers[statName].positiveDealsTaken == 0) return 1f;
         return math.pow(StatModifiers[statName].positiveIncrement, StatModifiers[statName].positiveDealsTaken);
     }
-    public float GetNegativeStatModifier (StatName statName)
+    public static float GetNegativeStatModifier (StatName statName)
     {
         if (StatModifiers[statName].negativeIncrements == null) return 1f;
         if (StatModifiers[statName].negativeDealsTaken == 0) return 1f;

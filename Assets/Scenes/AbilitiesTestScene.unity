@@ -184,6 +184,7 @@ MonoBehaviour:
   hpMax: 0
   ammoInMag: 0
   ammoReserve: 0
+  showHitIndicator: 1
 --- !u!114 &269238019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +330,7 @@ MonoBehaviour:
   slideSteerAccel: 3
   slideFriction: 4
   slideCooldown: 1
+  slideDistMod: 1
   canSlideMod: 1
   slideLandBuffer: 0.3
   slideLandGrace: 0.1
@@ -375,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 396380373}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.95, y: 1.38, z: -8.29}
+  m_LocalPosition: {x: 22.41, y: 1.38, z: -8.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1927,8 +1929,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1491494210}
-  - component: {fileID: 1491494209}
-  - component: {fileID: 1491494208}
   - component: {fileID: 1491494207}
   - component: {fileID: 1491494211}
   - component: {fileID: 1491494212}
@@ -1951,30 +1951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c2a528b2445f64c84b9b2f325611b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatModTester
---- !u!114 &1491494208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491494206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7333f0e8235c145ad923d02becced9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatModManager
---- !u!114 &1491494209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491494206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2995a4b6367e09d4b90a34e131a4c992, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityModManager
 --- !u!4 &1491494210
 Transform:
   m_ObjectHideFlags: 0
@@ -2018,6 +1994,7 @@ MonoBehaviour:
   bulletRestoreMod: 0
   enemyProjectileSpeedMod: 1
   pauseMenu: {fileID: 320752814500508156, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+  gamePaused: 0
 --- !u!1 &1515692868
 GameObject:
   m_ObjectHideFlags: 0

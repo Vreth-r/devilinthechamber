@@ -24,7 +24,6 @@ public class DealMenu : MonoBehaviour
         deal1.clicked += chooseDeal1;
         deal2.clicked += chooseDeal2;
         deal3.clicked += chooseDeal3;
-
     }
 
     void chooseDeal1 ()

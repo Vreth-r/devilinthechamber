@@ -9,14 +9,14 @@ public class NoJumpAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = false;
+        PlayerManager.Instance.playerMotor.canJumpMod = false;
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        PlayerScriptRefHolder.Instance.playerMotor.canJumpMod = true;
+        PlayerManager.Instance.playerMotor.canJumpMod = true;
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

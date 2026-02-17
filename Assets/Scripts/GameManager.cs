@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     public void enemyKilled ()
     {
-        if (bulletRestoreMod) PlayerScriptRefHolder.Instance.gunHitscan.currentMagazine += 1;
+        if (bulletRestoreMod) PlayerManager.Instance.gunHitscan.currentMagazine += 1;
         enemiesKilled += 1;
     }
 
@@ -57,51 +57,56 @@ public class GameManager : MonoBehaviour
         switch (stat)
         {
             case StatName.MOVEMENT_SPEED:
-                PlayerScriptRefHolder.Instance.playerMotor.movementSpeedMod = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.movementSpeedMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.DAMAGE_OUTPUT:
-                PlayerScriptRefHolder.Instance.gunHitscan.damageMod = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.damageMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.FIRE_SPEED:
-                PlayerScriptRefHolder.Instance.gunHitscan.fireRate = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.fireRate = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
             
             case StatName.RELOAD_SPEED:
-                PlayerScriptRefHolder.Instance.gunHitscan.reloadSpeedMod = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.reloadSpeedMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.MAGAZINE_SIZE:
-                PlayerScriptRefHolder.Instance.gunHitscan.magazineSize = (int)
-                    (StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat));
+                PlayerManager.Instance.gunHitscan.magazineSize = (int)
+                    (StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat));
                 return;
                 
 
             case StatName.JUMP_HEIGHT:
-                PlayerScriptRefHolder.Instance.playerMotor.jumpHeightMod = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.jumpHeightMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.SLIDE_DISTANCE:
-                PlayerScriptRefHolder.Instance.playerMotor.slideDistMod = 
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.slideDistMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
 
             case StatName.HEADSHOT_BONUS:
-                PlayerScriptRefHolder.Instance.gunHitscan.headShotDamageBonus =
-                    StatModManager.Instance.GetPositiveStatModifier(stat) * StatModManager.Instance.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.headShotDamageBonus =
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
                 return;
-                
-            case StatName.LADY_PROJECTILE_SPEED:
+
+            case StatName.BULLET_RANGE:
+                PlayerManager.Instance.gunHitscan.rangeMod = 
+                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                return;
+
+            case StatName.LADY_MOVEMENT_SPEED:
                 Debug.Log("enemy sat");
                 return;
-            
-            case StatName.DOG_RECOVERY_SPEED:
+
+            case StatName.DOG_MOVEMENT_SPEED:
                 Debug.Log("enemy sat");
                 return;
             

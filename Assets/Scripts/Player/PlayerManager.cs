@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerScriptRefHolder : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
-    public static PlayerScriptRefHolder Instance;
+    public static PlayerManager Instance;
     public PlayerMotor playerMotor;
     public PlayerLook playerLook;
     public FovKick fovKick;

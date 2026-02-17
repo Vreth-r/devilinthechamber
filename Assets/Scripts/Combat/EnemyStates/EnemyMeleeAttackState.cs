@@ -57,7 +57,7 @@ public class EnemyMeleeAttackState : IEnemyState
         {
             didHit = true;
             melee?.DoMeleeHit();
-            timer = cooldownTime;
+            timer = cooldownTime * StatModManager.GetNegativeStatModifier(StatName.DOG_RECOVERY_SPEED);
         }
         else if (didHit && timer <= 0f)
         {
