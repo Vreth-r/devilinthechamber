@@ -1,27 +1,46 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyTurretState : IEnemyState
 {
     readonly EnemyContext ctx;
     readonly EnemyStateMachine fsm;
-    EnemyAnimDriver anim;
+
+    EnemyAnimDriver fireAnim;
 
     public string Name => "Turret";
 
+    float nextShotAt;
+    readonly Queue<float> scheduledProjectileTimes = new Queue<float>(8);
+
     public EnemyTurretState(EnemyContext ctx, EnemyStateMachine fsm)
-    { this.ctx = ctx; this.fsm = fsm; }
+    { 
+        this.ctx = ctx; 
+        this.fsm = fsm; 
+    }
 
     public void Enter()
     {
         if (ctx.agent)
         {
-            ctx.agent.isStopped = true;
-            ctx.agent.ResetPath();
-            // optional disable agent entirely if giving bugs
-            // ctx.agent.enabled = false;
-            anim = ctx.self.GetComponent<EnemyAnimDriver>();
-            anim?.SetFiring(true);
+            if (ctx.agent.enabled && ctx.agent.isOnNavMesh)
+            {
+                ctx.agent.isStopped = true;
+                ctx.agent.ResetPath();
+            }
+            else
+            {
+                ctx.agent.isStopped = true;
+            }
         }
+
+        fireAnim = ctx.self.GetComponent<EnemyAnimDriver>();
+        fireAnim?.PlayWindUp();
+
+        scheduledProjectileTimes.Clear();
+
+        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
+        nextShotAt = Time.time + interval;
     }
 
     public void Tick(float dt)
@@ -33,23 +52,43 @@ public class EnemyTurretState : IEnemyState
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        if (ctx.firePoint && EnemyCombatUtil.CanFire(ctx, Time.time))
-        {
-            ctx.lastFireTime = Time.time;
-            var weapon = ctx.self.GetComponent<EnemyProjectileWeapon>();
-            if (weapon)
-            {
-                Vector3 playerVel = Vector3.zero;
-                var pm = ctx.target.GetComponent<PlayerMotor>();
-                if (pm) playerVel = pm.PlanarVelocity; // or pm.FullVelocity
+        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
 
-                weapon.TryFireAt(ctx.target, playerVel);
-            }
+        while (Time.time >= nextShotAt)
+        {
+            nextShotAt += interval;
+
+            fireAnim?.PlayShoot();
+
+            float delay = fireAnim ? fireAnim.FireDelaySeconds : 0f;
+            scheduledProjectileTimes.Enqueue(Time.time + delay);
         }
+
+        while (scheduledProjectileTimes.Count > 0 && Time.time >= scheduledProjectileTimes.Peek())
+        {
+            scheduledProjectileTimes.Dequeue();
+            FireProjectileNow();
+        }
+    }
+
+    void FireProjectileNow()
+    {
+        var weapon = ctx.self.GetComponent<EnemyProjectileWeapon>();
+        if (!weapon) return;
+
+        Vector3 playerVel = Vector3.zero;
+        var pm = ctx.target.GetComponent<PlayerMotor>();
+        playerVel = pm ? pm.FullVelocity : Vector3.zero;
+
+        weapon.FireNow(ctx.target, playerVel);
     }
 
     public void Exit()
     {
-        anim?.SetFiring(false);
+        scheduledProjectileTimes.Clear();
+        fireAnim?.PlayWindDown();
+
+        if (ctx.agent)
+            ctx.agent.isStopped = false;
     }
 }

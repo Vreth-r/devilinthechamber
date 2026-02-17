@@ -30,49 +30,50 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
     public bool TryFireAt(Transform target, Vector3 targetVelocity = default)
     {
-        float speedMod = StatModManager.GetNegativeStatModifier(StatName.LADY_PROJECTILE_SPEED);
-        Vector3 shooterVel = Vector3.zero;
+        if (Time.time < nextFireTime) return false;
 
+        nextFireTime = Time.time + (1f / Mathf.Max(0.01f, fireRate));
+        FireNow(target, targetVelocity);
+        return true;
+    }
+
+
+    public void FireNow(Transform target, Vector3 targetVelocity = default)
+    {
+        float speedMod = StatModManager.GetNegativeStatModifier(StatName.LADY_PROJECTILE_SPEED);
+
+        if (!firePoint || !projectilePrefab || !target) return;
+
+        Vector3 shooterVel = Vector3.zero;
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent) shooterVel = agent.velocity;
 
         Vector3 relVel = targetVelocity - shooterVel;
         smoothedRelVel = Vector3.Lerp(smoothedRelVel, relVel, 1f - Mathf.Exp(-velocitySmoothing * Time.deltaTime));
 
-        if (!firePoint || !projectilePrefab || !target) return false;
-        if (Time.time < nextFireTime) return false;
-
-        nextFireTime = Time.time + (1f / Mathf.Max(0.01f, fireRate));
-
         Vector3 origin = firePoint.position;
+
         Vector3 targetPos;
         if (target.TryGetComponent<CharacterController>(out var tcc))
-        {
             targetPos = target.TransformPoint(tcc.center);
-        }
         else if (target.TryGetComponent<Collider>(out var col))
-        {
             targetPos = col.bounds.center;
-        }
         else
-        {
             targetPos = target.position + Vector3.up * aimHeight;
-        }
 
         Vector3 aimPoint = targetPos;
 
         if (leadTarget)
         {
-            if (TryGetInterceptPoint(origin, projectileSpeed * speedMod, targetPos, relVel, maxLeadTime, out Vector3 intercept))
-            {
+            float spd = projectileSpeed * speedMod;
+
+            if (TryGetInterceptPoint(origin, spd, targetPos, relVel, maxLeadTime, out Vector3 intercept))
                 aimPoint = intercept;
-            }
             else
             {
                 float dist = Vector3.Distance(origin, targetPos);
-                float t = Mathf.Clamp(dist / Mathf.Max(0.01f, projectileSpeed * speedMod), 0f, 0.20f);
+                float t = Mathf.Clamp(dist / Mathf.Max(0.01f, spd), 0f, 0.20f);
                 Vector3 partial = targetPos + targetVelocity * t;
-
                 aimPoint = Vector3.Lerp(targetPos, partial, Mathf.Clamp01(fallbackLeadBlend));
             }
         }
@@ -89,9 +90,8 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
-
-        return true;
     }
+
 
     static void IgnoreShooterCollisions(GameObject projectileGO, Transform shooterRoot)
     {
