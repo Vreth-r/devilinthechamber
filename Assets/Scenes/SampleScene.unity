@@ -1996,7 +1996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70af7e5e2800c0942a511604cab3d8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLook
-  cameraPivot: {fileID: 902138630}
+  yawPivot: {fileID: 0}
+  pitchPivot: {fileID: 0}
   sensitivity: 0.12
   pitchMin: -85
   pitchMax: 85
@@ -2037,6 +2038,7 @@ MonoBehaviour:
   slideSteerAccel: 3
   slideFriction: 4
   slideCooldown: 1
+  slideDistMod: 1
   canSlideMod: 1
   slideLandBuffer: 0.3
   slideLandGrace: 0.1
@@ -2048,6 +2050,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   fovKick: {fileID: 79748251}
+  viewportFovKick: {fileID: 0}
   cameraMovement: {fileID: 79748252}
 --- !u!143 &2140585735
 CharacterController:
