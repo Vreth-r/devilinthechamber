@@ -134,6 +134,7 @@ public class GunHitscan : MonoBehaviour
 
     IEnumerator Reload()
     {
+        if (currentMagazine == magazineSize + magazineSizeMod) yield break;
         reloading = true;
         animator.SetTrigger("Reload");
         animator.speed = reloadSpeed * reloadSpeedMod;
