@@ -16,7 +16,7 @@ public class EnemyIdleState : IEnemyState
 
     public void Enter()
     {
-        if (ctx.agent)
+        if (ctx.agent && ctx.agent.enabled && ctx.agent.isOnNavMesh)
         {
             ctx.agent.isStopped = true;
             ctx.agent.ResetPath();

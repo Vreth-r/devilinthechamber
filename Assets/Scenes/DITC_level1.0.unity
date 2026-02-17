@@ -108949,6 +108949,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460152271542592120, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858559306033470389, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7099012730608624417, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8112738904725317636, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8170111758473247630, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -108964,6 +108980,14 @@ PrefabInstance:
     - target: {fileID: 8720710987815483464, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
       propertyPath: m_Name
       value: Gothic_Architecture_Columns_-_Asset_Pack (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720710987815483464, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838933223433327050, guid: 734a25f879aa04dcd848b9b12d63d762, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

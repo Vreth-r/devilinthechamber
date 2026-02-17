@@ -3,8 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    public Transform cameraPivot;
+    [Header("Pivots")]
+    [Tooltip("Yaw only (left/right). Usually a child of the player root at eye height.")]
+    public Transform yawPivot;
 
+    [Tooltip("Pitch only (up/down). Child of yawPivot. Camera should be a child of this.")]
+    public Transform pitchPivot;
+
+    [Header("Settings")]
     public float sensitivity = 0.08f;
     public float pitchMin = -85f;
     public float pitchMax = 85f;
@@ -23,9 +29,22 @@ public class PlayerLook : MonoBehaviour
     {
         LockCursor(true);
 
-        Vector3 e = cameraPivot ? cameraPivot.eulerAngles : transform.eulerAngles;
-        yaw = e.y;
-        pitch = e.x;
+        if (yawPivot && pitchPivot)
+        {
+            yaw = yawPivot.eulerAngles.y;
+
+            float x = pitchPivot.localEulerAngles.x;
+            if (x > 180f) x -= 360f;
+            pitch = Mathf.Clamp(x, pitchMin, pitchMax);
+        }
+        else
+        {
+            Vector3 e = transform.eulerAngles;
+            yaw = e.y;
+            pitch = e.x;
+        }
+
+        ApplyRotation();
     }
 
     void OnEnable() => controls.Enable();
@@ -47,8 +66,16 @@ public class PlayerLook : MonoBehaviour
         pitch -= look.y * sensitivity;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
-        if (cameraPivot)
-            cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        ApplyRotation();
+    }
+
+    void ApplyRotation()
+    {
+        if (!yawPivot || !pitchPivot) return;
+
+        yawPivot.rotation = Quaternion.Euler(0f, yaw, 0f);
+
+        pitchPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
     void LockCursor(bool locked)

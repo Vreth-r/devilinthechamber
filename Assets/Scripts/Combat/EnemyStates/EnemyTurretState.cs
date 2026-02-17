@@ -4,6 +4,7 @@ public class EnemyTurretState : IEnemyState
 {
     readonly EnemyContext ctx;
     readonly EnemyStateMachine fsm;
+    EnemyAnimDriver anim;
 
     public string Name => "Turret";
 
@@ -18,6 +19,8 @@ public class EnemyTurretState : IEnemyState
             ctx.agent.ResetPath();
             // optional disable agent entirely if giving bugs
             // ctx.agent.enabled = false;
+            anim = ctx.self.GetComponent<EnemyAnimDriver>();
+            anim?.SetFiring(true);
         }
     }
 
@@ -45,5 +48,8 @@ public class EnemyTurretState : IEnemyState
         }
     }
 
-    public void Exit() { }
+    public void Exit()
+    {
+        anim?.SetFiring(false);
+    }
 }

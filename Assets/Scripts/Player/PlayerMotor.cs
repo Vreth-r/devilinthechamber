@@ -67,6 +67,7 @@ public class PlayerMotor : MonoBehaviour
 
     [Header("FX")]
     public FovKick fovKick;
+    public FovKick viewportFovKick;
 
     CharacterController cc;
     PlayerControls controls;
@@ -198,6 +199,7 @@ public class PlayerMotor : MonoBehaviour
                 if (fovKick)
                 {
                     fovKick.UpdateSlideSpeed(planarVelocity.magnitude);
+                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
                 }
 
                 if (slideTimer <= 0f || planarVelocity.magnitude <= slideMinEndSpeed || !grounded)
@@ -239,6 +241,7 @@ public class PlayerMotor : MonoBehaviour
         if (fovKick)
         {
             fovKick.SetSpeed(planarVelocity.magnitude);
+            viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
         }
 
         if ((cc.collisionFlags & CollisionFlags.Above) != 0 && velocity.y > 0f)
@@ -273,6 +276,7 @@ public class PlayerMotor : MonoBehaviour
         if (fovKick)
         {
             fovKick.BeginSlide(planarVelocity.magnitude);
+            viewportFovKick.BeginSlide(planarVelocity.magnitude);
         }
     }
 
@@ -289,6 +293,7 @@ public class PlayerMotor : MonoBehaviour
         if (fovKick)
         {
             fovKick.EndSlide();
+            viewportFovKick.EndSlide();
         }
 
         if (crouchHeldAfter) 
@@ -305,7 +310,11 @@ public class PlayerMotor : MonoBehaviour
     {
         slideJumpUsed = true;
 
-        if (fovKick) fovKick.EndSlide();
+        if (fovKick)
+        {
+            fovKick.EndSlide();
+            viewportFovKick.EndSlide();
+        }
 
         if (CanStandUp()) SetStance(Stance.Stand);
         else SetStance(Stance.Crouch);

@@ -5,6 +5,7 @@ public class EnemyRangedKiteState : IEnemyState
 {
     readonly EnemyContext ctx;
     readonly EnemyStateMachine fsm;
+    EnemyAnimDriver anim;
 
     public string Name => "RangedKite";
 
@@ -29,6 +30,9 @@ public class EnemyRangedKiteState : IEnemyState
         ctx.agent.stoppingDistance = 0f;
         ctx.repathTimer = 0f;
         orbitTimer = 0f;
+
+        anim = ctx.self.GetComponent<EnemyAnimDriver>();
+        anim?.SetFiring(true);
 
         orbitDir = Random.value < 0.5f ? -1 : 1;
     }
@@ -152,5 +156,6 @@ public class EnemyRangedKiteState : IEnemyState
     {
         if (!ctx.agent) return;
         ctx.agent.isStopped = false;
+        anim?.SetFiring(false);
     }
 }
