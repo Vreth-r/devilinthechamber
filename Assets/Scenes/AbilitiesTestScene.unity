@@ -3905,6 +3905,18 @@ PrefabInstance:
       propertyPath: reloadSpeed
       value: 1.7
       objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: magazineSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: currentMagazine
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: headShotDamageBonus
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.92063445

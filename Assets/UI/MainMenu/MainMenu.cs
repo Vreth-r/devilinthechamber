@@ -6,19 +6,28 @@ using UnityEngine.UIElements;
 public class MainMenu : MonoBehaviour {
     UIDocument doc;
     Button playButton;
+    Button exitButton;
 
     void Awake()
     {
         doc = GetComponent<UIDocument>();
         var root = doc.rootVisualElement;
         playButton = root.Q<Button>("Play");
+        exitButton = root.Q<Button>("Exit");
 
         playButton.clicked += testFunc;
+        exitButton.clicked += exitGame;
     }
 
     void testFunc ()
     {
-        SceneManager.LoadScene("AbilitiesTestScene");
+        SceneManager.LoadScene("AbilitiesTestScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("DITC_level1.0", LoadSceneMode.Additive);
+    }
+
+    void exitGame()
+    {
+        Application.Quit();
     }
 
 
