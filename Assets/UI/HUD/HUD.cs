@@ -62,7 +62,6 @@ public class HUD : MonoBehaviour
 
     public void SetAmmo(int mag, int reserve)
     {
-        Debug.Log($"{mag}, {reserve}");
         ammoInMag = Mathf.Max(0, mag);
         ammoReserve = Mathf.Max(0, reserve);
         Refresh();

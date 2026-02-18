@@ -21,8 +21,7 @@ public class MainMenu : MonoBehaviour {
 
     void testFunc ()
     {
-        SceneManager.LoadScene("AbilitiesTestScene", LoadSceneMode.Single);
-        SceneManager.LoadScene("DITC_level1.0", LoadSceneMode.Additive);
+        SceneManager.LoadScene("DITC_level1.0", LoadSceneMode.Single);
     }
 
     void exitGame()

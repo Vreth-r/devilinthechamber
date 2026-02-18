@@ -31,8 +31,6 @@ public class EnemyProjectileWeapon : MonoBehaviour
     public bool TryFireAt(Transform target, Vector3 targetVelocity = default)
     {
         if (Time.time < nextFireTime) return false;
-        float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
-        Vector3 shooterVel = Vector3.zero;
 
         nextFireTime = Time.time + (1f / Mathf.Max(0.01f, fireRate));
         FireNow(target, targetVelocity);
@@ -42,13 +40,13 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
     public void FireNow(Transform target, Vector3 targetVelocity = default)
     {
-        float speedMod = StatModManager.GetNegativeStatModifier(StatName.LADY_PROJECTILE_SPEED);
 
         if (!firePoint || !projectilePrefab || !target) return;
 
         Vector3 shooterVel = Vector3.zero;
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent) shooterVel = agent.velocity;
+        float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
 
         Vector3 relVel = targetVelocity - shooterVel;
         smoothedRelVel = Vector3.Lerp(smoothedRelVel, relVel, 1f - Mathf.Exp(-velocitySmoothing * Time.deltaTime));
