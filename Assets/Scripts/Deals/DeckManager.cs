@@ -34,7 +34,7 @@ public class DeckManager : MonoBehaviour
                     int k = UnityEngine.Random.Range(0, tier1Deals.dealDeck.Count - 1);
                     while (pickedIndexesTier1.Contains(k))
                     {
-                        k += 1;
+                        k = (k + 1) % tier1Deals.dealDeck.Count;
                     }
                     deals.Add(tier1Deals.dealDeck[k]);
                     pickedIndexesTier1.Add(k);
@@ -46,7 +46,7 @@ public class DeckManager : MonoBehaviour
                     int k = UnityEngine.Random.Range(0, tier2Deals.dealDeck.Count - 1);
                     while (pickedIndexesTier2.Contains(k))
                     {
-                        k += 1;
+                        k = (k + 1) % tier2Deals.dealDeck.Count;
                     }
                     deals.Add(tier2Deals.dealDeck[k]);
                     pickedIndexesTier2.Add(k);
@@ -58,7 +58,7 @@ public class DeckManager : MonoBehaviour
                     int k = UnityEngine.Random.Range(0, tier3Deals.dealDeck.Count - 1);
                     while (pickedIndexesTier3.Contains(k))
                     {
-                        k += 1;
+                        k = (k + 1) % tier3Deals.dealDeck.Count;
                     }
                     deals.Add(tier3Deals.dealDeck[k]);
                     pickedIndexesTier3.Add(k);
