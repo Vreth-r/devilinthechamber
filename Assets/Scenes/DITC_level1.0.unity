@@ -92906,6 +92906,7 @@ MonoBehaviour:
   sensitivity: 0.12
   pitchMin: -85
   pitchMax: 85
+  allowCursorRelockOnClick: 1
 --- !u!114 &396380377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109884,6 +109885,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: hud
+      value: 
+      objectReference: {fileID: 1912343762}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: hudDoc
+      value: 
+      objectReference: {fileID: 1912343762}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: pauseDoc
+      value: 
+      objectReference: {fileID: 1797308605}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: playerLook
+      value: 
+      objectReference: {fileID: 396380376}
     - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23
@@ -109923,6 +109940,10 @@ PrefabInstance:
     - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126246197411789737, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -424829,7 +424850,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1749177757}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be2ebda8fff78f44b8c16d8b5e5baea8, type: 3}
   m_Name: 
@@ -442166,6 +442187,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &1797308605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8126246197411789737, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+  m_PrefabInstance: {fileID: 506552593}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1 &1798400732
 GameObject:
   m_ObjectHideFlags: 0
@@ -473582,6 +473614,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907107099}
   m_Mesh: {fileID: 4300000, guid: 07466299836994710ae8fb4683ac97f3, type: 2}
+--- !u!114 &1912343762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1600842880131713211, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+  m_PrefabInstance: {fileID: 1132935409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1 &1914106500
 GameObject:
   m_ObjectHideFlags: 0

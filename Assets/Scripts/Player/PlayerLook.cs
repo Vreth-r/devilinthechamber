@@ -15,6 +15,8 @@ public class PlayerLook : MonoBehaviour
     public float pitchMin = -85f;
     public float pitchMax = 85f;
 
+    public bool allowCursorRelockOnClick = true;
+
     PlayerControls controls;
 
     float yaw;
@@ -57,8 +59,13 @@ public class PlayerLook : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             LockCursor(false);
 
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && Cursor.lockState != CursorLockMode.Locked)
+        if (allowCursorRelockOnClick &&
+            Mouse.current != null &&
+            Mouse.current.leftButton.wasPressedThisFrame &&
+            UnityEngine.Cursor.lockState != CursorLockMode.Locked)
+        {
             LockCursor(true);
+        }
 
         Vector2 look = controls.Player.Look.ReadValue<Vector2>();
 

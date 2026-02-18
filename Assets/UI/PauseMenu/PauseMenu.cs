@@ -1,32 +1,130 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
+
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu Instance;
-    UIDocument doc;
 
-    Button resume;
+    [Header("UIDocuments")]
+    [SerializeField] UIDocument pauseDoc;
+    [SerializeField] UIDocument hudDoc;
+
+    [Header("Optional")]
+    [SerializeField] PlayerLook playerLook;
+    [SerializeField] string mainMenuSceneName = "MainMenu";
+
+    PlayerControls controls;
+
+    VisualElement root;
+    Button resumeButton;
+    Button exitButton;
+
+    bool isPaused;
+    float toggleBlockUntil;
 
     void Awake()
     {
-        doc = GetComponent<UIDocument>();
-        var root = doc.rootVisualElement;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
 
-        resume = root.Q<Button>();
+        if (pauseDoc == null)
+            pauseDoc = GetComponent<UIDocument>();
 
-        resume.clicked += Resume;
-        Time.timeScale = 0;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;
-        GameManager.Instance.gamePaused = true;
+        pauseDoc.enabled = true;
+
+        root = pauseDoc.rootVisualElement;
+        resumeButton = root.Q<Button>("Resume");
+        exitButton   = root.Q<Button>("Exit");
+
+        if (resumeButton == null) Debug.LogError("PauseMenu: Button name='Resume' not found.");
+        if (exitButton == null)   Debug.LogError("PauseMenu: Button name='Exit' not found.");
+
+        if (resumeButton != null) resumeButton.clicked += Resume;
+        if (exitButton != null)   exitButton.clicked += ExitToMainMenu;
+
+        controls = new PlayerControls();
+
+        SetVisible(false);
     }
 
-    void Resume ()
+    void OnEnable()
     {
-        Time.timeScale = 1;
+        controls.Enable();
+        controls.Player.Pause.performed += OnPause;
+    }
+
+    void OnDisable()
+    {
+        //controls.Player.Pause.performed -= OnPause;
+        //controls.Disable();
+    }
+
+    void OnPause(InputAction.CallbackContext _)
+    {
+        if (Time.unscaledTime < toggleBlockUntil) return;
+        toggleBlockUntil = Time.unscaledTime + 0.15f;
+
+        Toggle();
+    }
+
+    public void Toggle()
+    {
+        if (isPaused) Resume();
+        else Pause();
+    }
+
+    public void Pause()
+    {
+        if (isPaused) return;
+        isPaused = true;
+
+        if (hudDoc != null) hudDoc.enabled = false;
+        SetVisible(true);
+
+        Time.timeScale = 0f;
+        if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+        if (playerLook != null) playerLook.allowCursorRelockOnClick = false;
+    }
+
+    public void Resume()
+    {
+        if (!isPaused) return;
+        isPaused = false;
+
+        toggleBlockUntil = Time.unscaledTime + 0.15f;
+
+        SetVisible(false);
+        if (hudDoc != null) hudDoc.enabled = true;
+
+        Time.timeScale = 1f;
+        if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
+
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
-        GameManager.Instance.gamePaused = false;
-        Destroy(gameObject);
+
+        if (playerLook != null) playerLook.allowCursorRelockOnClick = true;
+    }
+
+    void ExitToMainMenu()
+    {
+        Time.timeScale = 1f;
+        if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
+
+        Destroy(GameManager.Instance.gameObject);
+        SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
+    }
+
+    void SetVisible(bool visible)
+    {
+        root.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
 }
