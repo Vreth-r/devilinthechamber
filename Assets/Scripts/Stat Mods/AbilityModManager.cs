@@ -19,7 +19,12 @@ public enum AbilityName {
     NO_SLIDING,
     NO_JUMPING,
     HALF_HEALTH,
-    DEAFNESS 
+    DEAFNESS,
+    DOUBLE_DAMAGE_LOW_HP,
+    KNOCKBACK_ABILITY,
+    DOUBLE_LIFEGAIN_ABILITY,
+    ONE_EYED,
+    DEATH
     
 }
 public class AbilityModManager {
@@ -41,13 +46,19 @@ public class AbilityModManager {
         { AbilityName.NO_SLIDING, new NoSlideAbility() },
         { AbilityName.NO_JUMPING, new NoJumpAbility() },
         { AbilityName.HALF_HEALTH, new HalfHealthAbility() },
-        { AbilityName.DEAFNESS, new DeafnessAbility() }
+        { AbilityName.DEAFNESS, new DeafnessAbility() },
+        { AbilityName.DOUBLE_DAMAGE_LOW_HP, new DoubleDamageAbility() },
+        { AbilityName.KNOCKBACK_ABILITY, new KnockbackAbilty() },
+        { AbilityName.DOUBLE_LIFEGAIN_ABILITY, new DoubleLifeGainAbility() },
+        { AbilityName.ONE_EYED, new OneEyedAbility() },
+        { AbilityName.DEATH, null }
     };
 
     public static void StartAbility (AbilityName abilityName, float duration)
     {   
         abilities[abilityName].initialize(duration);
         abilities[abilityName].startFunction(); // run the start function (the effect)
-        TimerHandler.Instance.CreateTimerHandle(abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
+        if (duration != -1) 
+            TimerHandler.Instance.CreateTimerHandle(abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
     }
 }

@@ -1,22 +1,30 @@
 using UnityEngine;
+using System.Collections;
 
 public class BlinkingAbility : AbilityBase
 {
     public override void initialize (float duration)
     {
-        abilityName = AbilityName.BLINDNESS;
+        abilityName = AbilityName.BLINKING;
         this.duration = duration;
     }
     public override bool startFunction()
     {
-        UIEvents.SetBlind(true);
+        float t = Random.Range(2, 5);
+        TimerHandler.Instance.CreateTimerHandle(t, DoBlink);
         Debug.Log($"START: {abilityName}");
+        return true;
+    }
+    bool DoBlink ()
+    {
+        UIEvents.DoBlink();
         return true;
     }
 
     public override bool endFunction()
     {
-        UIEvents.SetBlind(false);
+        float t = Random.Range(2, 5);
+        TimerHandler.Instance.CreateTimerHandle(t, DoBlink);
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

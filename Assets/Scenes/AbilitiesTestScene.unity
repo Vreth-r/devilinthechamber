@@ -264,9 +264,8 @@ MonoBehaviour:
   m_WorldSpaceCollider: {fileID: 0}
 --- !u!4 &269238020
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+  m_PrefabInstance: {fileID: 1348428748499761500}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269238017}
   serializedVersion: 2
@@ -3833,7 +3832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReticleController
   baseGap: 0
---- !u!1001 &2138029912
+--- !u!1001 &1348428748499761500
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -3841,17 +3840,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1559301698}
     m_Modifications:
-    - target: {fileID: 372301592654884248, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
-      propertyPath: m_Layer
-      value: 10
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.49
       objectReference: {fileID: 0}
-    - target: {fileID: 452452295758384246, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
-      propertyPath: m_Layer
-      value: 10
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.38
       objectReference: {fileID: 0}
-    - target: {fileID: 978871405411095335, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
-      propertyPath: m_Layer
-      value: 10
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.735
       objectReference: {fileID: 0}
     - target: {fileID: 1382132599640436908, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_Layer
@@ -3919,25 +3918,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.92063445
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.39042574
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2801887734462551987, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
@@ -4129,11 +4128,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7322506360675857474, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7720191602401070104, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+    - target: {fileID: 9184200912964623427, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: m_Name
       value: Dan Wesson PPC
       objectReference: {fileID: 0}
@@ -4208,9 +4203,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 733540374}
-  - {fileID: 1491494210}
-  - {fileID: 581960183}
-  - {fileID: 396380379}
+  - {fileID: 1546225440228449239}
+  - {fileID: 1348428748499761500}
   - {fileID: 2132364922}
-  - {fileID: 269238020}
+  - {fileID: 7399215875453380527}
   - {fileID: 1464474176}

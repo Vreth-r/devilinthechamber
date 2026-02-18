@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-class TimerHandle
+public class TimerHandle
 {
     private float currentTime = 0f;
     public float length; // total length of timer
@@ -14,6 +14,13 @@ class TimerHandle
         this.length = length;
         this.timerEndFunction = timerEndFunction;
     }
+    public TimerHandle(TimerHandle other) // copy
+    {
+        length = other.length;
+        timerEndFunction = other.timerEndFunction;
+        timerDone = other.timerDone;
+    }
+
 
     public void Update ()
     {
@@ -61,6 +68,21 @@ public class TimerHandler : MonoBehaviour
     public void CreateTimerHandle (float length, Func<bool> timerEndFunction)
     {
         timerHandles.Add(new TimerHandle(length, timerEndFunction));
+    }
+
+    public List<TimerHandle> GetTimerHandles ()
+    {
+        List<TimerHandle> timerHandlesCopy = new List<TimerHandle>();
+        for (int i = 0; i < timerHandles.Count; i++)
+        {
+            timerHandlesCopy.Add(timerHandles[i]);
+        }
+        return timerHandlesCopy;
+    }
+
+    public void SetTimerHandles (List<TimerHandle> timerHandles)
+    {
+        this.timerHandles = timerHandles;
     }
 }
 

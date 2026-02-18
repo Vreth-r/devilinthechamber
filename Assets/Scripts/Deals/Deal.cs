@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatMod
 {
     public StatName statName;
+    public float modifier;
     public DealType dealType;
 }
 [System.Serializable]
@@ -12,6 +13,7 @@ public class Ability
 {
     public AbilityName AbilityName;
     public float duration;
+    public DealType dealType;
 }
 
 [CreateAssetMenu(menuName = "Deals/Deal")]
@@ -24,18 +26,18 @@ public class Deal : ScriptableObject
     {
         foreach (StatMod statDeal in statDeals)
         {
-            StatModManager.AddStatModifier(statDeal.statName, statDeal.dealType);
+            StatModManager.AddStatModifier(statDeal.statName, statDeal.modifier);
         }
 
-        foreach (Ability abilityDeals in abilityDeals)
+        foreach (Ability abilityDeal in abilityDeals)
         {
-            AbilityModManager.StartAbility(abilityDeals.AbilityName, abilityDeals.duration);
+            if (abilityDeal.AbilityName == AbilityName.DEATH)
+            {
+                // do thing
+                Debug.Log("you died!");
+                return;
+            }
+            AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
         }
     }
-}
-
-[CreateAssetMenu(menuName = "Deals/Deal Database")]
-public class DealDatabase : ScriptableObject
-{
-    public List<Deal> dealDeck;
 }

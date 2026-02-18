@@ -14,7 +14,8 @@ public class FakeHitIndicatorAbility : AbilityBase
         {
             float k = Random.Range(0.5f, duration / 5);
             t += k;
-            TimerHandler.Instance.CreateTimerHandle(k, FakeHit);
+            Debug.Log(t);
+            TimerHandler.Instance.CreateTimerHandle(t, FakeHit);
         }
         Debug.Log($"START: {abilityName}");
         return true;

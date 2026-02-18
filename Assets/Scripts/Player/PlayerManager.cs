@@ -9,10 +9,13 @@ public class PlayerManager : MonoBehaviour
     public CameraMovement cameraMovement;
     public GunHitscan gunHitscan;
     public PlayerHealth health;
+    public CharacterController controller;
 
     void Awake()
     {
         if (Instance == null)
             Instance = this;
+
+        controller = gameObject.GetComponent<CharacterController>();
     }
 }

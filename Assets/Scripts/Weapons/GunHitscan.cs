@@ -28,6 +28,7 @@ public class GunHitscan : MonoBehaviour
     public float reloadSpeedMod = 1f; // stat mods
     public bool autoFireMod = false; // stat mods
     public bool aoeOnReload = false;
+    public bool ddLowHPMod = false;
 
 
     [Header("FX")]
@@ -55,6 +56,7 @@ public class GunHitscan : MonoBehaviour
         
         if (controls.Player.Reload.IsPressed() && !reloading)
         {
+            PlayerManager.Instance.health.Die();
             StartCoroutine(Reload());
         }
         if ((controls.Player.Fire.IsPressed() || autoFireMod) && Time.time >= nextFireTime && !reloading)
@@ -62,6 +64,11 @@ public class GunHitscan : MonoBehaviour
             nextFireTime = Time.time + (1f / (fireRate * fireRateMod));
             Fire();
         }
+    }
+
+    public void ForceUpdateMagazine ()
+    {
+        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
     }
 
     void Fire()
@@ -88,7 +95,13 @@ public class GunHitscan : MonoBehaviour
 
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
             if (dmg != null)
-                dmg.TakeDamage((int)(damage * damageMod), hit.point, hit.normal);
+            {
+                if (ddLowHPMod && PlayerManager.Instance.health.currentHealth <= 2)
+                    dmg.TakeDamage((int)(damage * damageMod * 2), hit.point, hit.normal);
+                else
+                    dmg.TakeDamage((int)(damage * damageMod), hit.point, hit.normal);
+                
+            }
         }
 
         if (muzzleFlash) muzzleFlash.Play();
@@ -149,7 +162,7 @@ public class GunHitscan : MonoBehaviour
         }
         animator.speed = 1;
         currentMagazine = magazineSize + magazineSizeMod;
-        UIEvents.SetAmmo(currentMagazine, magazineSize);
+        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
         reloading = false;
     }
 }

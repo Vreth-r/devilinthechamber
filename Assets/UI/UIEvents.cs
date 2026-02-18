@@ -9,6 +9,9 @@ public static class UIEvents
     public static Action<bool> SetBlind;
     public static Action IndicateHit;
     public static Action<bool> UpdateShowHitIndicator;
+    public static Action<int, Sprite> UpdatePerks;
+    public static Action blink;
+    public static Action OneEye;
 
     public static void SetHealth(int current, int max)
     {
@@ -29,10 +32,23 @@ public static class UIEvents
         UpdateShowHitIndicator?.Invoke(showHitIndicator);
     }
 
-    
+    public static void SetPerk(int index, Sprite sprite)
+    {
+        UpdatePerks?.Invoke(index, sprite);
+    }
 
     public static void SetIsBlind(bool isBlind)
     {
         SetBlind?.Invoke(isBlind);
+    }
+
+    public static void DoBlink()
+    {
+        blink?.Invoke();
+    }
+
+    public static void SetOneEyed ()
+    {
+        OneEye?.Invoke();
     }
 }

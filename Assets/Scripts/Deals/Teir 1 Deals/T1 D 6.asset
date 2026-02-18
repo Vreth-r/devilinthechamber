@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
+  m_Name: T1 D 6
+  m_EditorClassIdentifier: Assembly-CSharp::Deal
+  statDeals:
+  - statName: 9
+    modifier: 0.5
+    dealType: 0
+  - statName: 5
+    modifier: -2
+    dealType: 1
+  abilityDeals:
+  - AbilityName: 17
+    duration: -1
+    dealType: 0

@@ -34,6 +34,7 @@ public class PlayerMotor : MonoBehaviour
     public float slideBurstSpeed = 50f;
     public float slideMinStartSpeed = 4.5f;
     public float slideAdditiveBoost = 10f;
+    public float slideSpeedMod = 1f;
 
     // decay
     public float slideDecayHalfLife = 0.10f;
@@ -44,6 +45,7 @@ public class PlayerMotor : MonoBehaviour
 
     public float slideFriction = 2.5f;
     public float slideCooldown = 0.12f;
+    public float slideCooldownMod = 1f;
     public float slideDistMod = 1f;
     public bool canSlideMod = true; // ability mods
 
@@ -180,7 +182,7 @@ public class PlayerMotor : MonoBehaviour
         {
             if (slideSteerAccel > 0f)
             {
-                float steerTargetSpeed = Mathf.Max(planarVelocity.magnitude, maxGroundSpeed);
+                float steerTargetSpeed = Mathf.Max(planarVelocity.magnitude * slideSpeedMod, maxGroundSpeed);
                 planarVelocity = Accelerate(planarVelocity, wishDir, steerTargetSpeed, slideSteerAccel, Time.deltaTime);
             }
 
@@ -199,11 +201,11 @@ public class PlayerMotor : MonoBehaviour
 
                 if (fovKick)
                 {
-                    fovKick.UpdateSlideSpeed(planarVelocity.magnitude);
-                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
+                    fovKick.UpdateSlideSpeed(planarVelocity.magnitude * slideSpeedMod);
+                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude  * slideSpeedMod);
                 }
 
-                if (slideTimer <= 0f || planarVelocity.magnitude <= slideMinEndSpeed || !grounded)
+                if (slideTimer <= 0f || planarVelocity.magnitude * slideSpeedMod <= slideMinEndSpeed || !grounded)
                 {
                     EndSlide(controls.Player.Crouch.IsPressed());
                 }
@@ -260,7 +262,7 @@ public class PlayerMotor : MonoBehaviour
         slideJumpUsed = false;
 
         slideTimer = slideDuration * slideDistMod;
-        slideCooldownTimer = slideCooldown;
+        slideCooldownTimer = slideCooldown * slideCooldownMod;
 
         // direction prefer current velocity, else wishDir, else forward
         Vector3 dir =

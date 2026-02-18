@@ -31,6 +31,8 @@ public class EnemyProjectileWeapon : MonoBehaviour
     public bool TryFireAt(Transform target, Vector3 targetVelocity = default)
     {
         if (Time.time < nextFireTime) return false;
+        float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
+        Vector3 shooterVel = Vector3.zero;
 
         nextFireTime = Time.time + (1f / Mathf.Max(0.01f, fireRate));
         FireNow(target, targetVelocity);

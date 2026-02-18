@@ -57,49 +57,54 @@ public class GameManager : MonoBehaviour
         switch (stat)
         {
             case StatName.MOVEMENT_SPEED:
-                PlayerManager.Instance.playerMotor.movementSpeedMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.movementSpeedMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.DAMAGE_OUTPUT:
-                PlayerManager.Instance.gunHitscan.damageMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.damageMod = StatModManager.GetStatModifier(stat);
+
                 return;
 
             case StatName.FIRE_SPEED:
-                PlayerManager.Instance.gunHitscan.fireRate = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.fireRate = StatModManager.GetStatModifier(stat);
                 return;
             
             case StatName.RELOAD_SPEED:
-                PlayerManager.Instance.gunHitscan.reloadSpeedMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.reloadSpeedMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.MAGAZINE_SIZE:
-                PlayerManager.Instance.gunHitscan.magazineSize = (int)
-                    (StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat));
+                PlayerManager.Instance.gunHitscan.magazineSizeMod = (int)StatModManager.GetStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+                return;
+
+            case StatName.PERMA_HEALTH:
+                PlayerManager.Instance.health.maxHealthMod = (int)StatModManager.GetStatModifier(stat);
+                PlayerManager.Instance.health.ForceUpdateHealth();
                 return;
                 
-
             case StatName.JUMP_HEIGHT:
-                PlayerManager.Instance.playerMotor.jumpHeightMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.jumpHeightMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.SLIDE_DISTANCE:
-                PlayerManager.Instance.playerMotor.slideDistMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.playerMotor.slideDistMod = StatModManager.GetStatModifier(stat);
+                return;
+
+            case StatName.SLIDE_SPEED:
+                PlayerManager.Instance.playerMotor.slideSpeedMod = StatModManager.GetStatModifier(stat);
+                return;
+
+            case StatName.SLIDE_COOLDOWN:
+                PlayerManager.Instance.playerMotor.slideCooldownMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.HEADSHOT_BONUS:
-                PlayerManager.Instance.gunHitscan.headShotDamageBonus =
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.headShotDamageBonus =StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.BULLET_RANGE:
-                PlayerManager.Instance.gunHitscan.rangeMod = 
-                    StatModManager.GetPositiveStatModifier(stat) * StatModManager.GetNegativeStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.rangeMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.LADY_MOVEMENT_SPEED:
