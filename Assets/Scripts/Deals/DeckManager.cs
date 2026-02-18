@@ -5,37 +5,69 @@ using Unity.Mathematics;
 public class DeckManager : MonoBehaviour
 {
     public static DeckManager Instance;
-    public List<int> pickedIndexes = new List<int>();
+    public List<int> pickedIndexesTier1 = new List<int>();
+    public List<int> pickedIndexesTier2 = new List<int>();
+    public List<int> pickedIndexesTier3 = new List<int>();
+    public Deal deathCard;
 
-    public DealDatabase dealDatabase;
+    public DealDatabase tier1Deals;
+    public DealDatabase tier2Deals;
+    public DealDatabase tier3Deals;
+
+    public int dealsCount = 0;
 
     void Awake()
     {
         if (Instance == null)
             Instance = this;
-
-        if (dealDatabase == null)
-            Debug.Log("NO DEAL DATABASE");
     }
 
     public List<Deal> GetRandomDeals ()
     {
+        dealsCount += 1;
+
         List<Deal> deals = new List<Deal>();
-        if (pickedIndexes.Count == dealDatabase.dealDeck.Count)
-            pickedIndexes.Clear();
-
-        int currentInd = 0;
-
-        for (int i = 0; i < 3; i++)
-        {
-            int indexInc = UnityEngine.Random.Range(0, dealDatabase.dealDeck.Count - 1);
-            currentInd = (currentInd + indexInc) % dealDatabase.dealDeck.Count;
-            while (pickedIndexes.Contains(currentInd))
-            {
-                currentInd += 1;
-            }
-            pickedIndexes.Add(currentInd);
-            deals.Add(dealDatabase.dealDeck[currentInd]);
+        switch (dealsCount) {
+            case <= 2:
+                for (int i = 0; i < 3; i++)
+                {
+                    int k = UnityEngine.Random.Range(0, tier1Deals.dealDeck.Count - 1);
+                    while (pickedIndexesTier1.Contains(k))
+                    {
+                        k += 1;
+                    }
+                    deals.Add(tier1Deals.dealDeck[k]);
+                    pickedIndexesTier1.Add(k);
+                }
+                break;
+            case <= 4:
+                for (int i = 0; i < 3; i++)
+                {
+                    int k = UnityEngine.Random.Range(0, tier2Deals.dealDeck.Count - 1);
+                    while (pickedIndexesTier2.Contains(k))
+                    {
+                        k += 1;
+                    }
+                    deals.Add(tier2Deals.dealDeck[k]);
+                    pickedIndexesTier2.Add(k);
+                }
+                break;
+            default:
+                for (int i = 0; i < math.min(9 - dealsCount, 3); i++)
+                {
+                    int k = UnityEngine.Random.Range(0, tier3Deals.dealDeck.Count - 1);
+                    while (pickedIndexesTier3.Contains(k))
+                    {
+                        k += 1;
+                    }
+                    deals.Add(tier3Deals.dealDeck[k]);
+                    pickedIndexesTier3.Add(k);
+                }
+                for (int j = 0; j < 3 - deals.Count; j++)
+                {
+                    deals.Add(deathCard);
+                }
+                break;
         }
 
         return deals;

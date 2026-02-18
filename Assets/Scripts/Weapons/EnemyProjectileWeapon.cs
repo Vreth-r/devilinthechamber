@@ -30,7 +30,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
     public bool TryFireAt(Transform target, Vector3 targetVelocity = default)
     {
-        float speedMod = StatModManager.GetNegativeStatModifier(StatName.LADY_PROJECTILE_SPEED);
+        float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
         Vector3 shooterVel = Vector3.zero;
 
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();

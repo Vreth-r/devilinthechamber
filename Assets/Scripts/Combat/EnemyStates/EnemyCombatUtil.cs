@@ -15,7 +15,7 @@ public static class EnemyCombatUtil
 
     public static bool CanFire(EnemyContext ctx, float timeNow)
     {
-        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate * StatModManager.GetNegativeStatModifier(StatName.LADY_FIRE_RATE));
+        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate * StatModManager.GetStatModifier(StatName.LADY_FIRE_RATE));
         return timeNow - ctx.lastFireTime >= interval;
     }
 }

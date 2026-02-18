@@ -14,6 +14,8 @@ public class HUD : MonoBehaviour
 
     public bool showHitIndicator = true;
 
+    public Texture2D oneEyedImage;
+
     Color baseBackgroundTint = new Color(0, 0, 0, 0.3f);
     Color hitBackgroundTint = new Color(1, 0, 0, 0.45f);
 
@@ -33,6 +35,9 @@ public class HUD : MonoBehaviour
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
         UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
+        UIEvents.UpdatePerks += SetPerkIcon;
+        UIEvents.blink += BlinkWrapper;
+        UIEvents.OneEye += SetOneEyed;
 
         doc = GetComponent<UIDocument>();
         var root = doc.rootVisualElement;
@@ -91,7 +96,7 @@ public class HUD : MonoBehaviour
         IEnumerator FadeToBlack (bool forward)
         {
             Color regBgCol = new Color (0, 0, 0, 0);
-            Color blindBgCol = new Color (0, 0, 0, 1);
+            Color blindBgCol = new Color (0, 0, 0, 0.8f);
             Color normalColor;
             Color newColor;
             if (forward)
@@ -105,7 +110,7 @@ public class HUD : MonoBehaviour
                 newColor = regBgCol;
             }
             float timer = 0f;
-            while (timer < 0.5)
+            while (timer < 0.3)
             {
                 timer += Time.deltaTime;
                 float t = timer / 0.5f;
@@ -116,6 +121,51 @@ public class HUD : MonoBehaviour
             background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
         }
     }
+
+    public void BlinkWrapper()
+    {
+        StartCoroutine(Blink());
+        IEnumerator Blink ()
+        {
+            StartCoroutine(FadeToBlack(true));
+            yield return new WaitForSeconds(0.05f);
+            StartCoroutine(FadeToBlack(false));
+            IEnumerator FadeToBlack (bool forward)
+            {
+                Color regBgCol = new Color (0, 0, 0, 0);
+                Color blindBgCol = new Color (0, 0, 0, 1f);
+                Color normalColor;
+                Color newColor;
+                if (forward)
+                {
+                    normalColor = regBgCol;
+                    newColor = blindBgCol;
+                }
+                else
+                {
+                    normalColor = blindBgCol;
+                    newColor = regBgCol;
+                }
+                float timer = 0f;
+                while (timer < 0.05)
+                {
+                    timer += Time.deltaTime;
+                    float t = timer / 0.5f;
+                    background.style.backgroundColor =
+                        new StyleColor(Color.Lerp(normalColor, newColor, t));
+                    yield return null;
+                }
+                background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+    }
+
+    void SetOneEyed ()
+    {
+        background.style.backgroundImage = oneEyedImage;
+    }
+
 
     public void IndicateHit()
     {
