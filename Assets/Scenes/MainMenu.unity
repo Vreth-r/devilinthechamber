@@ -26244,13 +26244,6 @@ MonoBehaviour:
       Data3: 1761530267
       Data4: 107085987
     Path: event:/UI/Click
-  gunshot3D:
-    Guid:
-      Data1: -1485703340
-      Data2: 1109952339
-      Data3: -1241049671
-      Data4: -860870306
-    Path: event:/SFX/Gunshot
   musicLoop:
     Guid:
       Data1: 2077169528
