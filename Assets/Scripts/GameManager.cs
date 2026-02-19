@@ -134,4 +134,20 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    public void SetPauseBGM(bool paused)
+    {
+        if (!_musicInstance.isValid()) return;
+
+        _musicInstance.setPaused(paused);
+    }
+
+    void OnDestroy()
+    {
+        if (_musicInstance.isValid())
+        {
+            _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            _musicInstance.release();
+        }
+    }
 }

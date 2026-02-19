@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour {
     void testFunc ()
     {
         PlayUIClick();
-        SceneManager.LoadScene("DITC_level1.0", LoadSceneMode.Single);
+        SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
 
     void exitGame()

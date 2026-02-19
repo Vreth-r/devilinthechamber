@@ -96,6 +96,8 @@ public class PauseMenu : MonoBehaviour
         if (isPaused) return;
         isPaused = true;
 
+        GameManager.Instance.SetPauseBGM(true);
+
         if (hudDoc != null) hudDoc.enabled = false;
         SetVisible(true);
 
@@ -111,6 +113,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (!isPaused) return;
         isPaused = false;
+
+        GameManager.Instance.SetPauseBGM(false);
 
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
@@ -134,7 +138,7 @@ public class PauseMenu : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 
         Destroy(GameManager.Instance.gameObject);
-        SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
+        SceneFader.Instance.FadeToScene(mainMenuSceneName);
     }
 
     void SetVisible(bool visible)

@@ -518243,6 +518243,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5587427517797050221, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 641
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
