@@ -20,13 +20,13 @@ public class DealMenu : MonoBehaviour
     [SerializeField]UIDocument dealsDoc;
     [SerializeField]UIDocument hudDoc;
     [SerializeField]PlayerLook cameraScript;
-    
+    [SerializeField]PauseMenu pauseMenu;
+
     VisualElement root;
     GameManager gameManager;
     PlayerControls controls;
-
-    bool isPaused;
-
+    
+    public bool dealMenuOpen;
 
     void Awake()
     {
@@ -41,7 +41,7 @@ public class DealMenu : MonoBehaviour
             dealsDoc = GetComponent<UIDocument>();
 
         dealsDoc.enabled = true;
-
+        dealMenuOpen = false;
         root = dealsDoc.rootVisualElement;
 
         deal1 = root.Q<Button>("Deal1");
@@ -62,10 +62,15 @@ public class DealMenu : MonoBehaviour
     void OnEnable()
     {
         controls.Enable();
-        controls.Player.OpenDeals.performed += OpenMenu;
+        controls.Player.OpenDeals.performed += MenuCheck;
     }
 
-    void OpenMenu(InputAction.CallbackContext _)
+    void MenuCheck(InputAction.CallbackContext _)
+    {
+        if(!dealMenuOpen && !pauseMenu.isPaused) OpenMenu();
+    }
+
+    void OpenMenu()
     {
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
@@ -73,17 +78,18 @@ public class DealMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         if (cameraScript!=null) cameraScript.enabled = false;
+        dealMenuOpen = true;
 
         //hudDoc.enabled = false;
         //hudDoc.gameObject.SetActive(false);
+        hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         dealsDoc.sortingOrder = 1;
 
-        deals = DeckManager.Instance.GetRandomDeals(); // (do not uncomment until deals work)
+        deals = DeckManager.Instance.GetRandomDeals();
 
         SetDealsText();
 
         SetVisible(true);
-        Debug.Log("Successfully opened deals menu");
     }
 
     void CloseMenu()
@@ -98,27 +104,27 @@ public class DealMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cameraScript.enabled = true;
+        dealMenuOpen = false;
         
-        //hudDoc.gameObject.SetActive(true);
+        hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 1;
 
         SetVisible(false);
-        Debug.Log("Successfully closed deals menu");
     }
 
     void ChooseDeal1 ()
     {
-        deals[0].ApplyDeal(); // (do not uncomment until deals work)
+        deals[0].ApplyDeal();
         CloseMenu();
     }
     void ChooseDeal2 ()
     {
-        deals[1].ApplyDeal(); // (do not uncomment until deals work)
+        deals[1].ApplyDeal(); 
         CloseMenu();
     }
     void ChooseDeal3 ()
     {
-        deals[2].ApplyDeal(); // (do not uncomment until deals work)
+        deals[2].ApplyDeal(); 
         CloseMenu();
     }
 
