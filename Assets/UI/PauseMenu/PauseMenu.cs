@@ -2,10 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using FMODUnity;
+using FMOD.Studio;
 
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu Instance;
+
+    public EventReference uiClick;
 
     [Header("UIDocuments")]
     [SerializeField] UIDocument pauseDoc;
@@ -59,6 +63,14 @@ public class PauseMenu : MonoBehaviour
         controls.Player.Pause.performed += OnPause;
     }
 
+    public void PlayUIClick()
+    {
+        if (!uiClick.IsNull)
+        {
+            RuntimeManager.PlayOneShot(uiClick);
+        }
+    }
+
     void OnDisable()
     {
         //controls.Player.Pause.performed -= OnPause;
@@ -110,12 +122,14 @@ public class PauseMenu : MonoBehaviour
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
+        PlayUIClick();
 
         if (playerLook != null) playerLook.allowCursorRelockOnClick = true;
     }
 
     void ExitToMainMenu()
     {
+        PlayUIClick();
         Time.timeScale = 1f;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 

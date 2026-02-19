@@ -1,5 +1,8 @@
 using UnityEngine;
 
+using FMODUnity;
+using FMOD.Studio;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -11,6 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public bool gamePaused;
     public PlayerControls controls;
+
+    public EventReference musicLoop;
+    private EventInstance _musicInstance;
     void Awake()
     {
         if (Instance == null)
@@ -19,6 +25,15 @@ public class GameManager : MonoBehaviour
         controls = new PlayerControls();
         controls.Player.Enable();
         DontDestroyOnLoad(this);
+    }
+
+    void Start()
+    {
+        if (!musicLoop.IsNull)
+        {
+            _musicInstance = RuntimeManager.CreateInstance(musicLoop);
+            _musicInstance.start();
+        }
     }
 
     void Update()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2528982224941339307}
   - component: {fileID: 4134692912670542349}
   - component: {fileID: 5588033945527148244}
-  - component: {fileID: 8764354408943947069}
   m_Layer: 0
   m_Name: Game Runners
   m_TagString: Untagged
@@ -76,20 +75,3 @@ MonoBehaviour:
   enemyProjectileSpeedMod: 1
   pauseMenu: {fileID: 320752814500508156, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
   gamePaused: 0
---- !u!114 &8764354408943947069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7665712747032464698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b57c7eb88fa6e549acbe4ec8237dbd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  soundLibrary: {fileID: 11400000, guid: 17f03c4f318e83944ba548ba034bf092, type: 2}
-  masterVolume: 1
-  uiVolume: 1
-  musicVolume: 1
-  gameplayVolume: 1

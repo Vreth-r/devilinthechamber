@@ -129,10 +129,10 @@ GameObject:
   m_Component:
   - component: {fileID: 53991717}
   - component: {fileID: 53991716}
-  - component: {fileID: 53991715}
   - component: {fileID: 53991718}
   - component: {fileID: 53991719}
   - component: {fileID: 53991720}
+  - component: {fileID: 53991721}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -140,14 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &53991715
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53991714}
-  m_Enabled: 1
 --- !u!20 &53991716
 Camera:
   m_ObjectHideFlags: 0
@@ -300,6 +292,20 @@ MonoBehaviour:
   flickerColorSlightly: 1
   colorVariation: 0.08
   refreshEverySeconds: 0
+--- !u!114 &53991721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53991714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &130144390
 GameObject:
   m_ObjectHideFlags: 0
@@ -26231,6 +26237,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124dfc8c27551fb4f9175d8311e9aa23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
+  uiClick:
+    Guid:
+      Data1: -1432008688
+      Data2: 1157120431
+      Data3: 1761530267
+      Data4: 107085987
+    Path: event:/UI/Click
+  gunshot3D:
+    Guid:
+      Data1: -1485703340
+      Data2: 1109952339
+      Data3: -1241049671
+      Data4: -860870306
+    Path: event:/SFX/Gunshot
+  musicLoop:
+    Guid:
+      Data1: 2077169528
+      Data2: 1153702088
+      Data3: -594701913
+      Data4: -1535170031
+    Path: event:/Music/MainMenuBGM
 --- !u!114 &2060318099
 MonoBehaviour:
   m_ObjectHideFlags: 0

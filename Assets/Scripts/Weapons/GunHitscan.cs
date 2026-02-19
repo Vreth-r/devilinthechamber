@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using FMODUnity;
+using FMOD.Studio;
 
 public class GunHitscan : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class GunHitscan : MonoBehaviour
 
     public Animator animator;
     public Camera cam;
+
+    [Header("Sound")]
+    public EventReference gunshot;
 
     [Header("Fire")]
     public float fireRate = 3f;
@@ -106,7 +111,7 @@ public class GunHitscan : MonoBehaviour
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
-        AudioEvents.Play("Gunshot");
+        RuntimeManager.PlayOneShotAttached(gunshot, gameObject);
         animator.SetTrigger("Fire");
         animator.speed = fireRate * fireRateMod;
 

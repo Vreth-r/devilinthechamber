@@ -80,6 +80,8 @@ public class PlayerMotor : MonoBehaviour
     Vector3 velocity;
     Vector3 planarVelocity;
     public Vector3 PlanarVelocity => planarVelocity;
+    public float PlanarSpeed => planarVelocity.magnitude;
+    public bool IsStanding => stance == Stance.Stand;
     public Vector3 FullVelocity => planarVelocity + Vector3.up * velocity.y;
 
     float coyoteTimer;
