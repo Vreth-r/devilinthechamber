@@ -53,10 +53,10 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
-    void testFunc ()
+    async void testFunc ()
     {
         PlayUIClick();
-        SceneFader.Instance.FadeToScene("DITC_level1.0");
+        await SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
 
     void exitGame()

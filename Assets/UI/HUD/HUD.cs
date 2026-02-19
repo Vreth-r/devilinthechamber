@@ -92,6 +92,7 @@ public class HUD : MonoBehaviour
     {
         StartCoroutine(FadeToBlack(isBlind));
 
+
         IEnumerator FadeToBlack (bool forward)
         {
             Color regBgCol = new Color (0, 0, 0, 0);
@@ -117,6 +118,7 @@ public class HUD : MonoBehaviour
                 yield return null;
             }
             background.style.backgroundColor = new StyleColor(newColor);
+            baseBackgroundTint = blindBgCol;
         }
     }
 
@@ -130,7 +132,7 @@ public class HUD : MonoBehaviour
             StartCoroutine(FadeToBlack(false));
             IEnumerator FadeToBlack (bool forward)
             {
-                Color regBgCol = new Color (0, 0, 0, 0);
+                Color regBgCol = baseBackgroundTint;
                 Color blindBgCol = new Color (0, 0, 0, 1f);
                 Color normalColor;
                 Color newColor;

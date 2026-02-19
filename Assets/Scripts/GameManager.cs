@@ -2,6 +2,7 @@ using UnityEngine;
 
 using FMODUnity;
 using FMOD.Studio;
+using Unity.Mathematics;
 
 public class GameManager : MonoBehaviour
 {
@@ -90,11 +91,13 @@ public class GameManager : MonoBehaviour
 
             case StatName.MAGAZINE_SIZE:
                 PlayerManager.Instance.gunHitscan.magazineSizeMod = (int)StatModManager.GetStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.currentMagazine = math.min(PlayerManager.Instance.gunHitscan.currentMagazine, PlayerManager.Instance.gunHitscan.magazineSize + PlayerManager.Instance.gunHitscan.magazineSizeMod);
                 PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
                 return;
 
             case StatName.PERMA_HEALTH:
                 PlayerManager.Instance.health.maxHealthMod = (int)StatModManager.GetStatModifier(stat);
+                PlayerManager.Instance.health.currentHealth += (int)StatModManager.GetStatModifier(stat);
                 PlayerManager.Instance.health.ForceUpdateHealth();
                 return;
                 
