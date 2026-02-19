@@ -1,0 +1,10 @@
+.expandable {
+    width: 25%;
+    height: 75%;
+    transition: scale 0.3s ease;
+    transition-timing-function: linear;
+}
+
+.expandable:hover {
+    scale: 1.1 1.1;
+}
