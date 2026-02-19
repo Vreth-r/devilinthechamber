@@ -41,6 +41,12 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             Die();
     }
 
+    public void Stun (float duration)
+    {
+        // help michael!
+        Debug.Log($"Stunned for {duration}s");
+    }
+
     void Flash()
     {
         flashTimer = flashTime;
@@ -72,6 +78,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
+        GameManager.Instance.enemyKilled();
         // later play death animation or smth
         if (destroyOnDeath)
             Destroy(gameObject);

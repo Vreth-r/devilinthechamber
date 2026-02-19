@@ -9,14 +9,8 @@ public class FakeHitIndicatorAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        float t = 0;
-        while (t < duration)
-        {
-            float k = Random.Range(0.5f, duration / 5);
-            t += k;
-            Debug.Log(t);
-            TimerHandler.Instance.CreateTimerHandle(t, FakeHit);
-        }
+        TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), Random.Range(1, 3), FakeHit);
+
         Debug.Log($"START: {abilityName}");
         return true;
     }
@@ -24,6 +18,7 @@ public class FakeHitIndicatorAbility : AbilityBase
     public bool FakeHit ()
     {
         UIEvents.IndicateHit();
+        TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), Random.Range(1, 3), FakeHit);
         return true;
     }
 

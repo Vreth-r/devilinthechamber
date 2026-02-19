@@ -1,134 +1,137 @@
 using UnityEngine;
 
-public class DealsLocalization
+public static class DealsLocalization
 {
 
-    public string StatLocale(string stat)
+    public static string StatLocale(StatName stat)
     {
         switch(stat)
         {
-            case "MOVEMENT_SPEED":
+            case StatName.MOVEMENT_SPEED:
                 return "% Movement Speed";
                 
-            case "DAMAGE_OUTPUT":
+            case StatName.DAMAGE_OUTPUT:
                 return "% Damage Output";
                 
-            case "FIRE_SPEED":
+            case StatName.FIRE_SPEED:
                 return "% Fire Rate";
                 
-            case "RELOAD_SPEED":
+            case StatName.RELOAD_SPEED:
                 return "% Reload Speed";
                 
-            case "MAGAZINE_SIZE":
+            case StatName.MAGAZINE_SIZE:
                 return " Magazine Size";
                 
-            case "PERMA_HEALTH":
+            case StatName.PERMA_HEALTH:
                 return " Permanent Health Bar Increase";
                 
-            case "JUMP_HEIGHT":
+            case StatName.JUMP_HEIGHT:
                 return "% Jump Height";
                 
-            case "SLIDE_DISTANCE":
+            case StatName.SLIDE_DISTANCE:
                 return "% Slide Distance";
                 
-            case "SLIDE_SPEED":
+            case StatName.SLIDE_SPEED:
                 return "% Slide Speed";
+
+            case StatName.BULLET_RANGE:
+                return "% Bullet Range";
                 
-            case "SLIDE_COOLDOWN":
+            case StatName.SLIDE_COOLDOWN:
                 return "% Slide Cooldown";
                 
-            case "HEADSHOT_BONUS":
+            case StatName.HEADSHOT_BONUS:
                 return "% Headshot Damage";
                 
-            case "LADY_PROJECTILE_SPEED":
+            case StatName.LADY_PROJECTILE_SPEED:
                 return "% Lady Projectile Speed";
                 
-            case "DOG_RECOVERY_SPEED":
+            case StatName.DOG_RECOVERY_SPEED:
                 return "% Dog Attack Recovery Speed";
                 
-            case "LADY_FIRE_RATE":
+            case StatName.LADY_FIRE_RATE:
                 return "% Lady Fire Rate";
                 
-            case "LADY_MOVEMENT_SPEED":
+            case StatName.LADY_MOVEMENT_SPEED:
                 return "% Lady Movement Speed";
                 
-            case "DOG_MOVEMENT_SPEED":
+            case StatName.DOG_MOVEMENT_SPEED:
                 return "% Dog Movement Speed";
                 
             default:
-                return "something wrong";
+                return stat.ToString();
                 
         }
     }
 
-    public string AbilityLocale(string ability)
+    public static string AbilityLocale(AbilityName ability)
     {
         switch(ability)
         {
-            case "INFINITE_MAG":
+            case AbilityName.INFINITE_MAG:
                 return " Second Infinite Magazine";
                 
-            case "INVINCIBILITY":
+            case AbilityName.INVINCIBILITY:
                 return " Second Invincibility";
                 
-            case "FULL_AUTO":
+            case AbilityName.FULL_AUTO:
                 return " Second Fully Automatic Gun";
                 
-            case "AOE_RELOAD":
+            case AbilityName.AOE_RELOAD:
                 return "AOE On Reload";
                 
-            case "AOE_ON_DAMAGE":
+            case AbilityName.AOE_ON_DAMAGE:
                 return "AOE On Health Bar Depletion";
                 
-            case "KILL_BULLET_RESTORE":
+            case AbilityName.KILL_BULLET_RESTORE:
                 return "Kills Restore A Bullet To Your Magazine";
                 
-            case "BLINDNESS":
-                return "Blindness";
+            case AbilityName.BLINDNESS:
+                return "Sunglasses Indoors";
                 
-            case "BLINKING":
+            case AbilityName.BLINKING:
                 return "Blinking";
                 
-            case "EXPLODING_ENEMIES":
+            case AbilityName.EXPLODING_ENEMIES:
                 return "Exploding Enemies";
                 
-            case "CRAWLING_HEALTH_DEGEN":
+            case AbilityName.CRAWLING_HEALTH_DEGEN:
                 return "Crawling Health Degeneration";
                 
-            case "NO_HIT_INDICATOR":
+            case AbilityName.NO_HIT_INDICATOR:
                 return "No Hit Indicator";
                 
-            case "FAKE_HIT_INDICATOR":
+            case AbilityName.FAKE_HIT_INDICATOR:
                 return "Phantom Hit Indicator";
                 
-            case "PHANTOM_NOISES":
+            case AbilityName.PHANTOM_NOISES:
                 return "Phantom Noises";
                 
-            case "NO_SLIDING":
+            case AbilityName.NO_SLIDING:
                 return "No Sliding";
                 
-            case "NO_JUMPING":
+            case AbilityName.NO_JUMPING:
                 return "No Jumping";
                 
-            case "HALF_HEALTH":
+            case AbilityName.HALF_HEALTH:
                 return "Half Health";
                 
-            case "DEAFNESS":
+            case AbilityName.DEAFNESS:
                 return "Deafness";
                 
-            case "DOUBLE_DAMAGE_LOW_HP":
+            case AbilityName.DOUBLE_DAMAGE_LOW_HP:
                 return "Dobule Damage When Below 3 Hit Points";
                 
-            case "KNOCKBACK_ABILITY":
+            case AbilityName.KNOCKBACK_ABILITY:
                 return "Enemies Knock You Back On Hits";
                 
-            case "DOUBLE_LIFEGAIN_ABILITY":
+            case AbilityName.DOUBLE_LIFEGAIN_ABILITY:
                 return "Double Amount Of Restored Hit Points";
                 
-            case "ONE_EYED":
+            case AbilityName.ONE_EYED:
                 return "One-Eyed";
                 
-            case "DEATH":
+            case AbilityName.DEATH:
                 return "Death";
                 
             default:

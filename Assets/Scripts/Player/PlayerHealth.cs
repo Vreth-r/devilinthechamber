@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
@@ -15,11 +16,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public bool invincible = false;
     public bool doubleHeal = false;
+    public bool AOEOnDamage = false;
 
     void Awake()
     {
         currentHealth = maxHealth;
-        UIEvents.SetHealth(currentHealth, maxHealth);
+    }
+    void Start()
+    {
+        UIEvents.SetHealth(currentHealth, maxHealth); // timing thing
+        
     }
 
     public void ForceUpdateHealth ()
@@ -56,8 +62,20 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (takesKnockback)
         {
             Vector3 knockbackDirection = hitNormal.normalized;
-            knockbackVelocity = knockbackDirection * knockbackForce;
+            knockbackVelocity = -knockbackDirection * knockbackForce;
             knockbackTimer = knockbackDuration;
+        }
+
+        if (AOEOnDamage)
+        {
+            Collider[] enemies = Physics.OverlapSphere(transform.position, 100, 7);
+
+            foreach (Collider enemy in enemies)
+            {
+                Debug.Log(enemy.gameObject.name);
+                if (enemy.gameObject.TryGetComponent(out IDamageable damageable))
+                    damageable.Stun(2f); // stun for 2 seconds
+            }
         }
 
         UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
@@ -67,6 +85,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Die();
         }
     }
+
+    public void Stun (float f) {}
 
     public void Die()
     {

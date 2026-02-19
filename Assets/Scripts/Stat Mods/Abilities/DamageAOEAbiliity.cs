@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class OneEyedAbility : AbilityBase
+public class DamageAOEAbiliity : AbilityBase
 {
     public override void initialize (float duration)
     {
-        abilityName = AbilityName.ONE_EYED;
+        abilityName = AbilityName.AOE_RELOAD;
         this.duration = duration;
     }
     public override bool startFunction()
     {
-        UIEvents.OneEye();
+        PlayerManager.Instance.health.AOEOnDamage = true;
         Debug.Log($"START: {abilityName}");
         return true;
     }

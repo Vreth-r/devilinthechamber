@@ -63,10 +63,11 @@ public class DeckManager : MonoBehaviour
                     deals.Add(tier3Deals.dealDeck[k]);
                     pickedIndexesTier3.Add(k);
                 }
-                for (int j = 0; j < 3 - deals.Count; j++)
+                while (deals.Count < 3)
                 {
                     deals.Add(deathCard);
                 }
+
                 break;
         }
 

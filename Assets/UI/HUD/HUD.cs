@@ -95,7 +95,7 @@ public class HUD : MonoBehaviour
         IEnumerator FadeToBlack (bool forward)
         {
             Color regBgCol = new Color (0, 0, 0, 0);
-            Color blindBgCol = new Color (0, 0, 0, 0.8f);
+            Color blindBgCol = new Color (0, 0, 0, 0.99f);
             Color normalColor;
             Color newColor;
             if (forward)
@@ -113,11 +113,10 @@ public class HUD : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 float t = timer / 0.5f;
-                background.style.backgroundColor =
-                    new StyleColor(Color.Lerp(normalColor, newColor, t));
+                background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                 yield return null;
             }
-            background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+            background.style.backgroundColor = new StyleColor(newColor);
         }
     }
 
@@ -127,7 +126,7 @@ public class HUD : MonoBehaviour
         IEnumerator Blink ()
         {
             StartCoroutine(FadeToBlack(true));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.15f);
             StartCoroutine(FadeToBlack(false));
             IEnumerator FadeToBlack (bool forward)
             {
@@ -146,16 +145,14 @@ public class HUD : MonoBehaviour
                     newColor = regBgCol;
                 }
                 float timer = 0f;
-                while (timer < 0.05)
+                while (timer < 0.075)
                 {
                     timer += Time.deltaTime;
                     float t = timer / 0.5f;
-                    background.style.backgroundColor =
-                        new StyleColor(Color.Lerp(normalColor, newColor, t));
+                    background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                     yield return null;
                 }
-                background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
-                yield return new WaitForSeconds(0.05f);
+                background.style.backgroundColor = new StyleColor(newColor);
             }
         }
     }
@@ -163,6 +160,7 @@ public class HUD : MonoBehaviour
     void SetOneEyed ()
     {
         background.style.backgroundImage = oneEyedImage;
+        StartCoroutine(FadeFromTo(baseBackgroundTint, new Color(0, 0, 0, 1), 0.2f));
     }
 
 
@@ -189,7 +187,10 @@ public class HUD : MonoBehaviour
         healthFill.style.width = Length.Percent(t * 100f);
         healthText.text = $"{hp} / {hpMax}";
 
-        ammoText.text = $"{ammoInMag} / {ammoReserve}";
+        if (ammoReserve == int.MaxValue)
+            ammoText.text = "inf / inf";
+        else
+            ammoText.text = $"{ammoInMag} / {ammoReserve}";
     }
 
     // tried to be smart, ended up with more work lol

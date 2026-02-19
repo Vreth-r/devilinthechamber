@@ -51,6 +51,8 @@ public class AbilityModManager {
         { AbilityName.KNOCKBACK_ABILITY, new KnockbackAbilty() },
         { AbilityName.DOUBLE_LIFEGAIN_ABILITY, new DoubleLifeGainAbility() },
         { AbilityName.ONE_EYED, new OneEyedAbility() },
+        { AbilityName.AOE_ON_DAMAGE, new DamageAOEAbiliity()},
+        { AbilityName.CRAWLING_HEALTH_DEGEN, new CrawlingHealthDegenAbility()},
         { AbilityName.DEATH, null }
     };
 
@@ -59,6 +61,6 @@ public class AbilityModManager {
         abilities[abilityName].initialize(duration);
         abilities[abilityName].startFunction(); // run the start function (the effect)
         if (duration != -1) 
-            TimerHandler.Instance.CreateTimerHandle(abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
+            TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
     }
 }

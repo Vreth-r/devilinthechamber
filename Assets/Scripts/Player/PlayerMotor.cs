@@ -169,7 +169,7 @@ public class PlayerMotor : MonoBehaviour
                 slideBufferTimer = 0f;
                 StartSlide(wishDir);
             }
-            else if (crouchPressed && CanStartSlideNow(grounded))
+            else if (crouchPressed && CanStartSlideNow(grounded) && canSlideMod)
             {
                 StartSlide(wishDir);
             }
@@ -290,7 +290,7 @@ public class PlayerMotor : MonoBehaviour
         if (!grounded) return false;
         if (stance == Stance.Slide) return false;
         if (slideCooldownTimer > 0f) return false;
-        return planarVelocity.magnitude >= slideMinStartSpeed && canSlideMod;
+        return planarVelocity.magnitude >= slideMinStartSpeed;
     }
 
     void EndSlide(bool crouchHeldAfter)

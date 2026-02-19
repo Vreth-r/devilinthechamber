@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -40,6 +41,13 @@ public class CheckpointManager : MonoBehaviour
         }
 
         // Restore timers
+
+        foreach (TimerHandle timer in checkpointData.currentTimerHandles)
+        {
+            if (Enum.TryParse(timer.timerName, out AbilityName ability))
+                AbilityModManager.StartAbility(ability, -1);
+        }
+
         TimerHandler.Instance.SetTimerHandles(
             new List<TimerHandle>(checkpointData.currentTimerHandles)
         );
@@ -55,6 +63,12 @@ public class CheckpointManager : MonoBehaviour
                 new List<float>(entry.Value)
             );
         }
+
+        PlayerManager.Instance.gunHitscan.currentMagazine = checkpointData.currentMag;
+        PlayerManager.Instance.health.currentHealth = checkpointData.currentHealth;
+        PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+        PlayerManager.Instance.health.ForceUpdateHealth();
+
 
     }
 }

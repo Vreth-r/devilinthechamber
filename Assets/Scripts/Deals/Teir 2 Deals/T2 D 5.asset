@@ -18,5 +18,5 @@ MonoBehaviour:
     dealType: 0
   - statName: 9
     modifier: 1.15
-    dealType: 0
+    dealType: 1
   abilityDeals: []

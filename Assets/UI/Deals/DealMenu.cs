@@ -8,9 +8,12 @@ public class DealMenu : MonoBehaviour
 {  
     public static DealMenu Instance;
 
+    public Texture2D deathCard;
+
     Button deal1;
     Button deal2;
     Button deal3;
+    List<Button> dealButtons;
     List<Deal> deals;
 
     [Header("UIDocuments")]
@@ -41,34 +44,28 @@ public class DealMenu : MonoBehaviour
 
         root = dealsDoc.rootVisualElement;
 
-        //deals = DeckManager.Instance.GetRandomDeals(); (do not uncomment until deals work)
-
         deal1 = root.Q<Button>("Deal1");
         deal2 = root.Q<Button>("Deal2");
         deal3 = root.Q<Button>("Deal3");
 
-        deal1.clicked += chooseDeal1;
-        deal2.clicked += chooseDeal2;
-        deal3.clicked += chooseDeal3;
+        dealButtons = new List<Button>{deal1, deal2, deal3};
+
+        deal1.clicked += ChooseDeal1;
+        deal2.clicked += ChooseDeal2;
+        deal3.clicked += ChooseDeal3;
 
         controls = new PlayerControls();
-
-        SetVisible(false);
-        onEnable();
-    }
-
-    void Start()
-    {
         
+        SetVisible(false);
     }
 
-    void onEnable()
+    void OnEnable()
     {
         controls.Enable();
-        controls.Player.OpenDeals.performed += openMenu;
+        controls.Player.OpenDeals.performed += OpenMenu;
     }
 
-    void openMenu(InputAction.CallbackContext _)
+    void OpenMenu(InputAction.CallbackContext _)
     {
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
@@ -77,14 +74,24 @@ public class DealMenu : MonoBehaviour
         Cursor.visible = true;
         if (cameraScript!=null) cameraScript.enabled = false;
 
-        hudDoc.enabled = false;
+        //hudDoc.enabled = false;
+        //hudDoc.gameObject.SetActive(false);
+        dealsDoc.sortingOrder = 1;
+
+        deals = DeckManager.Instance.GetRandomDeals(); // (do not uncomment until deals work)
+
+        SetDealsText();
 
         SetVisible(true);
         Debug.Log("Successfully opened deals menu");
     }
 
-    void closeMenu()
+    void CloseMenu()
     {
+        deal1.Clear();
+        deal2.Clear();
+        deal3.Clear();
+
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
         
         Time.timeScale = 1f;
@@ -92,30 +99,115 @@ public class DealMenu : MonoBehaviour
         Cursor.visible = false;
         cameraScript.enabled = true;
         
-        hudDoc.enabled = true;
+        //hudDoc.gameObject.SetActive(true);
+        dealsDoc.sortingOrder = 1;
 
         SetVisible(false);
         Debug.Log("Successfully closed deals menu");
     }
 
-    void chooseDeal1 ()
+    void ChooseDeal1 ()
     {
-        //deals[0].ApplyDeal(); (do not uncomment until deals work)
-        closeMenu();
+        deals[0].ApplyDeal(); // (do not uncomment until deals work)
+        CloseMenu();
     }
-    void chooseDeal2 ()
+    void ChooseDeal2 ()
     {
-        //deals[1].ApplyDeal(); (do not uncomment until deals work)
-        closeMenu();
+        deals[1].ApplyDeal(); // (do not uncomment until deals work)
+        CloseMenu();
     }
-    void chooseDeal3 ()
+    void ChooseDeal3 ()
     {
-        //deals[2].ApplyDeal(); (do not uncomment until deals work)
-        closeMenu();
+        deals[2].ApplyDeal(); // (do not uncomment until deals work)
+        CloseMenu();
     }
 
     void SetVisible(bool visible)
     {
         root.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    void SetDealsText()
+    {
+
+        for (int i = 0; i < dealButtons.Count; i++)
+        {
+            VisualElement posDealBox = new VisualElement();
+            VisualElement negDealBox = new VisualElement();
+            posDealBox.AddToClassList("CardTextBox");
+            negDealBox.AddToClassList("CardTextBox");
+
+            Deal curDeal = deals[i];
+
+            foreach (StatMod statMod in curDeal.statDeals)
+            {
+                Label l = new Label();
+
+                if (statMod.dealType == DealType.POSITIVE)
+                {
+                    string t;
+                    if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
+                        t = $"+{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
+                    else
+                    {
+                        if (statMod.modifier >= 1) 
+                            t = $"+{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                        else
+                            t = $"{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                    }
+                    l.AddToClassList("BuffTitle");
+                    l.text = t;
+                    posDealBox.Add(l);
+                }
+                else
+                {
+                    string t;
+                    if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
+                        t = $"{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
+                    else
+                        t = $"{100 * (statMod.modifier - 1)} {DealsLocalization.StatLocale(statMod.statName)}";
+                    l.AddToClassList("DebuffTitle");
+                    l.text = t;
+                    negDealBox.Add(l);
+                }
+            }
+
+            foreach (Ability ability in curDeal.abilityDeals)
+            {
+                if (ability.AbilityName == AbilityName.DEATH)
+                {
+                    dealButtons[i].style.backgroundImage = new StyleBackground(deathCard);
+                }
+                else
+                {
+                    string t;
+                    if (ability.duration != -1)
+                        t = $"{ability.duration}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+                    else
+                        t = $"{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+
+                    Label l = new Label();
+
+                    if (ability.dealType == DealType.POSITIVE)
+                    {
+                        l.AddToClassList("BuffTitle");
+                        l.text = t;
+                        posDealBox.Add(l);
+                    }
+                    else
+                    {
+                        l.AddToClassList("DebuffTitle");
+                        l.text = t;
+                        negDealBox.Add(l);
+                    }
+
+                    l.text = t;
+                }
+            }
+
+            dealButtons[i].Add(posDealBox);
+            dealButtons[i].Add(negDealBox);
+            
+        }
     }
 }

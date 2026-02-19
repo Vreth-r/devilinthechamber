@@ -10,15 +10,9 @@ public class HalfHealthAbility  : AbilityBase
     }
     public override bool startFunction()
     {
-        PlayerManager.Instance.health.maxHealth = math.min(PlayerManager.Instance.health.maxHealth / 2, 1);
-        PlayerManager.Instance.health.currentHealth = math.min(PlayerManager.Instance.health.currentHealth / 2, 1);
+        PlayerManager.Instance.health.maxHealth = math.max(PlayerManager.Instance.health.maxHealth / 2, 1);
+        PlayerManager.Instance.health.currentHealth = math.max(PlayerManager.Instance.health.currentHealth / 2, 1);
         Debug.Log($"START: {abilityName}");
-        return true;
-    }
-
-    public bool FakeHit ()
-    {
-        UIEvents.IndicateHit();
         return true;
     }
 
