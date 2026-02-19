@@ -10,6 +10,8 @@ public class TutorialHandler : MonoBehaviour
     public DialogueRunner dialogueRunner;
     bool dialogueStarted = false;
 
+    bool devilIgnored = false;
+
     public
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +37,13 @@ public class TutorialHandler : MonoBehaviour
         {
             dialogueRunner.StartDialogue("Start");
             dialogueStarted = true;
+        }
+
+        if (elapsedTime >= 25f && devilIgnored == false)
+        {
+            dialogueRunner.Stop();
+            dialogueRunner.StartDialogue("Ignored");
+            devilIgnored = true;
         }
 
     }
