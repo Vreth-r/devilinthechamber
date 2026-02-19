@@ -9,7 +9,17 @@ Hold down (deal making button) to make a deal.
 title: Ignored
 ---
 Hmm...
-Stubborn, aren't you?
+So stubborn.
 I'm interested in how you will fare without my help. 
 Entertain me, won't you?
+<<transition_scene TutorialHandler>>
+
+===
+
+title: dealTaken
+---
+The taste of your soul...
+What a unique flavour.
+I look forward to working with you.
+<<transition_scene TutorialHandler>>
 ===

@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Yarn.Unity;
+using DG.Tweening;
 
 public class TutorialHandler : MonoBehaviour
 {
@@ -8,7 +10,10 @@ public class TutorialHandler : MonoBehaviour
     public GameManager manager;
     bool playerMoved = false;
     public DialogueRunner dialogueRunner;
+
     bool dialogueStarted = false;
+
+    public Image whiteImage;
 
     bool devilIgnored = false;
 
@@ -47,4 +52,11 @@ public class TutorialHandler : MonoBehaviour
         }
 
     }
+
+    [YarnCommand("transition_scene")]
+    public void transition_scene()
+    {
+        whiteImage.DOFade(1f, 2f);
+    }
+
 }
