@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
             case StatName.MAGAZINE_SIZE:
                 PlayerManager.Instance.gunHitscan.magazineSizeMod = (int)StatModManager.GetStatModifier(stat);
-                PlayerManager.Instance.gunHitscan.currentMagazine = math.min(PlayerManager.Instance.gunHitscan.currentMagazine, PlayerManager.Instance.gunHitscan.magazineSize + PlayerManager.Instance.gunHitscan.magazineSizeMod);
+                PlayerManager.Instance.gunHitscan.currentMagazine = math.min(PlayerManager.Instance.gunHitscan.currentMagazine + PlayerManager.Instance.gunHitscan.magazineSizeMod, PlayerManager.Instance.gunHitscan.magazineSize + PlayerManager.Instance.gunHitscan.magazineSizeMod);
                 PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
                 return;
 
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
                 return;
 
             case StatName.HEADSHOT_BONUS:
-                PlayerManager.Instance.gunHitscan.headShotDamageBonus =StatModManager.GetStatModifier(stat);
+                PlayerManager.Instance.gunHitscan.headShotDamageMod = StatModManager.GetStatModifier(stat);
                 return;
 
             case StatName.BULLET_RANGE:

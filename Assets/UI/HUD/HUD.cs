@@ -1,8 +1,6 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class HUD : MonoBehaviour
 {
@@ -21,7 +19,8 @@ public class HUD : MonoBehaviour
 
     UIDocument doc;
 
-    VisualElement background;
+    VisualElement backgroundVignette;
+    VisualElement playerVisionMask;
     VisualElement healthFill;
     Label healthText;
     Label ammoText;
@@ -42,7 +41,8 @@ public class HUD : MonoBehaviour
         doc = GetComponent<UIDocument>();
         var root = doc.rootVisualElement;
 
-        background = root.Q<VisualElement>("vignette-panel");
+        backgroundVignette = root.Q<VisualElement>("vignette-panel");
+        playerVisionMask = root.Q<VisualElement>("player-vision-mask");
         healthFill = root.Q<VisualElement>("health-bar-fill");
         healthText = root.Q<Label>("health-text");
         ammoText = root.Q<Label>("ammo-text");
@@ -92,7 +92,6 @@ public class HUD : MonoBehaviour
     {
         StartCoroutine(FadeToBlack(isBlind));
 
-
         IEnumerator FadeToBlack (bool forward)
         {
             Color regBgCol = new Color (0, 0, 0, 0);
@@ -114,10 +113,10 @@ public class HUD : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 float t = timer / 0.5f;
-                background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                 yield return null;
             }
-            background.style.backgroundColor = new StyleColor(newColor);
+            backgroundVignette.style.backgroundColor = new StyleColor(newColor);
             baseBackgroundTint = blindBgCol;
         }
     }
@@ -151,18 +150,17 @@ public class HUD : MonoBehaviour
                 {
                     timer += Time.deltaTime;
                     float t = timer / 0.5f;
-                    background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                    backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                     yield return null;
                 }
-                background.style.backgroundColor = new StyleColor(newColor);
+                backgroundVignette.style.backgroundColor = new StyleColor(newColor);
             }
         }
     }
 
     void SetOneEyed ()
     {
-        background.style.backgroundImage = oneEyedImage;
-        StartCoroutine(FadeFromTo(baseBackgroundTint, new Color(0, 0, 0, 1), 0.2f));
+        playerVisionMask.style.backgroundImage = oneEyedImage;
     }
 
 
@@ -204,10 +202,10 @@ public class HUD : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = timer / duration;
-            background.style.unityBackgroundImageTintColor =
+            backgroundVignette.style.unityBackgroundImageTintColor =
                 new StyleColor(Color.Lerp(normalColor, newColor, t));
             yield return null;
         }
-        background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+        backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
     }
 }

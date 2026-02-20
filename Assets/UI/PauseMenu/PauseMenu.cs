@@ -142,14 +142,14 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void ExitToMainMenu()
+    async void ExitToMainMenu()
     {
         PlayUIClick();
         Time.timeScale = 1f;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 
         Destroy(GameManager.Instance.gameObject);
-        SceneFader.Instance.FadeToScene(mainMenuSceneName);
+        await SceneFader.Instance.FadeToScene(mainMenuSceneName);
     }
 
     void SetVisible(bool visible)
