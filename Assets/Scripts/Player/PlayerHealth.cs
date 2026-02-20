@@ -6,9 +6,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public PlayerSound sound;
-    public int maxHealth = 100;
+    public int maxHealth = 15;
     public int maxHealthMod = 0;
     public int currentHealth;
+    public int lives = 10;
 
     public bool takesKnockback = false;
     private float knockbackForce = 10f;
@@ -97,9 +98,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Debug.Log("died");
         if (respawn)
         {
-            //StartCoroutine(CheckpointManager.Instance.PauseLook());
+            lives -= 1;
             CheckpointManager.Instance.RespawnPlayer(gameObject);
-            //DealMenu.Instance.OpenMenu();
+            DealMenu.Instance.OpenMenu();
         }
         else
         {

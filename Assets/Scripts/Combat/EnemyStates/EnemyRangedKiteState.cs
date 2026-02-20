@@ -66,7 +66,7 @@ public class EnemyRangedKiteState : IEnemyState
 
         float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
 
-        while (Time.time >= nextShotAt)
+        if (Time.time >= nextShotAt)
         {
             nextShotAt += interval;
 
@@ -76,7 +76,7 @@ public class EnemyRangedKiteState : IEnemyState
             scheduledProjectileTimes.Enqueue(Time.time + delay);
         }
 
-        while (scheduledProjectileTimes.Count > 0 && Time.time >= scheduledProjectileTimes.Peek())
+        if (scheduledProjectileTimes.Count > 0 && Time.time >= scheduledProjectileTimes.Peek())
         {
             scheduledProjectileTimes.Dequeue();
             FireProjectileNow();
