@@ -11,9 +11,9 @@ public class Cutscene_ender : MonoBehaviour
         video.loopPointReached += vidOver;
     }
 
-    void vidOver(UnityEngine.Video.VideoPlayer vp)
+    async void vidOver(UnityEngine.Video.VideoPlayer vp)
     {
-        SceneFader.Instance.FadeToScene("Tutorial");
+        await SceneFader.Instance.FadeToScene("Tutorial");
     }
 
 }

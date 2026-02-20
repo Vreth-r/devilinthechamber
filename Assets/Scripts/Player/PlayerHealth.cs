@@ -92,7 +92,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Stun (float f) {}
 
-    public void Die(bool respawn)
+    public async void Die(bool respawn)
     {
         Debug.Log("died");
         if (respawn)
@@ -105,7 +105,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             Debug.Log("Died Permanently");
             StatModManager.ResetStatMods();
-            SceneFader.Instance.FadeToScene("GameOver");
+            await SceneFader.Instance.FadeToScene("GameOver");
         }
     }
 }

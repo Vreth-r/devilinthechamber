@@ -4,8 +4,8 @@ using Yarn.Unity;
 public class GameOverHandler : MonoBehaviour
 {
     [YarnCommand("mm")]
-    public void transition_scene()
+    public async void transition_scene()
     {
-        SceneFader.Instance.FadeToScene("MainMenu");
+        await SceneFader.Instance.FadeToScene("MainMenu");
     }
 }

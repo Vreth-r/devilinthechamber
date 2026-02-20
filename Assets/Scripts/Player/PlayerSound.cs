@@ -82,7 +82,7 @@ public class PlayerSound : MonoBehaviour
         if (slidePlaying && slideInst.isValid()) return;
 
         slideInst = RuntimeManager.CreateInstance(slide);
-        RuntimeManager.AttachInstanceToGameObject(slideInst, transform, cc); // CC is fine as velocity source
+        RuntimeManager.AttachInstanceToGameObject(slideInst, gameObject, cc); // CC is fine as velocity source
         slideInst.start();
         slidePlaying = true;
     }
