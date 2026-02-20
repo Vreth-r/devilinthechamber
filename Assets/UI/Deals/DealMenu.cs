@@ -22,7 +22,9 @@ public class DealMenu : MonoBehaviour
     GameManager gameManager;
     PlayerControls controls;
 
-    bool isPaused;
+    public bool dealPicked = false; // for the tutorial to trigger a thing
+
+    bool isPaused; 
 
 
     void Awake()
@@ -59,7 +61,6 @@ public class DealMenu : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void onEnable()
@@ -68,8 +69,14 @@ public class DealMenu : MonoBehaviour
         controls.Player.OpenDeals.performed += openMenu;
     }
 
+    void onDisable()
+    {
+        controls.Disable();
+    }
+
     void openMenu(InputAction.CallbackContext _)
     {
+        dealPicked = false;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
         Time.timeScale = 0f;
@@ -95,6 +102,7 @@ public class DealMenu : MonoBehaviour
         hudDoc.enabled = true;
 
         SetVisible(false);
+        dealPicked = true;
         Debug.Log("Successfully closed deals menu");
     }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Yarn.Unity;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class TutorialHandler : MonoBehaviour
 {
@@ -10,8 +11,12 @@ public class TutorialHandler : MonoBehaviour
     public GameManager manager;
     bool playerMoved = false;
     public DialogueRunner dialogueRunner;
+    public LinePresenter linePresenter;
+
+    public DealMenu dealmenu;
 
     bool dialogueStarted = false;
+    bool dealTakenDialogueStarted = false;
 
     public Image whiteImage;
 
@@ -49,6 +54,15 @@ public class TutorialHandler : MonoBehaviour
             dialogueRunner.Stop();
             dialogueRunner.StartDialogue("Ignored");
             devilIgnored = true;
+        }
+
+        if (dealmenu.dealPicked && dealTakenDialogueStarted == false)
+        {
+
+            controls.Player.Disable();
+            dialogueRunner.Stop();
+            dialogueRunner.StartDialogue("dealTaken");
+            dealTakenDialogueStarted = true;
         }
 
     }
