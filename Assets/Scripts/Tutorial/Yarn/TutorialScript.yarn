@@ -1,0 +1,24 @@
+﻿title: Start
+---
+If you want to get out of here...
+Why not make a deal with me? 
+Hold down Q to make a deal. 
+-> Make a deal...?
+===
+
+title: Ignored
+---
+Hmm...
+So stubborn.
+I'm interested in how you will fare without my help. 
+Entertain me, won't you?
+<<transition_scene TutorialHandler>>
+===
+
+title: dealTaken
+---
+The taste of your soul...
+What a unique flavour.
+I look forward to working with you.
+<<transition_scene TutorialHandler>>
+===
