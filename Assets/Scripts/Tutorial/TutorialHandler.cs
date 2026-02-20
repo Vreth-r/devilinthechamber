@@ -16,6 +16,8 @@ public class TutorialHandler : MonoBehaviour
     bool dialogueStarted = false;
     bool dealTakenDialogueStarted = false;
 
+
+
     public Image whiteImage;
 
     bool devilIgnored = false;
@@ -26,6 +28,7 @@ public class TutorialHandler : MonoBehaviour
     {
         controls = new PlayerControls();
         controls.Player.Enable();
+        OnEnable();
     }
 
     // Update is called once per frame
@@ -76,4 +79,13 @@ public class TutorialHandler : MonoBehaviour
         await SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
 
+    void OnEnable()
+    {
+        controls.Enable();
+        controls.Player.SkipTutorial.performed += SkipTutorial;
+    }
+    void SkipTutorial()
+    {
+        await SceneFader.Instance.FadeToScene("DITC_level1.0");
+    }
 }
