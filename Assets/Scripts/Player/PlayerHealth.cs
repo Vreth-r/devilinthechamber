@@ -82,15 +82,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         UIEvents.IndicateHit();
         if (currentHealth <= 0)
         {
-            Die();
+            Die(true);
         }
     }
 
     public void Stun (float f) {}
 
-    public void Die()
+    public void Die(bool respawn)
     {
         Debug.Log("died");
-        CheckpointManager.Instance.RespawnPlayer(gameObject);
+        if (respawn)
+            CheckpointManager.Instance.RespawnPlayer(gameObject);
+        else
+            Debug.Log("Died Permanently");
     }
 }

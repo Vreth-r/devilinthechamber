@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
+using UnityEditor;
+using Unity.Mathematics;
 
 public class DealMenu : MonoBehaviour
 {  
@@ -25,8 +27,10 @@ public class DealMenu : MonoBehaviour
     VisualElement root;
     GameManager gameManager;
     PlayerControls controls;
-    
-    public bool dealMenuOpen;
+
+    bool isPaused;
+    bool menuOpen = false;
+
 
     void Awake()
     {
@@ -72,6 +76,7 @@ public class DealMenu : MonoBehaviour
 
     void OpenMenu()
     {
+        if (menuOpen) return;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
         Time.timeScale = 0f;
@@ -90,6 +95,8 @@ public class DealMenu : MonoBehaviour
         SetDealsText();
 
         SetVisible(true);
+        menuOpen = true;
+        Debug.Log("Successfully opened deals menu");
     }
 
     void CloseMenu()
@@ -110,6 +117,8 @@ public class DealMenu : MonoBehaviour
         dealsDoc.sortingOrder = 1;
 
         SetVisible(false);
+        menuOpen = false;
+        Debug.Log("Successfully closed deals menu");
     }
 
     void ChooseDeal1 ()
@@ -153,13 +162,13 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"+{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"+{math.round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
                     else
                     {
                         if (statMod.modifier >= 1) 
-                            t = $"+{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"+{math.round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
                         else
-                            t = $"{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"{math.round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
                     }
                     l.AddToClassList("BuffTitle");
                     l.text = t;
@@ -169,9 +178,9 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{math.round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
                     else
-                        t = $"{100 * (statMod.modifier - 1)} {DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{math.round(100 * (statMod.modifier - 1))} {DealsLocalization.StatLocale(statMod.statName)}";
                     l.AddToClassList("DebuffTitle");
                     l.text = t;
                     negDealBox.Add(l);
@@ -188,7 +197,7 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (ability.duration != -1)
-                        t = $"{ability.duration}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+                        t = $"{math.round(ability.duration)}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
                     else
                         t = $"{DealsLocalization.AbilityLocale(ability.AbilityName)}";
 
