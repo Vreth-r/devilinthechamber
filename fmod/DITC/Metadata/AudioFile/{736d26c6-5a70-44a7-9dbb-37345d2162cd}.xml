@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{736d26c6-5a70-44a7-9dbb-37345d2162cd}">
+		<property name="assetPath">
+			<value>BGM_extended.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>21.792000000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b20af26-18f1-4719-a88a-65d0109b3c59}</destination>
+		</relationship>
+	</object>
+</objects>

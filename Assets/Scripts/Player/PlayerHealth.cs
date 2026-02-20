@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public PlayerSound sound;
-    public int maxHealth = 100;
+    public int maxHealth = 15;
     public int maxHealthMod = 0;
     public int currentHealth;
 
@@ -99,7 +99,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             //StartCoroutine(CheckpointManager.Instance.PauseLook());
             CheckpointManager.Instance.RespawnPlayer(gameObject);
-            //DealMenu.Instance.OpenMenu();
+            DealMenu.Instance.OpenMenu();
         }
         else
         {

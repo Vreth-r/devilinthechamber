@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
 	<object class="MixerReturn" id="{af5b5411-0fd9-4543-a1ce-9c980e1329aa}">
+		<property name="volume">
+			<value>-6</value>
+		</property>
 		<property name="overridingInputFormat">
 			<value>2</value>
 		</property>
@@ -37,11 +40,14 @@
 		<property name="density">
 			<value>95</value>
 		</property>
+		<property name="lowShelfGain">
+			<value>-2.5</value>
+		</property>
 		<property name="wetLevel">
-			<value>4.5</value>
+			<value>-0.5</value>
 		</property>
 		<property name="dryLevel">
-			<value>-70</value>
+			<value>-60</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{8526824f-a1cf-4124-8d0c-9fd7a5189a97}" />

@@ -7,7 +7,6 @@ public class TutorialHandler : MonoBehaviour
 {
     float elapsedTime;
     public PlayerControls controls;
-    public GameManager manager;
     bool playerMoved = false;
     public DialogueRunner dialogueRunner;
     public LinePresenter linePresenter;
@@ -25,7 +24,8 @@ public class TutorialHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controls = manager.controls;
+        controls = new PlayerControls();
+        controls.Player.Enable();
     }
 
     // Update is called once per frame

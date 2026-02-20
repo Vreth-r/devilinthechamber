@@ -3,6 +3,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using Unity.Mathematics;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
@@ -25,10 +26,15 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
-        cathedralEnemies.AddRange(GameObject.FindGameObjectsWithTag("Cathedral Enemy"));
+        Scene scene = SceneManager.GetActiveScene();
+
+        if (scene.name == "DITC_level1.0")
+        {
+            cathedralEnemies.AddRange(GameObject.FindGameObjectsWithTag("Cathedral Enemy"));
+        }
         controls = new PlayerControls();
         controls.Player.Enable();
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     void Start()
