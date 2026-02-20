@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
-using UnityEditor;
-using Unity.Mathematics;
 
 public class DealMenu : MonoBehaviour
 {  
@@ -27,12 +25,9 @@ public class DealMenu : MonoBehaviour
     VisualElement root;
     GameManager gameManager;
     PlayerControls controls;
-
-    public bool dealMenuOpen = false;
-    public bool dealPicked = false; // for the tutorial to trigger a thing
-
-    bool isPaused; 
-
+    
+    public bool dealMenuOpen;
+    public bool dealPicked = false;
 
     void Awake()
     {
@@ -61,12 +56,8 @@ public class DealMenu : MonoBehaviour
         deal3.clicked += ChooseDeal3;
 
         controls = new PlayerControls();
-
+        
         SetVisible(false);
-    }
-
-    void Start()
-    {
     }
 
     void OnEnable()
@@ -75,14 +66,13 @@ public class DealMenu : MonoBehaviour
         controls.Player.OpenDeals.performed += MenuCheck;
     }
 
-    void onDisable()
+    void MenuCheck(InputAction.CallbackContext _)
     {
-        controls.Disable();
+        if(!dealMenuOpen && !pauseMenu.isPaused) OpenMenu();
     }
 
-    void openMenu(InputAction.CallbackContext _)
+    void OpenMenu()
     {
-        dealPicked = false;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
         Time.timeScale = 0f;
@@ -101,8 +91,6 @@ public class DealMenu : MonoBehaviour
         SetDealsText();
 
         SetVisible(true);
-        menuOpen = true;
-        Debug.Log("Successfully opened deals menu");
     }
 
     void CloseMenu()
@@ -121,24 +109,25 @@ public class DealMenu : MonoBehaviour
         
         hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 1;
-
+        dealPicked = false;
         SetVisible(false);
-        dealPicked = true;
-        Debug.Log("Successfully closed deals menu");
     }
 
     void ChooseDeal1 ()
     {
+        dealPicked = true;
         deals[0].ApplyDeal();
         CloseMenu();
     }
     void ChooseDeal2 ()
     {
+        dealPicked = true;
         deals[1].ApplyDeal(); 
         CloseMenu();
     }
     void ChooseDeal3 ()
     {
+        dealPicked = true;
         deals[2].ApplyDeal(); 
         CloseMenu();
     }
@@ -168,13 +157,13 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"+{math.round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"+{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
                     else
                     {
                         if (statMod.modifier >= 1) 
-                            t = $"+{math.round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"+{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
                         else
-                            t = $"{math.round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
                     }
                     l.AddToClassList("BuffTitle");
                     l.text = t;
@@ -184,9 +173,9 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"{math.round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
                     else
-                        t = $"{math.round(100 * (statMod.modifier - 1))} {DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{100 * (statMod.modifier - 1)} {DealsLocalization.StatLocale(statMod.statName)}";
                     l.AddToClassList("DebuffTitle");
                     l.text = t;
                     negDealBox.Add(l);
@@ -203,7 +192,7 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (ability.duration != -1)
-                        t = $"{math.round(ability.duration)}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+                        t = $"{ability.duration}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
                     else
                         t = $"{DealsLocalization.AbilityLocale(ability.AbilityName)}";
 

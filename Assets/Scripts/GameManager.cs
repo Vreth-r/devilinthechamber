@@ -52,6 +52,13 @@ public class GameManager : MonoBehaviour
         enemiesKilled += 1;
     }
 
+    public void SetPauseBGM(bool paused)
+    {
+        if (!_musicInstance.isValid()) return;
+
+        _musicInstance.setPaused(!paused);
+    }
+
     public void FourNegativeDeals (StatName statName)
     {
         Debug.Log($"Too many negative deals {statName}");

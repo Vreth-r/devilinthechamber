@@ -121,6 +121,8 @@ public class PauseMenu : MonoBehaviour
         if (!isPaused) return;
         isPaused = false;
 
+        GameManager.Instance.SetPauseBGM(false);
+
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
         SetVisible(false);
