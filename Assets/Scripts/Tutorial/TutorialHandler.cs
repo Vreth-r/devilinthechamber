@@ -6,13 +6,13 @@ using DG.Tweening;
 public class TutorialHandler : MonoBehaviour
 {
     float elapsedTime;
-    public PlayerControls controls;
+    PlayerControls controls_deal;
     public GameManager manager;
     bool playerMoved = false;
     public DialogueRunner dialogueRunner;
     public LinePresenter linePresenter;
 
-    public DealMenu dealmenu;
+    public Tutorial_DealMenu dealmenu;
 
     bool dialogueStarted = false;
     bool dealTakenDialogueStarted = false;
@@ -25,31 +25,34 @@ public class TutorialHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controls = manager.controls;
+        // controls_player = manager.controls;
+        // controls_deal = dealmenu.controls;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        Vector2 moveInput = Vector2.ClampMagnitude(controls.Player.Move.ReadValue<Vector2>(), 1f);
-        if (moveInput != Vector2.zero)
-        {
-            playerMoved = true; 
-        }
+     {
+        elapsedTime += Time.deltaTime;
+        // Vector2 moveInput = Vector2.ClampMagnitude(controls.Player.Move.ReadValue<Vector2>(), 1f);
+        // if (moveInput != Vector2.zero)
+        // {
+        //     playerMoved = true; 
+        // }
 
-        if (playerMoved)
-        {
-            elapsedTime += Time.deltaTime;
-        }
+        // if (playerMoved)
+        // {
+        //     elapsedTime += Time.deltaTime;
+        // }
 
-        if (elapsedTime >= 4f && dialogueStarted == false)
+        if (elapsedTime >= 9f && dialogueStarted == false)
         {
             dialogueRunner.StartDialogue("Start");
             dialogueStarted = true;
         }
 
-        if (elapsedTime >= 25f && devilIgnored == false)
+        if (elapsedTime >= 40f && devilIgnored == false)
         {
+            dealmenu.controls.Disable();
             dialogueRunner.Stop();
             dialogueRunner.StartDialogue("Ignored");
             devilIgnored = true;
@@ -58,7 +61,7 @@ public class TutorialHandler : MonoBehaviour
         if (dealmenu.dealPicked && dealTakenDialogueStarted == false)
         {
 
-            controls.Player.Disable();
+            dealmenu.controls.Disable();
             dialogueRunner.Stop();
             dialogueRunner.StartDialogue("dealTaken");
             dealTakenDialogueStarted = true;

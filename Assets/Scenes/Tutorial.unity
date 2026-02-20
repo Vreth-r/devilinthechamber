@@ -2250,7 +2250,7 @@ PrefabInstance:
     - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
       propertyPath: dealMenu
       value: 
-      objectReference: {fileID: 565238910}
+      objectReference: {fileID: 0}
     - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
       propertyPath: pauseDoc
       value: 
@@ -2796,22 +2796,74 @@ PrefabInstance:
       propertyPath: m_Name
       value: DealMenu
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6936796601329012023, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+    - {fileID: 6490033550650205101, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9193377382605764597, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 565238912}
+    - targetCorrespondingSourceObject: {fileID: 9193377382605764597, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 565238911}
   m_SourcePrefab: {fileID: 100100000, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
---- !u!114 &565238910 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6490033550650205101, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+--- !u!1 &537733523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9193377382605764597, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
   m_PrefabInstance: {fileID: 537733522}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &565238911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537733523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce8cb7b56bddd274d9acb87ddd71c31e, type: 3}
+  m_Script: {fileID: 11500000, guid: 091525fefd37d4f4395dcad571547f0f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DealMenu
+  m_EditorClassIdentifier: Assembly-CSharp::DeckManager
+  pickedIndexesTier1: 
+  pickedIndexesTier2: 
+  pickedIndexesTier3: 
+  deathCard: {fileID: 11400000, guid: c8edc5f408c6db04eb7eb6206bc25b18, type: 2}
+  tier1Deals: {fileID: 11400000, guid: 7961a896520230d4ea063851a7297a6e, type: 2}
+  tier2Deals: {fileID: 11400000, guid: 14968c992b933fd4ab765c02bbe6b413, type: 2}
+  tier3Deals: {fileID: 11400000, guid: acbfc227590c6a14787a007a43fe1067, type: 2}
+  dealsCount: 0
+--- !u!114 &565238912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537733523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ea51b3c55505b4abecdeb27eea25f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tutorial_DealMenu
+  deathCard: {fileID: 2800000, guid: 41492d353fc68ba40aac506e2a414bf7, type: 3}
+  dealsDoc: {fileID: 565238913}
+  hudDoc: {fileID: 237978894}
+  cameraScript: {fileID: 484096531}
+  pauseMenu: {fileID: 292528247}
+  dealMenuOpen: 0
+  dealPicked: 0
+--- !u!114 &565238913 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7561635846338231625, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+  m_PrefabInstance: {fileID: 537733522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537733523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1 &570562207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,7 +2896,7 @@ MonoBehaviour:
   manager: {fileID: 1596020541}
   dialogueRunner: {fileID: 589031555}
   linePresenter: {fileID: 1323773033}
-  dealmenu: {fileID: 565238910}
+  dealmenu: {fileID: 565238912}
   whiteImage: {fileID: 1048469508}
 --- !u!4 &570562209
 Transform:
@@ -4236,7 +4288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -32.869995, y: 0}
+  m_AnchoredPosition: {x: -32.870117, y: 0}
   m_SizeDelta: {x: -1754.26, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048469508
