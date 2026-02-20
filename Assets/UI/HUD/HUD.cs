@@ -20,7 +20,8 @@ public class HUD : MonoBehaviour
 
     UIDocument doc;
 
-    VisualElement background;
+    VisualElement backgroundVignette;
+    VisualElement oneEyePanel;
     VisualElement healthContainer;
     VisualElement bulletContainer;
     VisualElement ammoBullet;
@@ -46,7 +47,8 @@ public class HUD : MonoBehaviour
         doc = GetComponent<UIDocument>();
         var root = doc.rootVisualElement;
 
-        background = root.Q<VisualElement>("vignette-panel");
+        backgroundVignette = root.Q<VisualElement>("vignette-panel");
+        oneEyePanel = root.Q<VisualElement>("one-eye-panel");
         healthContainer =root.Q<VisualElement>("health-container");
         healthText = root.Q<Label>("health-text");
         ammoText = root.Q<Label>("ammo-text");
@@ -94,10 +96,10 @@ public class HUD : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 float t = timer / 0.5f;
-                background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                 yield return null;
             }
-            background.style.backgroundColor = new StyleColor(newColor);
+            backgroundVignette.style.backgroundColor = new StyleColor(newColor);
         }
     }
 
@@ -130,17 +132,17 @@ public class HUD : MonoBehaviour
                 {
                     timer += Time.deltaTime;
                     float t = timer / 0.5f;
-                    background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                    backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                     yield return null;
                 }
-                background.style.backgroundColor = new StyleColor(newColor);
+                backgroundVignette.style.backgroundColor = new StyleColor(newColor);
             }
         }
     }
 
     void SetOneEyed ()
     {
-        background.style.backgroundImage = oneEyedImage;
+        oneEyePanel.style.backgroundImage = oneEyedImage;
         StartCoroutine(FadeFromTo(baseBackgroundTint, new Color(0, 0, 0, 1), 0.2f));
     }
 
@@ -196,10 +198,10 @@ public class HUD : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = timer / duration;
-            background.style.unityBackgroundImageTintColor =
+            backgroundVignette.style.unityBackgroundImageTintColor =
                 new StyleColor(Color.Lerp(normalColor, newColor, t));
             yield return null;
         }
-        background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+        backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
     }
 }
