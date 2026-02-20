@@ -1,13 +1,14 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class HUD : MonoBehaviour
 {
-    [Header("Demo Values")]
-    public int hp = 100;
-    public int hpMax = 100;
-    public int ammoInMag = 5;
+    public int hp = 10;
+    public int hpMax = 10;
+    public int ammoInMag = 10;
     public int ammoReserve = 10;
 
     public bool showHitIndicator = true;
@@ -19,12 +20,17 @@ public class HUD : MonoBehaviour
 
     UIDocument doc;
 
-    VisualElement backgroundVignette;
-    VisualElement playerVisionMask;
-    VisualElement healthFill;
+    VisualElement background;
+    VisualElement healthContainer;
+    VisualElement bulletContainer;
+    VisualElement ammoBullet;
     Label healthText;
     Label ammoText;
-    VisualElement perksRow;
+
+    [Header("Health bar sprites")]
+    [SerializeField]Sprite filledHP;
+    [SerializeField]Sprite emptyHP;
+    [SerializeField]Sprite bullet;
 
     void Awake()
     {
@@ -34,22 +40,17 @@ public class HUD : MonoBehaviour
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
         UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
-        UIEvents.UpdatePerks += SetPerkIcon;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
 
         doc = GetComponent<UIDocument>();
         var root = doc.rootVisualElement;
 
-        backgroundVignette = root.Q<VisualElement>("vignette-panel");
-        playerVisionMask = root.Q<VisualElement>("player-vision-mask");
-        healthFill = root.Q<VisualElement>("health-bar-fill");
+        background = root.Q<VisualElement>("vignette-panel");
+        healthContainer =root.Q<VisualElement>("health-container");
         healthText = root.Q<Label>("health-text");
         ammoText = root.Q<Label>("ammo-text");
-        perksRow = root.Q<VisualElement>("perks-row");
 
-        // visual slots
-        SetPerkCount(3);
         Refresh();
     }
 
@@ -60,32 +61,12 @@ public class HUD : MonoBehaviour
         Refresh();
     }
 
+
     public void SetAmmo(int mag, int reserve)
     {
         ammoInMag = Mathf.Max(0, mag);
         ammoReserve = Mathf.Max(0, reserve);
         Refresh();
-    }
-
-    public void SetPerkCount(int count)
-    {
-        perksRow.Clear();
-        for (int i = 0; i < count; i++)
-        {
-            var icon = new VisualElement();
-            icon.AddToClassList("perk-icon");
-            perksRow.Add(icon);
-        }
-    }
-
-    public void SetPerkIcon(int index, Sprite sprite)
-    {
-        if (index < 0 || index >= perksRow.childCount) return;
-        var icon = perksRow[index];
-
-        icon.style.backgroundImage = sprite
-            ? new StyleBackground(sprite)
-            : StyleKeyword.None;
     }
 
     public void SetBlind (bool isBlind)
@@ -113,11 +94,10 @@ public class HUD : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 float t = timer / 0.5f;
-                backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                 yield return null;
             }
-            backgroundVignette.style.backgroundColor = new StyleColor(newColor);
-            baseBackgroundTint = blindBgCol;
+            background.style.backgroundColor = new StyleColor(newColor);
         }
     }
 
@@ -131,7 +111,7 @@ public class HUD : MonoBehaviour
             StartCoroutine(FadeToBlack(false));
             IEnumerator FadeToBlack (bool forward)
             {
-                Color regBgCol = baseBackgroundTint;
+                Color regBgCol = new Color (0, 0, 0, 0);
                 Color blindBgCol = new Color (0, 0, 0, 1f);
                 Color normalColor;
                 Color newColor;
@@ -150,17 +130,18 @@ public class HUD : MonoBehaviour
                 {
                     timer += Time.deltaTime;
                     float t = timer / 0.5f;
-                    backgroundVignette.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
+                    background.style.backgroundColor = Color.Lerp(normalColor, newColor, t);
                     yield return null;
                 }
-                backgroundVignette.style.backgroundColor = new StyleColor(newColor);
+                background.style.backgroundColor = new StyleColor(newColor);
             }
         }
     }
 
     void SetOneEyed ()
     {
-        playerVisionMask.style.backgroundImage = oneEyedImage;
+        background.style.backgroundImage = oneEyedImage;
+        StartCoroutine(FadeFromTo(baseBackgroundTint, new Color(0, 0, 0, 1), 0.2f));
     }
 
 
@@ -184,7 +165,20 @@ public class HUD : MonoBehaviour
     void Refresh()
     {
         float t = Mathf.Clamp01(hp / (float)Mathf.Max(1, hpMax));
-        healthFill.style.width = Length.Percent(t * 100f);
+        healthContainer.Clear();
+        for (int i = 0; i < hpMax; i++)
+        {
+            Image hpImage = new Image();
+
+            if (i < hp) hpImage.sprite = filledHP;
+            else hpImage.sprite = emptyHP;
+
+            hpImage.style.width = 75;
+            hpImage.style.height = 25;
+            //hpImage.style.marginRight = 0;
+
+            healthContainer.Add(hpImage);
+        }
         healthText.text = $"{hp} / {hpMax}";
 
         if (ammoReserve == int.MaxValue)
@@ -202,10 +196,10 @@ public class HUD : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = timer / duration;
-            backgroundVignette.style.unityBackgroundImageTintColor =
+            background.style.unityBackgroundImageTintColor =
                 new StyleColor(Color.Lerp(normalColor, newColor, t));
             yield return null;
         }
-        backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+        background.style.unityBackgroundImageTintColor = new StyleColor(newColor);
     }
 }
