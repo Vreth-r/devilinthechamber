@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8ce3c7837f71c48a8f81b3ef546da0, type: 3}
+  m_Name: Teir 2 Deals
+  m_EditorClassIdentifier: Assembly-CSharp::DealDatabase
+  dealDeck:
+  - {fileID: 11400000, guid: 57b91f7e26014f646847a3e77a57c5b8, type: 2}
+  - {fileID: 11400000, guid: 21ae6678b7fae7e438bbacf1764fea1f, type: 2}
+  - {fileID: 11400000, guid: 3b841de43642dca458fdd4e7eaed49a8, type: 2}
+  - {fileID: 11400000, guid: 24869b406ae6d5544b590dbb705961e1, type: 2}
+  - {fileID: 11400000, guid: b4219581073052f408fcc2b579f2d524, type: 2}
+  - {fileID: 11400000, guid: c5e8d713dfd83eb45bf81c47d29c9261, type: 2}
+  - {fileID: 11400000, guid: 50edd4b2eadd5914989091e11f0920e3, type: 2}
+  - {fileID: 11400000, guid: 6ed703fd306b1584eba038864b1f8c22, type: 2}
+  - {fileID: 11400000, guid: 875a067cdf1e2fd408bb9194facfcd87, type: 2}
+  - {fileID: 11400000, guid: 1466c8bed31fab240975f9207072c7fb, type: 2}
