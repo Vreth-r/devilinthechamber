@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StopMusic()
+    {
+        _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _musicInstance.release();
+    }
+
     void Update()
     {
         if (controls.Player.Pause.WasPressedThisFrame())
@@ -72,7 +78,10 @@ public class GameManager : MonoBehaviour
     public void WinCheck()
     {
         Debug.Log(cathedralEnemies.Count);
-        if (cathedralEnemies.Count <= 0) Debug.Log("all cathedral enemies killed");//SceneFader.Instance.FadeToScene("MainMenu");
+        if (cathedralEnemies.Count <= 0)
+        {
+            SceneFader.Instance.FadeToScene("Credits-Animation");
+        }
     }
 
     public void SetPauseBGM(bool paused)

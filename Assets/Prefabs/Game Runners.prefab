@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4134692912670542349}
   - component: {fileID: 5588033945527148244}
   - component: {fileID: 1071394761703974900}
-  - component: {fileID: 5911864935252342963}
   m_Layer: 0
   m_Name: Game Runners
   m_TagString: Untagged
@@ -96,23 +95,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2ebda8fff78f44b8c16d8b5e5baea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CheckpointManager
---- !u!114 &5911864935252342963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7665712747032464698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09bfeba3f78902c4c90e7e9bdd2f983b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeckManager
-  pickedIndexesTier1: 
-  pickedIndexesTier2: 
-  pickedIndexesTier3: 
-  deathCard: {fileID: 11400000, guid: c8edc5f408c6db04eb7eb6206bc25b18, type: 2}
-  tier1Deals: {fileID: 11400000, guid: 7961a896520230d4ea063851a7297a6e, type: 2}
-  tier2Deals: {fileID: 11400000, guid: 14968c992b933fd4ab765c02bbe6b413, type: 2}
-  tier3Deals: {fileID: 11400000, guid: acbfc227590c6a14787a007a43fe1067, type: 2}
-  dealsCount: 0

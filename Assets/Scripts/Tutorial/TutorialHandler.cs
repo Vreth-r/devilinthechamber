@@ -7,7 +7,7 @@ public class TutorialHandler : MonoBehaviour
 {
     float elapsedTime;
     public PlayerControls controls;
-    bool playerMoved = false;
+    //bool playerMoved = false;
     public DialogueRunner dialogueRunner;
     public LinePresenter linePresenter;
 

@@ -148,6 +148,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 
+        GameManager.Instance.StopMusic();
         Destroy(GameManager.Instance.gameObject);
         await SceneFader.Instance.FadeToScene(mainMenuSceneName);
     }

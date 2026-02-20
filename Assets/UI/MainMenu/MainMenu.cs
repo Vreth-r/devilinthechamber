@@ -1,4 +1,4 @@
-using GLTF.Schema;
+//using GLTF.Schema;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;

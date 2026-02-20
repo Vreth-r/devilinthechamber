@@ -12,6 +12,8 @@ public class HUD : MonoBehaviour
     public int ammoInMag = 10;
     public int ammoReserve = 10;
 
+    bool uiReady;
+
     public bool showHitIndicator = true;
 
     public Texture2D oneEyedImage;
@@ -36,25 +38,7 @@ public class HUD : MonoBehaviour
 
     void Awake()
     {
-        // event subs
-        UIEvents.UpdateHealth += SetHealth;
-        UIEvents.UpdateAmmo += SetAmmo;
-        UIEvents.SetBlind += SetBlind;
-        UIEvents.IndicateHit += IndicateHit;
-        UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
-        UIEvents.blink += BlinkWrapper;
-        UIEvents.OneEye += SetOneEyed;
-
         doc = GetComponent<UIDocument>();
-        var root = doc.rootVisualElement;
-
-        backgroundVignette = root.Q<VisualElement>("vignette-panel");
-        oneEyePanel = root.Q<VisualElement>("one-eye-panel");
-        healthContainer =root.Q<VisualElement>("health-container");
-        livesText = root.Q<Label>("lives-text");
-        ammoText = root.Q<Label>("ammo-text");
-
-        Refresh();
     }
 
     void OnEnable()
@@ -66,6 +50,9 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
+
+        uiReady = false;
+        StartCoroutine(InitUIWhenReady());
     }
 
     void OnDisable()
@@ -77,6 +64,39 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
         UIEvents.blink -= BlinkWrapper;
         UIEvents.OneEye -= SetOneEyed;
+    }
+
+    IEnumerator InitUIWhenReady()
+    {
+        if (doc == null) doc = GetComponent<UIDocument>();
+
+        while (doc == null || doc.rootVisualElement == null)
+            yield return null;
+
+        var root = doc.rootVisualElement;
+
+        backgroundVignette = root.Q<VisualElement>("vignette-panel");
+        oneEyePanel        = root.Q<VisualElement>("one-eye-panel");
+        healthContainer    = root.Q<VisualElement>("health-container");
+        livesText          = root.Q<Label>("lives-text");
+        ammoText           = root.Q<Label>("ammo-text");
+
+        // Minimum needed for Refresh to run safely
+        uiReady = (healthContainer != null && ammoText != null);
+
+        if (!uiReady)
+        {
+            Debug.LogError(
+                $"[HUD] Missing required UI elements. " +
+                $"healthContainer={(healthContainer != null)} ammoText={(ammoText != null)} " +
+                $"vignette={(backgroundVignette != null)} livesText={(livesText != null)} " +
+                $"(Check UXML names for this scene.)",
+                this
+            );
+            yield break;
+        }
+
+        Refresh();
     }
 
     public void SetHealth(int current, int max)
@@ -96,6 +116,7 @@ public class HUD : MonoBehaviour
 
     public void SetBlind (bool isBlind)
     {
+        if (!uiReady) return;
         StartCoroutine(FadeToBlack(isBlind));
 
         IEnumerator FadeToBlack (bool forward)
@@ -128,6 +149,7 @@ public class HUD : MonoBehaviour
 
     public void BlinkWrapper()
     {
+        if (!uiReady) return;
         StartCoroutine(Blink());
         IEnumerator Blink ()
         {
@@ -163,8 +185,9 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void SetOneEyed ()
+    void SetOneEyed()
     {
+        if (!uiReady) return;
         oneEyePanel.style.backgroundImage = oneEyedImage;
         StartCoroutine(FadeFromTo(baseBackgroundTint, new Color(0, 0, 0, 1), 0.2f));
     }
@@ -172,14 +195,16 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
-        if (!this) return;   
         if (!showHitIndicator) return;
+        if (!uiReady) return;
+        if (backgroundVignette == null) return;
+
         StartCoroutine(HitAnim());
         IEnumerator HitAnim()
         {
-            StartCoroutine(FadeFromTo(baseBackgroundTint, hitBackgroundTint, 0.05f));
+            yield return FadeFromTo(baseBackgroundTint, hitBackgroundTint, 0.05f);
             yield return new WaitForSeconds(0.075f);
-            StartCoroutine(FadeFromTo(hitBackgroundTint, baseBackgroundTint, 0.05f));
+            yield return FadeFromTo(hitBackgroundTint, baseBackgroundTint, 0.05f);
         }
     }
 
@@ -190,28 +215,31 @@ public class HUD : MonoBehaviour
 
     void Refresh()
     {
-        float t = Mathf.Clamp01(hp / (float)Mathf.Max(1, hpMax));
+        if (!uiReady) return;
+
+        // health
         healthContainer.Clear();
         for (int i = 0; i < hpMax; i++)
         {
             Image hpImage = new Image();
-
-            if (i < hp) hpImage.sprite = filledHP;
-            else hpImage.sprite = emptyHP;
-
+            hpImage.sprite = (i < hp) ? filledHP : emptyHP;
             hpImage.style.width = 75;
             hpImage.style.height = 25;
-            //hpImage.style.marginRight = 0;
-
             healthContainer.Add(hpImage);
         }
 
+        // lives text is OPTIONAL: only set it if it exists + player manager exists
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "DITC_level1.0")
+        if (scene.name == "DITC_level1.0" && livesText != null)
         {
-            livesText.text = $"Time of Death: {NumToRoman(PlayerManager.Instance.health.lives)}";
+            var pm = PlayerManager.Instance;
+            if (pm != null && pm.health != null)
+                livesText.text = $"Time of Death: {NumToRoman(pm.health.lives)}";
+            else
+                livesText.text = "Time of Death: ?";
         }
 
+        // ammo (ammoText required, so safe)
         if (ammoReserve == int.MaxValue)
             ammoText.text = "inf / inf";
         else
@@ -219,10 +247,12 @@ public class HUD : MonoBehaviour
     }
 
     // tried to be smart, ended up with more work lol
-    IEnumerator FadeFromTo (Color normalColor, Color newColor, float duration)
+    IEnumerator FadeFromTo(Color normalColor, Color newColor, float duration)
     {
-        float timer = 0f;
+        if (!uiReady) yield break;
+        if (backgroundVignette == null) yield break;
 
+        float timer = 0f;
         while (timer < duration)
         {
             timer += Time.deltaTime;

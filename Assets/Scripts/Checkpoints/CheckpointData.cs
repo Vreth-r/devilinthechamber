@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
+
 
 public class CheckpointData
 {

@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 2850455742950197985}
   - component: {fileID: 1863407837334079098}
   - component: {fileID: 8536200438810518271}
-  - component: {fileID: 9136965801208911241}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -204,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor
   cameraPivot: {fileID: 2007305100116867303}
+  sound: {fileID: 0}
   maxGroundSpeed: 15
   maxAirSpeed: 5
   groundAcceleration: 80
@@ -293,37 +293,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af55d0f83c93a24bad89791fda5e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  sound: {fileID: 0}
   maxHealth: 100
   maxHealthMod: 0
   currentHealth: 100
+  lives: 10
   takesKnockback: 0
   invincible: 0
   doubleHeal: 0
---- !u!114 &9136965801208911241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4363569059510009330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36b41bbe30e7264c85747d9d609c1ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootstepsFMOD
-  footstepEvent:
-    Guid:
-      Data1: 446407132
-      Data2: 1107042144
-      Data3: 1510014389
-      Data4: 1843246721
-    Path: event:/SFX/Footstep
-  minMoveSpeed: 0.15
-  minInterval: 0.4
-  maxInterval: 1
-  speedForMinInterval: 9
-  speedForMaxInterval: 2
-  requireGrounded: 1
+  AOEOnDamage: 0
 --- !u!1 &5381282142322402920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2980,42 +2958,6 @@ PrefabInstance:
     - target: {fileID: 9101609037697419032, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_Layer
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.x
-      value: 26.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.y
-      value: 1.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.z
-      value: -10.735
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Name
-      value: Dan Wesson PPC
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2063976853361272615, guid: 470078ac910366e4caff4f5d9d960057, type: 3}

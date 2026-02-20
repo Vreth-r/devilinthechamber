@@ -104,8 +104,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
         else
         {
-            Debug.Log("Died Permanently");
             StatModManager.ResetStatMods();
+            GameManager.Instance.StopMusic();
+            Destroy(GameManager.Instance.gameObject);
             await SceneFader.Instance.FadeToScene("GameOver");
         }
     }
