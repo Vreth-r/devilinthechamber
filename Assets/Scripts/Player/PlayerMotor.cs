@@ -184,7 +184,7 @@ public class PlayerMotor : MonoBehaviour
         {
             if (slideSteerAccel > 0f)
             {
-                float steerTargetSpeed = Mathf.Max(planarVelocity.magnitude * slideSpeedMod, maxGroundSpeed);
+                float steerTargetSpeed = Mathf.Max(planarVelocity.magnitude, maxGroundSpeed);
                 planarVelocity = Accelerate(planarVelocity, wishDir, steerTargetSpeed, slideSteerAccel, Time.deltaTime);
             }
 
@@ -203,11 +203,11 @@ public class PlayerMotor : MonoBehaviour
 
                 if (fovKick)
                 {
-                    fovKick.UpdateSlideSpeed(planarVelocity.magnitude * slideSpeedMod);
-                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude  * slideSpeedMod);
+                    fovKick.UpdateSlideSpeed(planarVelocity.magnitude);
+                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
                 }
 
-                if (slideTimer <= 0f || planarVelocity.magnitude * slideSpeedMod <= slideMinEndSpeed || !grounded)
+                if (slideTimer <= 0f || planarVelocity.magnitude <= slideMinEndSpeed || !grounded)
                 {
                     EndSlide(controls.Player.Crouch.IsPressed());
                 }
@@ -276,8 +276,8 @@ public class PlayerMotor : MonoBehaviour
         float startSpeed = Mathf.Max(currentSpeed, slideMinStartSpeed);
 
         float boosted = startSpeed + slideAdditiveBoost;
-        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed);
-        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed);
+        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed * slideSpeedMod);
+        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed * slideSpeedMod);
         if (fovKick)
         {
             fovKick.BeginSlide(planarVelocity.magnitude);

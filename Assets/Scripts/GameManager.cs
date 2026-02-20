@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     {
         if (!_musicInstance.isValid()) return;
 
-        _musicInstance.setPaused(!paused);
+        _musicInstance.setPaused(paused);
     }
 
     public void FourNegativeDeals (StatName statName)

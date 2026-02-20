@@ -95,5 +95,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             CheckpointManager.Instance.RespawnPlayer(gameObject);
         else
             Debug.Log("Died Permanently");
+            // wipe all mods
+            // SceneFader.Instance.FadeToScene("Game Over");
     }
 }
