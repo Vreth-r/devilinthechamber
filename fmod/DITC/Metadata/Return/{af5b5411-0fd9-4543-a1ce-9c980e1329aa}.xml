@@ -28,6 +28,12 @@
 		<property name="decayTime">
 			<value>1400</value>
 		</property>
+		<property name="earlyDelay">
+			<value>29.5</value>
+		</property>
+		<property name="lateDelay">
+			<value>60</value>
+		</property>
 		<property name="density">
 			<value>95</value>
 		</property>

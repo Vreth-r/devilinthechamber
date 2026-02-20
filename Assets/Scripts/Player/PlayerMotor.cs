@@ -5,6 +5,7 @@ public class PlayerMotor : MonoBehaviour
 {
     [Header("References")]
     public Transform cameraPivot;
+    public PlayerSound sound;
 
     [Header("Movement")]
     public float maxGroundSpeed = 9f;
@@ -142,6 +143,7 @@ public class PlayerMotor : MonoBehaviour
         if (justLanded)
         {
             landGraceTimer = slideLandGrace;
+            sound.PlayLand();
         }
         else
         {
@@ -236,6 +238,7 @@ public class PlayerMotor : MonoBehaviour
             if (stance == Stance.Crouch) TryStandUp(force: true);
 
             velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight) * jumpHeightMod;
+            sound.PlayJump();
         }
 
         velocity.y -= gravity * Time.deltaTime;
@@ -262,6 +265,7 @@ public class PlayerMotor : MonoBehaviour
         SetStance(Stance.Slide);
 
         slideJumpUsed = false;
+        sound.StartSlideLoop();
 
         slideTimer = slideDuration * slideDistMod;
         slideCooldownTimer = slideCooldown * slideCooldownMod;
@@ -295,6 +299,7 @@ public class PlayerMotor : MonoBehaviour
 
     void EndSlide(bool crouchHeldAfter)
     {
+        sound.StopSlideLoop();
         if (fovKick)
         {
             fovKick.EndSlide();
@@ -314,6 +319,8 @@ public class PlayerMotor : MonoBehaviour
     void DoSlideJumpLaunch(Vector3 wishDir)
     {
         slideJumpUsed = true;
+        sound.StopSlideLoop();
+        sound.PlayJump();
 
         if (fovKick)
         {
@@ -352,11 +359,13 @@ public class PlayerMotor : MonoBehaviour
         if (stance == Stance.Stand)
         {
             ApplyControllerHeightKeepBottom(standingHeight);
+
         }
         else
         {
             ApplyControllerHeightKeepBottom(crouchHeight);
         }
+        
     }
 
     void TryStandUp(bool force = false)

@@ -9,8 +9,8 @@ public class EnemyMeleeAttackState : IEnemyState
 
     EnemyMeleeAttack melee;
 
-    float windupTime = 0.20f;
-    float cooldownTime = 0.55f;
+    float windupTime = 0.0f;
+    float cooldownTime = 0.5f;
 
     float timer;
     bool didHit;
@@ -64,6 +64,14 @@ public class EnemyMeleeAttackState : IEnemyState
             didHit = false;
             timer = windupTime;
         }
+
+        if (ctx.agent && ctx.agent.enabled && ctx.agent.isOnNavMesh)
+        {
+            ctx.agent.isStopped = false;
+            ctx.agent.stoppingDistance = 0f;
+            ctx.agent.SetDestination(ctx.target.position);
+        }
+        
     }
 
     public void Exit()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    [Header("References")]
+    public PlayerSound sound;
     public int maxHealth = 100;
     public int maxHealthMod = 0;
     public int currentHealth;
@@ -81,6 +83,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
         UIEvents.IndicateHit();
+        sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {
             Die(true);

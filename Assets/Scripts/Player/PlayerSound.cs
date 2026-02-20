@@ -8,7 +8,10 @@ public class PlayerSound : MonoBehaviour
 {
     [Header("FMOD")]
     public EventReference footstepEvent;
-    //public EventReference 
+    public EventReference slide;
+    public EventReference land;
+    public EventReference jump;
+    public EventReference playerDamage;
 
     [Header("When to play")]
     public float minMoveSpeed = 0.15f;
@@ -27,11 +30,19 @@ public class PlayerSound : MonoBehaviour
 
     float timer;
 
+    EventInstance slideInst;
+    bool slidePlaying;
+
     void Awake()
     {
         motor = GetComponent<PlayerMotor>();
         cc = GetComponent<CharacterController>();
         timer = Random.Range(0f, 0.1f);
+    }
+
+    void OnDestroy()
+    {
+        StopSlideLoop(immediate: false);
     }
 
     void Update()
@@ -63,5 +74,44 @@ public class PlayerSound : MonoBehaviour
     {
         if (footstepEvent.IsNull) return;
         RuntimeManager.PlayOneShotAttached(footstepEvent, gameObject);
+    }
+
+    public void StartSlideLoop()
+    {
+        if (slide.IsNull) return;
+        if (slidePlaying && slideInst.isValid()) return;
+
+        slideInst = RuntimeManager.CreateInstance(slide);
+        RuntimeManager.AttachInstanceToGameObject(slideInst, transform, cc); // CC is fine as velocity source
+        slideInst.start();
+        slidePlaying = true;
+    }
+
+    public void StopSlideLoop(bool immediate = false)
+    {
+        if (!slideInst.isValid()) { slidePlaying = false; return; }
+
+        slideInst.stop(immediate ? FMOD.Studio.STOP_MODE.IMMEDIATE : FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        slideInst.release();
+        slideInst.clearHandle();
+        slidePlaying = false;
+    }
+
+    public void PlayJump()
+    {
+        if (jump.IsNull) return;
+        RuntimeManager.PlayOneShotAttached(jump, gameObject);
+    }
+
+    public void PlayLand()
+    {
+        if (jump.IsNull) return;
+        RuntimeManager.PlayOneShotAttached(land, gameObject);
+    }
+
+    public void PlayPlayerDamage()
+    {
+        if (jump.IsNull) return;
+        RuntimeManager.PlayOneShotAttached(playerDamage, gameObject);
     }
 }
