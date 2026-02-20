@@ -13,8 +13,7 @@ public class Cutscene_ender : MonoBehaviour
 
     void vidOver(UnityEngine.Video.VideoPlayer vp)
     {
-        print ("Video Over");
-        // SceneManager.LoadScene("Tutorial"); // uncomment when merged
+        SceneFader.Instance.FadeToScene("Tutorial");
     }
 
 }

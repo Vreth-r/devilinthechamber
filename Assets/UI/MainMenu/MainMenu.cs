@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour {
     async void testFunc ()
     {
         PlayUIClick();
-        await SceneFader.Instance.FadeToScene("DITC_level1.0");
+        await SceneFader.Instance.FadeToScene("Intro-Animation");
     }
 
     void exitGame()

@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.15471691, g: 0.15471691, b: 0.15471691, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2518,6 +2518,7 @@ GameObject:
   - component: {fileID: 484096531}
   - component: {fileID: 484096530}
   - component: {fileID: 484096529}
+  - component: {fileID: 484096535}
   m_Layer: 6
   m_Name: Player (1)
   m_TagString: Untagged
@@ -2537,6 +2538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af55d0f83c93a24bad89791fda5e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  sound: {fileID: 484096535}
   maxHealth: 100
   maxHealthMod: 0
   currentHealth: 100
@@ -2562,7 +2564,7 @@ MonoBehaviour:
   cameraMovement: {fileID: 1225412394}
   gunHitscan: {fileID: 2138029913}
   health: {fileID: 484096529}
-  controller: {fileID: 0}
+  controller: {fileID: 484096533}
 --- !u!114 &484096531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2594,6 +2596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor
   cameraPivot: {fileID: 1096653533}
+  sound: {fileID: 484096535}
   maxGroundSpeed: 15
   maxAirSpeed: 5
   groundAcceleration: 80
@@ -2676,6 +2679,59 @@ Transform:
   - {fileID: 1096653533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &484096535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484096528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d2590a32c3cd646b3d1277535700bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSound
+  footstepEvent:
+    Guid:
+      Data1: 446407132
+      Data2: 1107042144
+      Data3: 1510014389
+      Data4: 1843246721
+    Path: event:/SFX/Footstep
+  slide:
+    Guid:
+      Data1: -135372769
+      Data2: 1171608509
+      Data3: -2092877424
+      Data4: 2112237246
+    Path: event:/SFX/Slide
+  land:
+    Guid:
+      Data1: 172758527
+      Data2: 1090988598
+      Data3: 2014803104
+      Data4: 623142541
+    Path: event:/SFX/Land
+  jump:
+    Guid:
+      Data1: -52514843
+      Data2: 1159068840
+      Data3: -2089652551
+      Data4: -1789918491
+    Path: event:/SFX/Jump
+  playerDamage:
+    Guid:
+      Data1: 1057436440
+      Data2: 1142404368
+      Data3: 534019239
+      Data4: 1226069108
+    Path: event:/SFX/PlayerDamage
+  minMoveSpeed: 0.15
+  minInterval: 0.18
+  maxInterval: 0.5
+  speedForMinInterval: 9
+  speedForMaxInterval: 2
+  requireGrounded: 1
 --- !u!1001 &537733522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3605,12 +3661,36 @@ PrefabInstance:
       value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: gunshot.Path
+      value: event:/SFX/Gunshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: magazineSize
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: currentMagazine
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: gunshot.Guid.Data1
+      value: -1485703340
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: gunshot.Guid.Data2
+      value: 1109952339
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: gunshot.Guid.Data3
+      value: -1241049671
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
+      propertyPath: gunshot.Guid.Data4
+      value: -860870306
       objectReference: {fileID: 0}
     - target: {fileID: 2761775108679973516, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: headShotDamageBonus

@@ -109,7 +109,6 @@ public class DealMenu : MonoBehaviour
         
         hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 1;
-        dealPicked = false;
         SetVisible(false);
     }
 

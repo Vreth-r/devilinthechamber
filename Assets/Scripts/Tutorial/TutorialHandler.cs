@@ -69,7 +69,8 @@ public class TutorialHandler : MonoBehaviour
     [YarnCommand("transition_scene")]
     public void transition_scene()
     {
-        whiteImage.DOFade(1f, 2f);
+        //whiteImage.DOFade(1f, 2f);
+        SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
 
 }
