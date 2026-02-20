@@ -10,5 +10,12 @@ public class StatModTester : MonoBehaviour
         //  AbilityModManager.StartAbility(AbilityName.BLINKING, -1);
     }
 
+    void wrapper()
+    {
+        //StatModManager.AddStatModifier(StatName.HEADSHOT_BONUS, 3);
+        //AbilityModManager.StartAbility(AbilityName.INVINCIBILITY, 10);
+        //AbilityModManager.StartAbility(AbilityName.KNOCKBACK_ABILITY, 10);
+//        AbilityModManager.StartAbility(AbilityName.FULL_AUTO, -1);
+    }
 
 }
