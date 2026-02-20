@@ -3,6 +3,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using Unity.Mathematics;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public bool gamePaused;
     public PlayerControls controls;
+    List<GameObject> cathedralEnemies = new List<GameObject>();
 
     public EventReference musicLoop;
     private EventInstance _musicInstance;
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
+        cathedralEnemies.AddRange(GameObject.FindGameObjectsWithTag("Cathedral Enemy"));
         controls = new PlayerControls();
         controls.Player.Enable();
         DontDestroyOnLoad(this);
@@ -46,10 +49,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void enemyKilled ()
+    public void enemyKilled (GameObject enemy)
     {
         if (bulletRestoreMod) PlayerManager.Instance.gunHitscan.currentMagazine += 1;
         enemiesKilled += 1;
+        
+        UnlistEnemy(enemy); 
+        WinCheck();
+    }
+
+    public void UnlistEnemy(GameObject enemy)
+    {
+        if (cathedralEnemies.Contains(enemy)) cathedralEnemies.Remove(enemy);
+    }
+
+    public void WinCheck()
+    {
+        Debug.Log(cathedralEnemies.Count);
+        if (cathedralEnemies.Count <= 0) Debug.Log("all cathedral enemies killed");//SceneFader.Instance.FadeToScene("MainMenu");
     }
 
     public void SetPauseBGM(bool paused)
