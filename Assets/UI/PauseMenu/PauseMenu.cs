@@ -19,13 +19,16 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] PlayerLook playerLook;
     [SerializeField] string mainMenuSceneName = "MainMenu";
 
+    [Header("DealMenu (for correct pausing behaviour)")]
+    [SerializeField] DealMenu dealMenu;
+
     PlayerControls controls;
 
     VisualElement root;
     Button resumeButton;
     Button exitButton;
 
-    bool isPaused;
+    public bool isPaused;
     float toggleBlockUntil;
 
     void Awake()
@@ -82,7 +85,7 @@ public class PauseMenu : MonoBehaviour
         if (Time.unscaledTime < toggleBlockUntil) return;
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
-        Toggle();
+        if (!dealMenu.dealMenuOpen) Toggle();
     }
 
     public void Toggle()
@@ -95,16 +98,22 @@ public class PauseMenu : MonoBehaviour
     {
         if (isPaused) return;
         isPaused = true;
+        Time.timeScale = 0f;
 
-        if (hudDoc != null) hudDoc.enabled = false;
+        GameManager.Instance.SetPauseBGM(true);
+
+        if (hudDoc != null) hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         SetVisible(true);
 
-        Time.timeScale = 0f;
-        if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
+        //if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
-        if (playerLook != null) playerLook.allowCursorRelockOnClick = false;
+        if (playerLook != null) 
+        {
+            playerLook.enabled = false;
+            playerLook.allowCursorRelockOnClick = false;
+        }
     }
 
     public void Resume()
@@ -115,7 +124,7 @@ public class PauseMenu : MonoBehaviour
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
         SetVisible(false);
-        if (hudDoc != null) hudDoc.enabled = true;
+        if (hudDoc != null) hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
 
         Time.timeScale = 1f;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
@@ -124,7 +133,11 @@ public class PauseMenu : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         PlayUIClick();
 
-        if (playerLook != null) playerLook.allowCursorRelockOnClick = true;
+        if (playerLook != null) 
+        {
+            playerLook.enabled = true;
+            playerLook.allowCursorRelockOnClick = true;
+        }
     }
 
     void ExitToMainMenu()
