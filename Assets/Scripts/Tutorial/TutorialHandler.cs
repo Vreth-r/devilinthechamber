@@ -70,6 +70,7 @@ public class TutorialHandler : MonoBehaviour
     public async void transition_scene()
     {
         //whiteImage.DOFade(1f, 2f);
+        controls.Player.Disable();
         await SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
 

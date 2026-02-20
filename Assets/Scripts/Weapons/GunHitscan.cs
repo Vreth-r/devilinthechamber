@@ -13,6 +13,7 @@ public class GunHitscan : MonoBehaviour
 
     [Header("Sound")]
     public EventReference gunshot;
+    public EventReference reload;
 
     [Header("Fire")]
     public float fireRate = 3f;
@@ -153,6 +154,7 @@ public class GunHitscan : MonoBehaviour
     IEnumerator Reload()
     {
         if (currentMagazine == magazineSize + magazineSizeMod) yield break;
+        RuntimeManager.PlayOneShotAttached(reload, gameObject);
         reloading = true;
         animator.SetTrigger("Reload");
         animator.speed = reloadSpeed * reloadSpeedMod;
