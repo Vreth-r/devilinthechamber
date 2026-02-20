@@ -93,10 +93,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         Debug.Log("died");
         if (respawn)
+        {
+            //StartCoroutine(CheckpointManager.Instance.PauseLook());
             CheckpointManager.Instance.RespawnPlayer(gameObject);
+            //DealMenu.Instance.OpenMenu();
+        }
         else
+        {
             Debug.Log("Died Permanently");
-            // wipe all mods
-            // SceneFader.Instance.FadeToScene("Game Over");
+            StatModManager.ResetStatMods();
+            SceneFader.Instance.FadeToScene("GameOver");
+        }
     }
 }

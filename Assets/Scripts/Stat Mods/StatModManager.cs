@@ -81,6 +81,13 @@ public class StatModManager
         }
 
         return totalMod;
+    }
 
+    public static void ResetStatMods()
+    {
+        foreach (List<float> statMods in StatModifiers.Values)
+        {
+            statMods.Clear();
+        }
     }
 }

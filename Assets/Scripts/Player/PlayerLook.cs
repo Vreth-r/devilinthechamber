@@ -73,6 +73,7 @@ public class PlayerLook : MonoBehaviour
         pitch -= look.y * sensitivity;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
+
         ApplyRotation();
     }
 
@@ -89,5 +90,14 @@ public class PlayerLook : MonoBehaviour
     {
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
+    }
+
+    public void forceSetYaw (float newYaw)
+    {
+        yaw = newYaw;
+    }
+    public void g ()
+    {
+        Debug.Log(yaw);
     }
 }

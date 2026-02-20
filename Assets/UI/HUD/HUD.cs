@@ -95,7 +95,7 @@ public class HUD : MonoBehaviour
         IEnumerator FadeToBlack (bool forward)
         {
             Color regBgCol = new Color (0, 0, 0, 0);
-            Color blindBgCol = new Color (0, 0, 0, 0.99f);
+            Color blindBgCol = new Color (0, 0, 0, 0.85f);
             Color normalColor;
             Color newColor;
             if (forward)

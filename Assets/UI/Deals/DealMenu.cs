@@ -71,7 +71,7 @@ public class DealMenu : MonoBehaviour
         if(!dealMenuOpen && !pauseMenu.isPaused) OpenMenu();
     }
 
-    void OpenMenu()
+    public void OpenMenu()
     {
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
