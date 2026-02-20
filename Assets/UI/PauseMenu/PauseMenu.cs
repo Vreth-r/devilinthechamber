@@ -134,7 +134,7 @@ public class PauseMenu : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 
         Destroy(GameManager.Instance.gameObject);
-        SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
+        SceneFader.Instance.FadeToScene(mainMenuSceneName);
     }
 
     void SetVisible(bool visible)
