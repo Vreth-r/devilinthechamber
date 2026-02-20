@@ -78,7 +78,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
-        GameManager.Instance.enemyKilled();
+        GameManager.Instance.enemyKilled(this.gameObject);
         // later play death animation or smth
         if (destroyOnDeath)
             Destroy(gameObject);
