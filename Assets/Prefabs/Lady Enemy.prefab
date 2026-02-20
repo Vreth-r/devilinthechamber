@@ -53,6 +53,56 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.7, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3826580721877915821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7297718692889182665}
+  - component: {fileID: 1796441193250844543}
+  m_Layer: 0
+  m_Name: Outline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7297718692889182665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826580721877915821}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.40000153, y: 1.1732788, z: 0.20436096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1194539561234325966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796441193250844543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826580721877915821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7547240879553611530
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       propertyPath: m_Name
-      value: fbx-lady-r2
+      value: Lady Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1608150724689556374, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -411,6 +461,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 5700592731536448992}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 7297718692889182665}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7831975565888927440}
     m_AddedComponents:
@@ -432,6 +485,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7926551655629421302}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3018919788408790549}
   m_SourcePrefab: {fileID: 100100000, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
 --- !u!4 &1194539561234325966 stripped
 Transform:
@@ -579,6 +635,29 @@ MonoBehaviour:
   windDownState: shoot-reset
   emptyState: Empty
   shootClip: {fileID: 7400000, guid: 6911479ccd389f04998588f68cf6a08d, type: 2}
+--- !u!1 &2059554155105268801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
+  m_PrefabInstance: {fileID: 1664469407930811941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3018919788408790549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059554155105268801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!137 &2479454782664830178 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3851044868119456455, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
