@@ -25,7 +25,7 @@ public class HUD : MonoBehaviour
     VisualElement healthContainer;
     VisualElement bulletContainer;
     VisualElement ammoBullet;
-    Label healthText;
+    Label livesText;
     Label ammoText;
 
     [Header("Health bar sprites")]
@@ -50,7 +50,7 @@ public class HUD : MonoBehaviour
         backgroundVignette = root.Q<VisualElement>("vignette-panel");
         oneEyePanel = root.Q<VisualElement>("one-eye-panel");
         healthContainer =root.Q<VisualElement>("health-container");
-        healthText = root.Q<Label>("health-text");
+        livesText = root.Q<Label>("lives-text");
         ammoText = root.Q<Label>("ammo-text");
 
         Refresh();
@@ -181,7 +181,7 @@ public class HUD : MonoBehaviour
 
             healthContainer.Add(hpImage);
         }
-        healthText.text = $"{hp} / {hpMax}";
+        livesText.text = $"Time of Death: {NumToRoman(PlayerManager.Instance.health.lives)}";
 
         if (ammoReserve == int.MaxValue)
             ammoText.text = "inf / inf";
@@ -203,5 +203,39 @@ public class HUD : MonoBehaviour
             yield return null;
         }
         backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
+    }
+
+    string NumToRoman (int num)
+    {
+        switch (num)
+        {
+            case 0:
+                return "0";
+            case 1:
+                return "I";
+            case 2:
+                return "II";
+            case 3:
+                return "III";
+            case 4:
+                return "IV";
+            case 5:
+                return "V";
+            case 6:
+                return "VI";
+            case 7:
+                return "VII";
+            case 8:
+                return "VIII";
+            case 9:
+                return "IX";
+            case 10:
+                return "X";
+            case 11:
+                return "XI";
+            default:
+                return "";
+            
+        }
     }
 }
