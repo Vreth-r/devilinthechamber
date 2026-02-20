@@ -2226,7 +2226,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1503137996}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -2539,9 +2539,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   sound: {fileID: 484096535}
-  maxHealth: 100
+  maxHealth: 15
   maxHealthMod: 0
-  currentHealth: 100
+  currentHealth: 15
+  lives: 10
   takesKnockback: 0
   invincible: 0
   doubleHeal: 0
@@ -2893,7 +2894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652a203e6e4ddf14db2c7bc5d3e7f25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialHandler
-  manager: {fileID: 1596020541}
   dialogueRunner: {fileID: 589031555}
   linePresenter: {fileID: 1323773033}
   dealmenu: {fileID: 565238912}
@@ -5958,6 +5958,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1600842880131713211, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6754230011566815363, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -6002,6 +6006,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9152806336476164597, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 21300000, guid: 9134596d0a48ed9589227a2ba8166c44, type: 3}
+    - target: {fileID: 9152806336476164597, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: emptyHP
+      value: 
+      objectReference: {fileID: 21300000, guid: 08f673832a7116594b25f5e14caa2e96, type: 3}
+    - target: {fileID: 9152806336476164597, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: filledHP
+      value: 
+      objectReference: {fileID: 21300000, guid: 7138a2ae7f54b677c9375439a7f5d8fe, type: 3}
+    - target: {fileID: 9152806336476164597, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152806336476164597, guid: 8901f35cd83173f4d8491a44c7403c8d, type: 3}
+      propertyPath: oneEyedImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 27d1d3d43d0d1224a9bf5721f841f717, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6391,17 +6415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2ebda8fff78f44b8c16d8b5e5baea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CheckpointManager
---- !u!114 &1596020541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5588033945527148244, guid: d4769a4ca7856324e9bad3db949cc477, type: 3}
-  m_PrefabInstance: {fileID: 1359860226}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596020537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cae64c0789cb4724b86aa71c724e89e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!1 &1601313701
 GameObject:
   m_ObjectHideFlags: 0
@@ -7288,6 +7301,13 @@ MonoBehaviour:
   animator: {fileID: 0}
   cam: {fileID: 0}
   gunshot:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  reload:
     Guid:
       Data1: 0
       Data2: 0

@@ -43,8 +43,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         else
             currentHealth += amount;
 
-        currentHealth = math.min(currentHealth, maxHealth);
-        UIEvents.UpdateHealth(currentHealth, maxHealth);
+        currentHealth = math.min(currentHealth, maxHealth + maxHealthMod);
+        UIEvents.UpdateHealth(currentHealth, maxHealth + maxHealthMod);
     }
 
     void Update()

@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 
 public class HUD : MonoBehaviour
@@ -54,6 +55,28 @@ public class HUD : MonoBehaviour
         ammoText = root.Q<Label>("ammo-text");
 
         Refresh();
+    }
+
+    void OnEnable()
+    {
+        UIEvents.UpdateHealth += SetHealth;
+        UIEvents.UpdateAmmo += SetAmmo;
+        UIEvents.SetBlind += SetBlind;
+        UIEvents.IndicateHit += IndicateHit;
+        UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
+        UIEvents.blink += BlinkWrapper;
+        UIEvents.OneEye += SetOneEyed;
+    }
+
+    void OnDisable()
+    {
+        UIEvents.UpdateHealth -= SetHealth;
+        UIEvents.UpdateAmmo -= SetAmmo;
+        UIEvents.SetBlind -= SetBlind;
+        UIEvents.IndicateHit -= IndicateHit;
+        UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
+        UIEvents.blink -= BlinkWrapper;
+        UIEvents.OneEye -= SetOneEyed;
     }
 
     public void SetHealth(int current, int max)
@@ -149,6 +172,7 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
+        if (!this) return;   
         if (!showHitIndicator) return;
         StartCoroutine(HitAnim());
         IEnumerator HitAnim()
@@ -181,7 +205,12 @@ public class HUD : MonoBehaviour
 
             healthContainer.Add(hpImage);
         }
-        livesText.text = $"Time of Death: {NumToRoman(PlayerManager.Instance.health.lives)}";
+
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "DITC_level1.0")
+        {
+            livesText.text = $"Time of Death: {NumToRoman(PlayerManager.Instance.health.lives)}";
+        }
 
         if (ammoReserve == int.MaxValue)
             ammoText.text = "inf / inf";

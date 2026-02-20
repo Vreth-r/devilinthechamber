@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0916db9fc5ebaf049a6987b69a763c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeAnimDriver
-  agent: {fileID: 0}
+  agent: {fileID: 1698955030572117038}
   moveSpeedParam: MoveSpeed
   dampTime: 0.08
 --- !u!4 &2230796504251231232 stripped
