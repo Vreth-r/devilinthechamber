@@ -10,16 +10,16 @@ public class DeafnessAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        normalGameplayVolume = AudioManager.Instance.gameplayVolume;
-        AudioManager.Instance.SetGameplayVolume(0f);
+        //normalGameplayVolume = AudioManager.Instance.gameplayVolume;
+        //AudioManager.Instance.SetGameplayVolume(0f);
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        AudioManager.Instance.SetGameplayVolume(normalGameplayVolume);
-        Debug.Log($"STOP: {abilityName}");
+        //AudioManager.Instance.SetGameplayVolume(normalGameplayVolume);
+        //Debug.Log($"STOP: {abilityName}");
         return true;
     }
 }
