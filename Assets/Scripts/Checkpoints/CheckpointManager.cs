@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Collections;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -34,9 +35,12 @@ public class CheckpointManager : MonoBehaviour
         {
             controller.enabled = false;
             player.transform.SetPositionAndRotation(
-                checkpointData.checkpointTransform.position,
-                checkpointData.checkpointTransform.rotation
+                checkpointData.checkpointPosition,
+                checkpointData.checkpointRotation
             );
+            //PlayerManager.Instance.playerLook.forceSetYaw(checkpointData.checkpointRotation.y);
+            //PlayerManager.Instance.playerLook.g();
+
             controller.enabled = true;
         }
 
@@ -68,7 +72,12 @@ public class CheckpointManager : MonoBehaviour
         PlayerManager.Instance.health.currentHealth = checkpointData.currentHealth;
         PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
         PlayerManager.Instance.health.ForceUpdateHealth();
+    }
 
-
+    public IEnumerator PauseLook ()
+    {
+        PlayerManager.Instance.playerLook.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        PlayerManager.Instance.playerLook.enabled = true;
     }
 }

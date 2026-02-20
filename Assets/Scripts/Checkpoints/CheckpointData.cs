@@ -4,16 +4,18 @@ using UnityEditor.ShaderGraph.Internal;
 
 public class CheckpointData
 {
-    public Transform checkpointTransform { get; private set; }
+    public Vector3 checkpointPosition;
+    public Quaternion checkpointRotation;
     public Dictionary<StatName, List<float>> currentStatModifiers = new Dictionary<StatName, List<float>>();
     public List<TimerHandle> currentTimerHandles = new List<TimerHandle>();
 
     public int currentMag;
     public int currentHealth;
 
-    public CheckpointData(Transform checkpointTransform)
+    public CheckpointData(Vector3 checkpointPosition, Quaternion checkpointRotation)
     {
-        this.checkpointTransform = checkpointTransform;
+        this.checkpointPosition = checkpointPosition;
+        this.checkpointRotation = checkpointRotation;
         var currentTimers = TimerHandler.Instance.GetTimerHandles();
 
         // Snapshot stats
@@ -33,6 +35,5 @@ public class CheckpointData
 
         currentMag = PlayerManager.Instance.gunHitscan.currentMagazine;
         currentHealth = PlayerManager.Instance.health.currentHealth;
-
     }
 }

@@ -2231,6 +2231,101 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!1001 &292528246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320752814500508156, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_Name
+      value: PauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: hudDoc
+      value: 
+      objectReference: {fileID: 237978894}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: dealMenu
+      value: 
+      objectReference: {fileID: 565238910}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: pauseDoc
+      value: 
+      objectReference: {fileID: 292528248}
+    - target: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: playerLook
+      value: 
+      objectReference: {fileID: 484096531}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33111
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073786067054131781, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+--- !u!114 &292528247 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2681207762522111728, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+  m_PrefabInstance: {fileID: 292528246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d545551f40e8f1489edc8ebbe7c021d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+--- !u!114 &292528248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8126246197411789737, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
+  m_PrefabInstance: {fileID: 292528246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!43 &452558675
 Mesh:
   m_ObjectHideFlags: 0
@@ -2448,6 +2543,7 @@ MonoBehaviour:
   takesKnockback: 0
   invincible: 0
   doubleHeal: 0
+  AOEOnDamage: 0
 --- !u!114 &484096530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2632,6 +2728,10 @@ PrefabInstance:
       propertyPath: hudDoc
       value: 
       objectReference: {fileID: 237978894}
+    - target: {fileID: 6490033550650205101, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 292528247}
     - target: {fileID: 6490033550650205101, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
       propertyPath: cameraScript
       value: 
@@ -3416,6 +3516,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1236908656}
     m_Modifications:
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.735
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184200912964623427, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_Name
+      value: Dan Wesson PPC
+      objectReference: {fileID: 0}
     - target: {fileID: 1382132599640436908, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -3719,42 +3855,6 @@ PrefabInstance:
     - target: {fileID: 9101609037697419032, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
       propertyPath: m_Layer
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 26.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10.735
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2676809506390091697, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184200912964623427, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
-      propertyPath: m_Name
-      value: Dan Wesson PPC
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2063976853361272615, guid: 470078ac910366e4caff4f5d9d960057, type: 3}
@@ -7101,3 +7201,4 @@ SceneRoots:
   - {fileID: 73904640}
   - {fileID: 537733522}
   - {fileID: 1405192295}
+  - {fileID: 292528246}

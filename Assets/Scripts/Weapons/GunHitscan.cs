@@ -61,7 +61,7 @@ public class GunHitscan : MonoBehaviour
         
         if (controls.Player.Reload.IsPressed() && !reloading)
         {
-            //PlayerManager.Instance.health.Die();
+            PlayerManager.Instance.health.Die(true);
             StartCoroutine(Reload());
         }
         if ((controls.Player.Fire.IsPressed() || autoFireMod) && Time.time >= nextFireTime && !reloading)
