@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     }
     void Start()
     {
-        UIEvents.SetHealth(currentHealth, maxHealth); // timing thing
+        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod); // timing thing
         
     }
 
@@ -44,7 +44,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             currentHealth += amount;
 
         currentHealth = math.min(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.UpdateHealth(currentHealth, maxHealth + maxHealthMod);
+        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
     }
 
     void Update()
@@ -83,7 +83,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
 
         UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.IndicateHit();
+        UIEvents.Hit();
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {

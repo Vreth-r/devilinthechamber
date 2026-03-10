@@ -82,14 +82,14 @@ public class HUD : MonoBehaviour
         ammoText           = root.Q<Label>("ammo-text");
 
         // Minimum needed for Refresh to run safely
-        uiReady = (healthContainer != null && ammoText != null);
+        uiReady = healthContainer != null && ammoText != null;
 
         if (!uiReady)
         {
             Debug.LogError(
                 $"[HUD] Missing required UI elements. " +
-                $"healthContainer={(healthContainer != null)} ammoText={(ammoText != null)} " +
-                $"vignette={(backgroundVignette != null)} livesText={(livesText != null)} " +
+                $"healthContainer={healthContainer != null} ammoText={ammoText != null} " +
+                $"vignette={backgroundVignette != null} livesText={livesText != null} " +
                 $"(Check UXML names for this scene.)",
                 this
             );

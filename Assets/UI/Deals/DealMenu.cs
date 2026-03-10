@@ -83,7 +83,7 @@ public class DealMenu : MonoBehaviour
 
         //hudDoc.enabled = false;
         //hudDoc.gameObject.SetActive(false);
-        hudDoc.rootVisualElement.style.display = DisplayStyle.None;
+        //hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         dealsDoc.sortingOrder = 1;
 
         deals = DeckManager.Instance.GetRandomDeals();
@@ -107,7 +107,7 @@ public class DealMenu : MonoBehaviour
         cameraScript.enabled = true;
         dealMenuOpen = false;
         
-        hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
+        //hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 1;
         SetVisible(false);
     }

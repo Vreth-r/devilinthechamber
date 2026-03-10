@@ -9,7 +9,7 @@ public class OneEyedAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        UIEvents.OneEye();
+        UIEvents.SetOneEyed();
         Debug.Log($"START: {abilityName}");
         return true;
     }
