@@ -160,9 +160,9 @@ public class DealMenu : MonoBehaviour
                     else
                     {
                         if (statMod.modifier >= 1) 
-                            t = $"+{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"+{Mathf.Round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
                         else
-                            t = $"{100 * (statMod.modifier - 1)}{DealsLocalization.StatLocale(statMod.statName)}";
+                            t = $"{Mathf.Round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
                     }
                     l.AddToClassList("BuffTitle");
                     l.text = t;
@@ -172,9 +172,9 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{Mathf.Round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
                     else
-                        t = $"{100 * (statMod.modifier - 1)} {DealsLocalization.StatLocale(statMod.statName)}";
+                        t = $"{Mathf.Round(100 * (statMod.modifier - 1))} {DealsLocalization.StatLocale(statMod.statName)}";
                     l.AddToClassList("DebuffTitle");
                     l.text = t;
                     negDealBox.Add(l);
@@ -191,7 +191,7 @@ public class DealMenu : MonoBehaviour
                 {
                     string t;
                     if (ability.duration != -1)
-                        t = $"{ability.duration}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+                        t = $"{Mathf.Round(ability.duration)}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
                     else
                         t = $"{DealsLocalization.AbilityLocale(ability.AbilityName)}";
 

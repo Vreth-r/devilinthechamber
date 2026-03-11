@@ -25,8 +25,8 @@ public class HUD : MonoBehaviour
 
     VisualElement backgroundVignette;
     VisualElement oneEyePanel;
-    VisualElement healthContainer;
-    VisualElement bulletContainer;
+    VisualElement healthBar;
+    VisualElement ammoPanel;
     VisualElement ammoBullet;
     Label livesText;
     Label ammoText;
@@ -77,18 +77,19 @@ public class HUD : MonoBehaviour
 
         backgroundVignette = root.Q<VisualElement>("vignette-panel");
         oneEyePanel        = root.Q<VisualElement>("one-eye-panel");
-        healthContainer    = root.Q<VisualElement>("health-container");
+        healthBar          = root.Q<VisualElement>("health-bar");
+        ammoPanel          = root.Q<VisualElement>("ammo-panel");
         livesText          = root.Q<Label>("lives-text");
-        ammoText           = root.Q<Label>("ammo-text");
+        //ammoText           = root.Q<Label>("ammo-text");
 
         // Minimum needed for Refresh to run safely
-        uiReady = healthContainer != null && ammoText != null;
+        uiReady = healthBar != null && ammoPanel != null;
 
         if (!uiReady)
         {
             Debug.LogError(
                 $"[HUD] Missing required UI elements. " +
-                $"healthContainer={healthContainer != null} ammoText={ammoText != null} " +
+                $"healthContainer={healthBar != null} ammoText={ammoText != null} " +
                 $"vignette={backgroundVignette != null} livesText={livesText != null} " +
                 $"(Check UXML names for this scene.)",
                 this
@@ -216,8 +217,11 @@ public class HUD : MonoBehaviour
     void Refresh()
     {
         if (!uiReady) return;
+        var pm = PlayerManager.Instance;
 
+        
         // health
+        /*
         healthContainer.Clear();
         for (int i = 0; i < hpMax; i++)
         {
@@ -227,12 +231,14 @@ public class HUD : MonoBehaviour
             hpImage.style.height = 25;
             healthContainer.Add(hpImage);
         }
+        */
+        healthBar.style.width = Length.Percent(100 * (hp / (float)hpMax));
+        Debug.Log($"{hp} {hpMax} {100 * (hp / hpMax)}");
 
         // lives text is OPTIONAL: only set it if it exists + player manager exists
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "DITC_level1.0" && livesText != null)
         {
-            var pm = PlayerManager.Instance;
             if (pm != null && pm.health != null)
                 livesText.text = $"Time of Death: {NumToRoman(pm.health.lives)}";
             else
@@ -240,10 +246,26 @@ public class HUD : MonoBehaviour
         }
 
         // ammo (ammoText required, so safe)
+        /*
         if (ammoReserve == int.MaxValue)
             ammoText.text = "inf / inf";
         else
             ammoText.text = $"{ammoInMag} / {ammoReserve}";
+        */
+        ammoPanel.Clear();
+        if (ammoReserve == int.MaxValue)
+        {
+        }
+        else
+        {
+            for (int i = 0; i < ammoInMag; i++)
+            {
+                VisualElement bullet = new VisualElement();
+                bullet.AddToClassList("bullet-img");
+                ammoPanel.Add(bullet);
+            }
+            
+        }
     }
 
     // tried to be smart, ended up with more work lol
