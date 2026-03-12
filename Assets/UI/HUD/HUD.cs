@@ -50,6 +50,7 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
+        UIEvents.ForceRefresh += ForceRefreshAll;
 
         uiReady = false;
         StartCoroutine(InitUIWhenReady());
@@ -64,6 +65,7 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
         UIEvents.blink -= BlinkWrapper;
         UIEvents.OneEye -= SetOneEyed;
+        UIEvents.ForceRefresh -= ForceRefreshAll;
     }
 
     IEnumerator InitUIWhenReady()
@@ -97,22 +99,18 @@ public class HUD : MonoBehaviour
             yield break;
         }
 
-        Refresh();
+        RefreshAll();
     }
 
-    public void SetHealth(int current, int max)
+    public void SetHealth()
     {
-        hp = current;
-        hpMax = Mathf.Max(1, max);
-        Refresh();
+        RefreshHealth();
     }
 
 
-    public void SetAmmo(int mag, int reserve)
+    public void SetAmmo()
     {
-        ammoInMag = Mathf.Max(0, mag);
-        ammoReserve = Mathf.Max(0, reserve);
-        Refresh();
+        RefreshAmmo();
     }
 
     public void SetBlind (bool isBlind)
@@ -214,28 +212,43 @@ public class HUD : MonoBehaviour
         this.showHitIndicator = showHitIndicator;
     }
 
-    void Refresh()
+    void ForceRefreshAll ()
+    {
+        RefreshAll();
+    }
+
+    void RefreshHealth ()
     {
         if (!uiReady) return;
-        var pm = PlayerManager.Instance;
+        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + PlayerManager.Instance.health.maxHealthMod)));
+    }
 
-        
-        // health
-        /*
-        healthContainer.Clear();
-        for (int i = 0; i < hpMax; i++)
+    void RefreshAmmo ()
+    {
+        if (!uiReady) return;
+        ammoPanel.Clear();
+        if (PlayerManager.Instance.gunHitscan.magazineSize == int.MaxValue)
         {
-            Image hpImage = new Image();
-            hpImage.sprite = (i < hp) ? filledHP : emptyHP;
-            hpImage.style.width = 75;
-            hpImage.style.height = 25;
-            healthContainer.Add(hpImage);
         }
-        */
-        healthBar.style.width = Length.Percent(100 * (hp / (float)hpMax));
-        Debug.Log($"{hp} {hpMax} {100 * (hp / hpMax)}");
+        else
+        {
+            for (int i = 0; i < PlayerManager.Instance.gunHitscan.currentMagazine; i++)
+            {
+                VisualElement bullet = new VisualElement();
+                bullet.AddToClassList("bullet-img");
+                ammoPanel.Add(bullet);
+            }
+            
+        }
+    }
+
+    void RefreshAll()
+    {
+        RefreshHealth();
+        RefreshAmmo();
 
         // lives text is OPTIONAL: only set it if it exists + player manager exists
+        /*
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "DITC_level1.0" && livesText != null)
         {
@@ -244,28 +257,8 @@ public class HUD : MonoBehaviour
             else
                 livesText.text = "Time of Death: ?";
         }
-
-        // ammo (ammoText required, so safe)
-        /*
-        if (ammoReserve == int.MaxValue)
-            ammoText.text = "inf / inf";
-        else
-            ammoText.text = $"{ammoInMag} / {ammoReserve}";
         */
-        ammoPanel.Clear();
-        if (ammoReserve == int.MaxValue)
-        {
-        }
-        else
-        {
-            for (int i = 0; i < ammoInMag; i++)
-            {
-                VisualElement bullet = new VisualElement();
-                bullet.AddToClassList("bullet-img");
-                ammoPanel.Add(bullet);
-            }
-            
-        }
+
     }
 
     // tried to be smart, ended up with more work lol
@@ -286,37 +279,4 @@ public class HUD : MonoBehaviour
         backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
     }
 
-    string NumToRoman (int num)
-    {
-        switch (num)
-        {
-            case 0:
-                return "0";
-            case 1:
-                return "I";
-            case 2:
-                return "II";
-            case 3:
-                return "III";
-            case 4:
-                return "IV";
-            case 5:
-                return "V";
-            case 6:
-                return "VI";
-            case 7:
-                return "VII";
-            case 8:
-                return "VIII";
-            case 9:
-                return "IX";
-            case 10:
-                return "X";
-            case 11:
-                return "XI";
-            default:
-                return "";
-            
-        }
-    }
 }

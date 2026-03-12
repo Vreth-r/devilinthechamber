@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             case StatName.MAGAZINE_SIZE:
                 PlayerManager.Instance.gunHitscan.magazineSizeMod = (int)StatModManager.GetStatModifier(stat);
                 PlayerManager.Instance.gunHitscan.currentMagazine = math.min(PlayerManager.Instance.gunHitscan.currentMagazine + PlayerManager.Instance.gunHitscan.magazineSizeMod, PlayerManager.Instance.gunHitscan.magazineSize + PlayerManager.Instance.gunHitscan.magazineSizeMod);
-                PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+                UIEvents.UpdateAmmo();
                 return;
 
             case StatName.PERMA_HEALTH:

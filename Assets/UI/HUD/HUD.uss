@@ -117,3 +117,20 @@
     align-items: stretch;
     align-self: center;
 }
+
+.health-bar {
+    flex-grow: 0.025;
+    justify-content: flex-start;
+    align-self: center;
+    align-content: auto;
+    align-items: stretch;
+    flex-shrink: 1;
+    flex-direction: column;
+    background-color: rgb(179, 0, 0);
+    width: 60%;
+    background-image: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}

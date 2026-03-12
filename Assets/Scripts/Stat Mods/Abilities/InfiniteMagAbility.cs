@@ -12,7 +12,7 @@ public class InfiniteMagAbility : AbilityBase
     {
         PlayerManager.Instance.gunHitscan.magazineSize = int.MaxValue;
         PlayerManager.Instance.gunHitscan.currentMagazine = int.MaxValue;
-        PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+        UIEvents.UpdateAmmo();
         Debug.Log($"START: {abilityName}");
         return true;
     }
@@ -21,7 +21,7 @@ public class InfiniteMagAbility : AbilityBase
     {
         PlayerManager.Instance.gunHitscan.magazineSize = 10 + PlayerManager.Instance.gunHitscan.magazineSizeMod;
         PlayerManager.Instance.gunHitscan.currentMagazine = 10 + PlayerManager.Instance.gunHitscan.magazineSizeMod;
-        PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+        UIEvents.UpdateAmmo();
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

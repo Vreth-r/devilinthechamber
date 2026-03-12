@@ -34,7 +34,7 @@ public class Deal : ScriptableObject
             if (abilityDeal.AbilityName == AbilityName.DEATH)
             {
                 // do thing
-                PlayerManager.Instance.health.Die(false);
+                PlayerManager.Instance.health.Die();
                 return;
             }
             AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
