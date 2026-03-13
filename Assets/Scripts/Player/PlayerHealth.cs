@@ -97,7 +97,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Stun (float f) {}
 
-    public async void Die()
+    public void Die()
     {
         UIEvents.DoDeathAnim();
         invincible = true;

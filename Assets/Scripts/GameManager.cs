@@ -75,12 +75,12 @@ public class GameManager : MonoBehaviour
         if (cathedralEnemies.Contains(enemy)) cathedralEnemies.Remove(enemy);
     }
 
-    public void WinCheck()
+    public async void WinCheck()
     {
         Debug.Log(cathedralEnemies.Count);
         if (cathedralEnemies.Count <= 0)
         {
-            SceneFader.Instance.FadeToScene("Credits-Animation");
+            await SceneFader.Instance.FadeToScene("Credits-Animation");
         }
     }
 

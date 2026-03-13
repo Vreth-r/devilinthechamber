@@ -83,9 +83,9 @@ public class TutorialHandler : MonoBehaviour
     void OnEnable()
     {
         controls.Enable();
-        controls.Player.SkipTutorial.performed += SkipTutorial;
+        //controls.Player.SkipTutorial.performed += SkipTutorial;
     }
-    void SkipTutorial()
+    async void SkipTutorial()
     {
         await SceneFader.Instance.FadeToScene("DITC_level1.0");
     }
