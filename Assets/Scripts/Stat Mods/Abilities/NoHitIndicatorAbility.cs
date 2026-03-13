@@ -9,14 +9,14 @@ public class NoHitIndicatorAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        UIEvents.UpdateShowHitIndicator(false);
+        UIEvents.SetShowHitIndicator(false);
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        UIEvents.UpdateShowHitIndicator(true);
+        UIEvents.SetShowHitIndicator(true);
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

@@ -25,8 +25,8 @@ public class GunHitscan : MonoBehaviour
     public float damageMod = 1f; // stat mods
     public float headShotDamageMod = 1f; // stat mods
 
-    public int magazineSize = 3;
-    public int currentMagazine = 3;
+    public int magazineSize = 10;
+    public int currentMagazine = 10;
     public int magazineSizeMod = 0; // stat mods
 
     public bool reloading = false;
@@ -53,7 +53,7 @@ public class GunHitscan : MonoBehaviour
     void OnDisable() => controls.Player.Disable();
     void Start()
     {
-        UIEvents.SetAmmo(currentMagazine, magazineSize);
+        UIEvents.SetAmmo();
     }
 
     void Update()
@@ -72,10 +72,6 @@ public class GunHitscan : MonoBehaviour
         }
     }
 
-    public void ForceUpdateMagazine ()
-    {
-        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
-    }
 
     void Fire()
     {
@@ -119,7 +115,7 @@ public class GunHitscan : MonoBehaviour
         if (tracerPrefab) SpawnTracer(origin, endPoint);
 
         currentMagazine -= 1;
-        UIEvents.SetAmmo(currentMagazine, magazineSize);
+        UIEvents.SetAmmo();
         if (currentMagazine == 0) StartCoroutine(Reload());
     }
 
@@ -169,7 +165,7 @@ public class GunHitscan : MonoBehaviour
         }
         animator.speed = 1;
         currentMagazine = magazineSize + magazineSizeMod;
-        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
+        UIEvents.SetAmmo();
         reloading = false;
     }
 }

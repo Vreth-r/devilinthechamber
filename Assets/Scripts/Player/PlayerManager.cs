@@ -17,5 +17,6 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
 
         controller = gameObject.GetComponent<CharacterController>();
+        gunHitscan = GetComponentInChildren<GunHitscan>();
     }
 }

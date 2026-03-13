@@ -1,0 +1,27 @@
+.custom-label {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(68, 138, 255);
+}
+
+.background {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    color: rgb(27, 27, 27);
+    transition-duration: 1.2s;
+    transition-property: background-color;
+}
+
+.text {
+    align-self: auto;
+    align-content: auto;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
+    font-size: 222px;
+    color: rgb(186, 31, 31);
+    background-color: rgba(0, 0, 0, 0);
+}

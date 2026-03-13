@@ -17,7 +17,7 @@ public class FakeHitIndicatorAbility : AbilityBase
 
     public bool FakeHit ()
     {
-        UIEvents.IndicateHit();
+        UIEvents.Hit();
         TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), Random.Range(1, 3), FakeHit);
         return true;
     }

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,16 +26,17 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     void Awake()
     {
         currentHealth = maxHealth;
+        UIEvents.DeathAnimFinished += DiePart2;
     }
     void Start()
     {
-        UIEvents.SetHealth(currentHealth, maxHealth); // timing thing
+        UIEvents.SetHealth(); // timing thing
         
     }
 
     public void ForceUpdateHealth ()
     {
-        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
+        UIEvents.SetHealth();
     }
 
     public void Heal (int amount)
@@ -44,7 +47,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             currentHealth += amount;
 
         currentHealth = math.min(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.UpdateHealth(currentHealth, maxHealth + maxHealthMod);
+        UIEvents.SetHealth();
     }
 
     void Update()
@@ -82,23 +85,28 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             }
         }
 
-        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.IndicateHit();
+        UIEvents.SetHealth();
+        UIEvents.Hit();
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {
-            Die(true);
+            lives -= 1;
+            Die();
         }
     }
 
     public void Stun (float f) {}
 
-    public async void Die(bool respawn)
+    public async void Die()
     {
-        Debug.Log("died");
-        if (respawn)
+        UIEvents.DoDeathAnim();
+        invincible = true;
+    }
+    async void DiePart2()
+    {
+        invincible = false;
+        if (lives > 0)
         {
-            lives -= 1;
             CheckpointManager.Instance.RespawnPlayer(gameObject);
             DealMenu.Instance.OpenMenu();
         }

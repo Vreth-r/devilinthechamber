@@ -9,14 +9,14 @@ public class BlindnessAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        UIEvents.SetBlind(true);
+        UIEvents.SetIsBlind(true);
         Debug.Log($"START: {abilityName}");
         return true;
     }
 
     public override bool endFunction()
     {
-        UIEvents.SetBlind(false);
+        UIEvents.SetIsBlind(false);
         Debug.Log($"STOP: {abilityName}");
         return true;
     }

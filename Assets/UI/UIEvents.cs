@@ -4,22 +4,25 @@ using System.Collections.Generic;
 
 public static class UIEvents
 {
-    public static Action<int, int> UpdateHealth;
-    public static Action<int, int> UpdateAmmo;
+    public static Action UpdateHealth;
+    public static Action UpdateAmmo;
     public static Action<bool> SetBlind;
     public static Action IndicateHit;
     public static Action<bool> UpdateShowHitIndicator;
     public static Action<int, Sprite> UpdatePerks;
     public static Action blink;
     public static Action OneEye;
+    public static Action Die;
+    public static Action DeathAnimFinished;
+    public static Action ForceRefresh;
 
-    public static void SetHealth(int current, int max)
+    public static void SetHealth()
     {
-        UpdateHealth?.Invoke(current, max);
+        UpdateHealth?.Invoke();
     }
-    public static void SetAmmo(int current, int max)
+    public static void SetAmmo()
     {
-        UpdateAmmo?.Invoke(current, max);
+        UpdateAmmo?.Invoke();
     }
 
     public static void Hit ()
@@ -50,5 +53,19 @@ public static class UIEvents
     public static void SetOneEyed ()
     {
         OneEye?.Invoke();
+    }
+
+    public static void ForceHUDRefresh ()
+    {
+        ForceRefresh?.Invoke();
+    }
+
+    public static void DoDeathAnim ()
+    {
+        Die?.Invoke();
+    }
+    public static void NotifyDeathAnimFinished ()
+    {
+        DeathAnimFinished?.Invoke();
     }
 }
