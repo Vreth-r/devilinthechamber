@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +6,8 @@ public class EnemyRangedKiteState : IEnemyState
 {
     readonly EnemyContext ctx;
     readonly EnemyStateMachine fsm;
+
+    EnemyAnimDriver fireAnim;
 
     public string Name => "RangedKite";
 
@@ -14,6 +17,10 @@ public class EnemyRangedKiteState : IEnemyState
     const float orbitRecalcHz = 6f;
     float orbitTimer;
     int orbitDir = 1;
+
+    float nextShotAt;
+
+    readonly Queue<float> scheduledProjectileTimes = new Queue<float>(8);
 
     public EnemyRangedKiteState(EnemyContext ctx, EnemyStateMachine fsm)
     {
@@ -29,6 +36,13 @@ public class EnemyRangedKiteState : IEnemyState
         ctx.agent.stoppingDistance = 0f;
         ctx.repathTimer = 0f;
         orbitTimer = 0f;
+
+        fireAnim = ctx.self.GetComponent<EnemyAnimDriver>();
+        fireAnim?.PlayWindUp();
+
+        nextShotAt = Time.time + (1f / Mathf.Max(0.01f, ctx.fireRate));
+
+        scheduledProjectileTimes.Clear();
 
         orbitDir = Random.value < 0.5f ? -1 : 1;
     }
@@ -50,11 +64,22 @@ public class EnemyRangedKiteState : IEnemyState
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        if (ctx.firePoint && EnemyCombatUtil.CanFire(ctx, Time.time))
+        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
+
+        if (Time.time >= nextShotAt)
         {
-            ctx.lastFireTime = Time.time;
-            // TODO later: shoot from ctx.firePoint at player
-            Debug.Log("Ranged enemy fired");
+            nextShotAt += interval;
+
+            fireAnim?.PlayShoot();
+
+            float delay = fireAnim ? fireAnim.FireDelaySeconds : 0f;
+            scheduledProjectileTimes.Enqueue(Time.time + delay);
+        }
+
+        if (scheduledProjectileTimes.Count > 0 && Time.time >= scheduledProjectileTimes.Peek())
+        {
+            scheduledProjectileTimes.Dequeue();
+            FireProjectileNow();
         }
 
         float min = ctx.preferredRange - ctx.rangeTolerance;
@@ -76,7 +101,6 @@ public class EnemyRangedKiteState : IEnemyState
                 Vector3 desired = ctx.self.position + away * retreatStep;
                 SetAgentDestinationSafe(desired);
             }
-
             return;
         }
 
@@ -94,7 +118,6 @@ public class EnemyRangedKiteState : IEnemyState
                 Vector3 desired = ctx.self.position + to * approachStep;
                 SetAgentDestinationSafe(desired);
             }
-
             return;
         }
 
@@ -120,6 +143,18 @@ public class EnemyRangedKiteState : IEnemyState
         }
     }
 
+    void FireProjectileNow()
+    {
+        var weapon = ctx.self.GetComponent<EnemyProjectileWeapon>();
+        if (!weapon) return;
+
+        Vector3 playerVel = Vector3.zero;
+        var pm = ctx.target.GetComponent<PlayerMotor>();
+        playerVel = pm ? pm.FullVelocity : Vector3.zero;
+
+        weapon.FireNow(ctx.target, playerVel);
+    }
+
     void SetAgentDestinationSafe(Vector3 desiredWorldPos)
     {
         if (!ctx.agent) return;
@@ -127,9 +162,7 @@ public class EnemyRangedKiteState : IEnemyState
         ctx.agent.isStopped = false;
 
         if (NavMesh.SamplePosition(desiredWorldPos, out NavMeshHit hit, 2.5f, NavMesh.AllAreas))
-        {
             ctx.agent.SetDestination(hit.position);
-        }
         else
         {
             NavMesh.SamplePosition(ctx.self.position, out hit, 2.5f, NavMesh.AllAreas);
@@ -139,7 +172,9 @@ public class EnemyRangedKiteState : IEnemyState
 
     public void Exit()
     {
-        if (!ctx.agent) return;
-        ctx.agent.isStopped = false;
+        if (ctx.agent) ctx.agent.isStopped = false;
+        scheduledProjectileTimes.Clear();
+
+        fireAnim?.PlayWindDown();
     }
 }

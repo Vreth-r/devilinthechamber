@@ -5,6 +5,7 @@ public class PlayerMotor : MonoBehaviour
 {
     [Header("References")]
     public Transform cameraPivot;
+    public PlayerSound sound;
 
     [Header("Movement")]
     public float maxGroundSpeed = 9f;
@@ -12,12 +13,15 @@ public class PlayerMotor : MonoBehaviour
     public float groundAcceleration = 60f;
     public float airAcceleration = 25f;
     public float groundFriction = 14f;
+    public float movementSpeedMod = 1f; // from stat mods
 
     [Header("Jump")]
     public float jumpHeight = 1.2f;
     public float gravity = 22f;
     public float coyoteTime = 0.08f;
     public float jumpBuffer = 0.08f;
+    public float jumpHeightMod = 1f; // stat mods
+    public bool canJumpMod = true; // ability mods
 
     [Header("Crouch")]
     public float standingHeight = 1.8f;
@@ -31,6 +35,7 @@ public class PlayerMotor : MonoBehaviour
     public float slideBurstSpeed = 50f;
     public float slideMinStartSpeed = 4.5f;
     public float slideAdditiveBoost = 10f;
+    public float slideSpeedMod = 1f;
 
     // decay
     public float slideDecayHalfLife = 0.10f;
@@ -41,6 +46,9 @@ public class PlayerMotor : MonoBehaviour
 
     public float slideFriction = 2.5f;
     public float slideCooldown = 0.12f;
+    public float slideCooldownMod = 1f;
+    public float slideDistMod = 1f;
+    public bool canSlideMod = true; // ability mods
 
     [Header("Air -> Slide Buffer")]
     public float slideLandBuffer = 0.20f;
@@ -63,6 +71,7 @@ public class PlayerMotor : MonoBehaviour
 
     [Header("FX")]
     public FovKick fovKick;
+    public FovKick viewportFovKick;
 
     CharacterController cc;
     PlayerControls controls;
@@ -71,6 +80,10 @@ public class PlayerMotor : MonoBehaviour
 
     Vector3 velocity;
     Vector3 planarVelocity;
+    public Vector3 PlanarVelocity => planarVelocity;
+    public float PlanarSpeed => planarVelocity.magnitude;
+    public bool IsStanding => stance == Stance.Stand;
+    public Vector3 FullVelocity => planarVelocity + Vector3.up * velocity.y;
 
     float coyoteTimer;
     float jumpBufferTimer;
@@ -99,6 +112,8 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.gamePaused) return;
+        
         slideCooldownTimer -= Time.deltaTime;
 
         Vector2 moveInput = Vector2.ClampMagnitude(controls.Player.Move.ReadValue<Vector2>(), 1f);
@@ -128,6 +143,7 @@ public class PlayerMotor : MonoBehaviour
         if (justLanded)
         {
             landGraceTimer = slideLandGrace;
+            sound.PlayLand();
         }
         else
         {
@@ -155,7 +171,7 @@ public class PlayerMotor : MonoBehaviour
                 slideBufferTimer = 0f;
                 StartSlide(wishDir);
             }
-            else if (crouchPressed && CanStartSlideNow(grounded))
+            else if (crouchPressed && CanStartSlideNow(grounded) && canSlideMod)
             {
                 StartSlide(wishDir);
             }
@@ -190,6 +206,7 @@ public class PlayerMotor : MonoBehaviour
                 if (fovKick)
                 {
                     fovKick.UpdateSlideSpeed(planarVelocity.magnitude);
+                    viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
                 }
 
                 if (slideTimer <= 0f || planarVelocity.magnitude <= slideMinEndSpeed || !grounded)
@@ -205,22 +222,23 @@ public class PlayerMotor : MonoBehaviour
             if (grounded)
             {
                 planarVelocity = ApplyFriction(planarVelocity, groundFriction, Time.deltaTime);
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult, groundAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult * movementSpeedMod, groundAcceleration, Time.deltaTime);
             }
             else
             {
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult, airAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult * movementSpeedMod, airAcceleration, Time.deltaTime);
             }
         }
 
-        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide)
+        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide && canJumpMod)
         {
             jumpBufferTimer = 0f;
             coyoteTimer = 0f;
 
             if (stance == Stance.Crouch) TryStandUp(force: true);
 
-            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight);
+            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight) * jumpHeightMod;
+            sound.PlayJump();
         }
 
         velocity.y -= gravity * Time.deltaTime;
@@ -231,6 +249,7 @@ public class PlayerMotor : MonoBehaviour
         if (fovKick)
         {
             fovKick.SetSpeed(planarVelocity.magnitude);
+            viewportFovKick.UpdateSlideSpeed(planarVelocity.magnitude);
         }
 
         if ((cc.collisionFlags & CollisionFlags.Above) != 0 && velocity.y > 0f)
@@ -246,9 +265,10 @@ public class PlayerMotor : MonoBehaviour
         SetStance(Stance.Slide);
 
         slideJumpUsed = false;
+        sound.StartSlideLoop();
 
-        slideTimer = slideDuration;
-        slideCooldownTimer = slideCooldown;
+        slideTimer = slideDuration * slideDistMod;
+        slideCooldownTimer = slideCooldown * slideCooldownMod;
 
         // direction prefer current velocity, else wishDir, else forward
         Vector3 dir =
@@ -260,11 +280,12 @@ public class PlayerMotor : MonoBehaviour
         float startSpeed = Mathf.Max(currentSpeed, slideMinStartSpeed);
 
         float boosted = startSpeed + slideAdditiveBoost;
-        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed);
-        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed);
+        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed * slideSpeedMod);
+        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed * slideSpeedMod);
         if (fovKick)
         {
             fovKick.BeginSlide(planarVelocity.magnitude);
+            viewportFovKick.BeginSlide(planarVelocity.magnitude);
         }
     }
 
@@ -278,9 +299,11 @@ public class PlayerMotor : MonoBehaviour
 
     void EndSlide(bool crouchHeldAfter)
     {
+        sound.StopSlideLoop();
         if (fovKick)
         {
             fovKick.EndSlide();
+            viewportFovKick.EndSlide();
         }
 
         if (crouchHeldAfter) 
@@ -296,8 +319,14 @@ public class PlayerMotor : MonoBehaviour
     void DoSlideJumpLaunch(Vector3 wishDir)
     {
         slideJumpUsed = true;
+        sound.StopSlideLoop();
+        sound.PlayJump();
 
-        if (fovKick) fovKick.EndSlide();
+        if (fovKick)
+        {
+            fovKick.EndSlide();
+            viewportFovKick.EndSlide();
+        }
 
         if (CanStandUp()) SetStance(Stance.Stand);
         else SetStance(Stance.Crouch);
@@ -330,11 +359,13 @@ public class PlayerMotor : MonoBehaviour
         if (stance == Stance.Stand)
         {
             ApplyControllerHeightKeepBottom(standingHeight);
+
         }
         else
         {
             ApplyControllerHeightKeepBottom(crouchHeight);
         }
+        
     }
 
     void TryStandUp(bool force = false)

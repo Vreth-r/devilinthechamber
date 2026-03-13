@@ -1,0 +1,50 @@
+.expandable {
+    width: 25%;
+    height: 75%;
+    transition: scale 0.3s ease;
+    transition-timing-function: linear;
+}
+
+.expandable:hover {
+    scale: 1.1 1.1;
+}
+
+.BuffTitle {
+    color: rgb(206, 180, 78);
+    -unity-text-align: middle-left;
+    font-size: 32px;
+    letter-spacing: 5px;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
+    translate: 0 20px;
+}
+
+.DebuffTitle {
+    color: rgb(255, 0, 0);
+    -unity-text-align: middle-left;
+    font-size: 32px;
+    letter-spacing: 5px;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
+    translate: 0 20px;
+    transform-origin: center;
+    background-size: 100% 100%;
+}
+
+.AbilityDescription {
+    font-size: 14px;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
+    color: rgb(148, 148, 148);
+    -unity-text-align: middle-left;
+    white-space: normal;
+}
+
+.CardTextBox {
+    flex-grow: 1;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
+    color: rgb(206, 180, 78);
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    -unity-text-align: upper-left;
+    transform-origin: center;
+}

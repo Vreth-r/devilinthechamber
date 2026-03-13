@@ -6,37 +6,76 @@ public class EnemyMeleeAttackState : IEnemyState
     readonly EnemyStateMachine fsm;
 
     public string Name => "MeleeAttack";
-    float windup = 0.25f;
+
+    EnemyMeleeAttack melee;
+
+    float windupTime = 0.0f;
+    float cooldownTime = 0.5f;
+
+    float timer;
+    bool didHit;
 
     public EnemyMeleeAttackState(EnemyContext ctx, EnemyStateMachine fsm)
-    { this.ctx = ctx; this.fsm = fsm; }
+    {
+        this.ctx = ctx;
+        this.fsm = fsm;
+        melee = ctx.self.GetComponent<EnemyMeleeAttack>();
+    }
 
     public void Enter()
     {
-        ctx.agent.isStopped = true;
-        ctx.agent.ResetPath();
-        windup = 0.25f;
+        if (ctx.agent)
+        {
+            ctx.agent.isStopped = true;
+            ctx.agent.ResetPath();
+        }
+
+        timer = windupTime;
+        didHit = false;
     }
 
     public void Tick(float dt)
     {
-        if (!ctx.HasTarget) { fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm))); return; }
+        if (!ctx.HasTarget)
+        {
+            fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm)));
+            return;
+        }
 
         float dist = ctx.DistanceToTarget();
-        if (dist > ctx.attackRange) { fsm.SetState(new EnemyMeleeChaseState(ctx, fsm)); return; }
+        if (dist > ctx.attackRange)
+        {
+            fsm.SetState(new EnemyMeleeChaseState(ctx, fsm));
+            return;
+        }
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        windup -= dt;
-        if (windup <= 0f)
+        timer -= dt;
+
+        if (!didHit && timer <= 0f)
         {
-            // TODO later actually damage player (hitbox / overlap / interface)
-            windup = 0.6f; // attack cooldown loop
+            didHit = true;
+            melee?.DoMeleeHit();
+            timer = cooldownTime * StatModManager.GetStatModifier(StatName.DOG_RECOVERY_SPEED);
         }
+        else if (didHit && timer <= 0f)
+        {
+            didHit = false;
+            timer = windupTime;
+        }
+
+        if (ctx.agent && ctx.agent.enabled && ctx.agent.isOnNavMesh)
+        {
+            ctx.agent.isStopped = false;
+            ctx.agent.stoppingDistance = 0f;
+            ctx.agent.SetDestination(ctx.target.position);
+        }
+        
     }
 
     public void Exit()
     {
-        ctx.agent.isStopped = false;
+        if (ctx.agent) ctx.agent.isStopped = false;
     }
 }

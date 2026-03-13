@@ -21,4 +21,16 @@ public class SoundLibrary : ScriptableObject
         lookup.TryGetValue(soundId, out var entry);
         return entry;
     }
+
+    void OnEnable()
+    {
+        if (sounds == null) return;
+        var seen = new HashSet<string>();
+        foreach (var s in sounds)
+        {
+            if (string.IsNullOrWhiteSpace(s.soundId)) continue;
+            if (!seen.Add(s.soundId))
+                Debug.LogWarning($"SoundLibrary: Duplicate soundId '{s.soundId}'", this);
+        }
+    }
 }

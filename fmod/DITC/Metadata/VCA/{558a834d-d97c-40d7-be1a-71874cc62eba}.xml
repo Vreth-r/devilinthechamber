@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerVCA" id="{558a834d-d97c-40d7-be1a-71874cc62eba}">
+		<property name="name">
+			<value>Master</value>
+		</property>
+		<relationship name="mixer">
+			<destination>{fe3d83c1-d794-47cd-92fc-884f357f347b}</destination>
+		</relationship>
+	</object>
+</objects>

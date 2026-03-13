@@ -18,7 +18,7 @@ public class FovKick : MonoBehaviour
     public float speedForMaxFov = 18f;
     public float speedFovSmooth = 10f;
 
-    Camera cam;
+    public Camera cam;
 
     bool sliding;
     float slideStartSpeed = 1f;

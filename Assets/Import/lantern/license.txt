@@ -1,0 +1,11 @@
+Model Information:
+* title:	lantern
+* source:	https://sketchfab.com/3d-models/lantern-8dbafc4037d34f0b93158dc56d5b50be
+* author:	toivo (https://sketchfab.com/toivo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "lantern" (https://sketchfab.com/3d-models/lantern-8dbafc4037d34f0b93158dc56d5b50be) by toivo (https://sketchfab.com/toivo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

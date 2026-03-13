@@ -178,11 +178,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.203
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.786
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -223,7 +227,40 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2063976853361272615}
+    - targetCorrespondingSourceObject: {fileID: 7036213049465896255, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6061074386899920505}
   m_SourcePrefab: {fileID: 100100000, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
+--- !u!1 &452452295758384246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7036213049465896255, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
+  m_PrefabInstance: {fileID: 7485766025927782729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6061074386899920505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452452295758384246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f930f45bf764b094195070a8ddcf9537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunLag
+  cameraPivot: {fileID: 0}
+  motor: {fileID: 0}
+  baseLocalPos: {x: 0, y: 0, z: 0}
+  baseLocalEuler: {x: 270.01978, y: 90, z: 0}
+  maxPosOffset: 0.1
+  posLag: 0.06
+  maxRotOffset: 8
+  rotLag: 0.07
+  posResponse: {x: 1, y: 0, z: 0.8}
+  rotResponse: {x: 0, y: 0, z: 1}
+  enableBob: 0
+  bobAmount: 0.02
+  bobSpeed: 10
 --- !u!4 &6946927732796266146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a1ac162cc7ce8f248b76b1607d955dc5, type: 3}
@@ -247,6 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunHitscan
   muzzle: {fileID: 6249866615138648727}
+  animator: {fileID: 0}
+  cam: {fileID: 0}
   fireRate: 1.5
   range: 20
   damage: 5

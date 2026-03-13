@@ -11,7 +11,7 @@ public class EnemyStateMachine
         Current?.Exit();
         Current = next;
         Current?.Enter();
-        Debug.Log(next);
+        //Debug.Log(next);
     }
 
     public void Tick(float dt)

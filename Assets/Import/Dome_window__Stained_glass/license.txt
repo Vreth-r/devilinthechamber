@@ -1,0 +1,11 @@
+Model Information:
+* title:	Dome window | Stained glass
+* source:	https://sketchfab.com/3d-models/dome-window-stained-glass-6eb06f9ea1bf43e78865ef1a030ed4e3
+* author:	lavakongen (https://sketchfab.com/lavakongen)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Dome window | Stained glass" (https://sketchfab.com/3d-models/dome-window-stained-glass-6eb06f9ea1bf43e78865ef1a030ed4e3) by lavakongen (https://sketchfab.com/lavakongen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
