@@ -163,6 +163,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipTutorial"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7f7807e-e75d-4e0a-b92e-945c604ee54d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -297,6 +306,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenDeals"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b26d9a5-2a65-49e8-affc-faaa5002980b"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipTutorial"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -319,6 +339,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_OpenDeals = m_Player.FindAction("OpenDeals", throwIfNotFound: true);
+        m_Player_SkipTutorial = m_Player.FindAction("SkipTutorial", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -410,6 +431,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_OpenDeals;
+    private readonly InputAction m_Player_SkipTutorial;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -453,6 +475,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/OpenDeals".
         /// </summary>
         public InputAction @OpenDeals => m_Wrapper.m_Player_OpenDeals;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkipTutorial".
+        /// </summary>
+        public InputAction @SkipTutorial => m_Wrapper.m_Player_SkipTutorial;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -503,6 +529,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenDeals.started += instance.OnOpenDeals;
             @OpenDeals.performed += instance.OnOpenDeals;
             @OpenDeals.canceled += instance.OnOpenDeals;
+            @SkipTutorial.started += instance.OnSkipTutorial;
+            @SkipTutorial.performed += instance.OnSkipTutorial;
+            @SkipTutorial.canceled += instance.OnSkipTutorial;
         }
 
         /// <summary>
@@ -538,6 +567,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenDeals.started -= instance.OnOpenDeals;
             @OpenDeals.performed -= instance.OnOpenDeals;
             @OpenDeals.canceled -= instance.OnOpenDeals;
+            @SkipTutorial.started -= instance.OnSkipTutorial;
+            @SkipTutorial.performed -= instance.OnSkipTutorial;
+            @SkipTutorial.canceled -= instance.OnSkipTutorial;
         }
 
         /// <summary>
@@ -719,6 +751,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenDeals(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkipTutorial" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkipTutorial(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

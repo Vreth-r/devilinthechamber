@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
   m_Name: T3 D 6
   m_EditorClassIdentifier: Assembly-CSharp::Deal
-  statDeals: []
-  abilityDeals:
-  - AbilityName: 17
-    duration: -1
+  statDeals:
+  - statName: 5
+    modifier: 1
     dealType: 0
-  - AbilityName: 15
+  abilityDeals:
+  - AbilityName: 11
     duration: -1
     dealType: 1
-  - AbilityName: 18
+  - AbilityName: 9
     duration: -1
     dealType: 1

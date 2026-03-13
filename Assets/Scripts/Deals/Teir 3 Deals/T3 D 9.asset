@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: T3 D 9
   m_EditorClassIdentifier: Assembly-CSharp::Deal
   statDeals:
-  - statName: 2
-    modifier: 1.5
+  - statName: 12
+    modifier: 0.5
     dealType: 0
   abilityDeals:
-  - AbilityName: 16
+  - AbilityName: 7
     duration: -1
     dealType: 1
-  - AbilityName: 10
+  - AbilityName: 6
     duration: -1
     dealType: 1

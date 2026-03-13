@@ -15,7 +15,6 @@ MonoBehaviour:
   dealDeck:
   - {fileID: 11400000, guid: 57b91f7e26014f646847a3e77a57c5b8, type: 2}
   - {fileID: 11400000, guid: 21ae6678b7fae7e438bbacf1764fea1f, type: 2}
-  - {fileID: 11400000, guid: b9344ae859b1b114eb57f1dd7fdd124a, type: 2}
   - {fileID: 11400000, guid: 3b841de43642dca458fdd4e7eaed49a8, type: 2}
   - {fileID: 11400000, guid: 24869b406ae6d5544b590dbb705961e1, type: 2}
   - {fileID: 11400000, guid: b4219581073052f408fcc2b579f2d524, type: 2}

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Deal
   statDeals: []
   abilityDeals:
-  - AbilityName: 4
+  - AbilityName: 19
     duration: -1
     dealType: 0
-  - AbilityName: 15
+  - AbilityName: 9
     duration: -1
     dealType: 1

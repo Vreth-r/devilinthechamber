@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Deal
   statDeals:
   - statName: 0
-    modifier: 1.07
+    modifier: 1.15
     dealType: 0
   - statName: 6
     modifier: 1.5

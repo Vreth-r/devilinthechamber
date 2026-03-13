@@ -120,7 +120,7 @@ public static class DealsLocalization
                 return "Deafness";
                 
             case AbilityName.DOUBLE_DAMAGE_LOW_HP:
-                return "Double Damage When Below 3 Hit Points";
+                return "Dobule Damage When Below 3 Hit Points";
                 
             case AbilityName.KNOCKBACK_ABILITY:
                 return "Enemies Knock You Back On Hits";
