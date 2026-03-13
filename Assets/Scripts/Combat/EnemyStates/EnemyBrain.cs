@@ -7,29 +7,14 @@ public class EnemyBrain : MonoBehaviour
     [Header("Behaviour")]
     public EnemyBehaviour behaviour;
 
+    [Header("Stats")]
+    public EnemyStats stats;
+
     [Header("Target")]
     public Transform target;
 
-    [Header("Ranges")]
-    public float aggroRange = 25f;
-    public float attackRange = 2.0f;
-    public float stopRange = 1.8f;
-
-    [Header("Chase")]
-    public float repathRateHz = 10f;
-
-    [Header("Facing")]
-    public bool faceTargetWhenStopped = true;
-    public float faceTurnSpeed = 12f;
-
     [Header("Combat")]
     public Transform firePoint;
-    public float fireRate = 3f;
-    public int damage = 10;
-
-    [Header("Ranged Spacing")]
-    public float preferredRange = 12f;
-    public float rangeTolerance = 2f;
 
     EnemyStateMachine fsm;
     EnemyContext ctx;
@@ -49,55 +34,66 @@ public class EnemyBrain : MonoBehaviour
             self: transform,
             agent: agent,
             target: target,
-            aggroRange: aggroRange,
-            attackRange: attackRange,
-            stopRange: stopRange,
-            repathRateHz: repathRateHz,
-            faceTargetWhenStopped: faceTargetWhenStopped,
-            faceTurnSpeed: faceTurnSpeed
+            firePoint: firePoint,
+            stats: stats
         );
 
         fsm = new EnemyStateMachine();
+
+        ApplyStatsToAgent();
     }
 
     void OnEnable()
     {
         if (!behaviour)
         {
-            Debug.LogError($"{name}: No EnemyBehaviour assigned #stupidbitch");
+            Debug.LogError($"{name}: No EnemyBehaviour assigned.");
+            enabled = false;
             return;
         }
+
+        if (!stats)
+        {
+            Debug.LogError($"{name}: No EnemyStats assigned.");
+            enabled = false;
+            return;
+        }
+
         fsm.SetState(behaviour.CreateInitialState(ctx, fsm));
     }
 
     void Update()
     {
         ctx.target = target;
-        ctx.aggroRange = aggroRange;
-        ctx.attackRange = attackRange;
-        ctx.stopRange = stopRange;
-        ctx.repathRateHz = repathRateHz;
-        ctx.faceTargetWhenStopped = faceTargetWhenStopped;
-        ctx.faceTurnSpeed = faceTurnSpeed;
-
         ctx.firePoint = firePoint;
-        ctx.fireRate = fireRate;
-        ctx.damage = damage;
+        ctx.stats = stats;
 
-        ctx.preferredRange = preferredRange;
-        ctx.rangeTolerance = rangeTolerance;
+        ApplyStatsToAgent();
 
         fsm.Tick(Time.deltaTime);
+    }
+
+    void ApplyStatsToAgent()
+    {
+        if (!agent || stats == null) return;
+
+        agent.speed = stats.moveSpeed;
+        agent.stoppingDistance = stats.stopRange;
     }
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
+        if (!stats) return;
+
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, aggroRange);
+        Gizmos.DrawWireSphere(transform.position, stats.aggroRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, stats.attackRange);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, stats.leashRange);
     }
 #endif
 }

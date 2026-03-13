@@ -11,13 +11,8 @@ public class EnemyRangedKiteState : IEnemyState
 
     public string Name => "RangedKite";
 
-    const float orbitStep = 10f;
-    const float retreatStep = 11f;
-    const float approachStep = 6f;
-    const float orbitRecalcHz = 6f;
     float orbitTimer;
     int orbitDir = 1;
-
     float nextShotAt;
 
     readonly Queue<float> scheduledProjectileTimes = new Queue<float>(8);
@@ -40,7 +35,8 @@ public class EnemyRangedKiteState : IEnemyState
         fireAnim = ctx.self.GetComponent<EnemyAnimDriver>();
         fireAnim?.PlayWindUp();
 
-        nextShotAt = Time.time + (1f / Mathf.Max(0.01f, ctx.fireRate));
+        float interval = 1f / Mathf.Max(0.01f, ctx.stats.fireRate);
+        nextShotAt = Time.time + (interval * ctx.stats.initialShotDelayMultiplier);
 
         scheduledProjectileTimes.Clear();
 
@@ -49,14 +45,7 @@ public class EnemyRangedKiteState : IEnemyState
 
     public void Tick(float dt)
     {
-        if (!ctx.HasTarget)
-        {
-            fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyRangedKiteState(ctx, fsm)));
-            return;
-        }
-
-        float dist = ctx.DistanceToTarget();
-        if (dist > ctx.aggroRange)
+        if (!ctx.HasTarget || ctx.IsTargetOutOfLeashRange())
         {
             fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyRangedKiteState(ctx, fsm)));
             return;
@@ -64,7 +53,7 @@ public class EnemyRangedKiteState : IEnemyState
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
+        float interval = 1f / Mathf.Max(0.01f, ctx.stats.fireRate);
 
         if (Time.time >= nextShotAt)
         {
@@ -82,40 +71,40 @@ public class EnemyRangedKiteState : IEnemyState
             FireProjectileNow();
         }
 
-        float min = ctx.preferredRange - ctx.rangeTolerance;
-        float max = ctx.preferredRange + ctx.rangeTolerance;
+        float min = ctx.stats.preferredRange - ctx.stats.rangeTolerance;
+        float max = ctx.stats.preferredRange + ctx.stats.rangeTolerance;
 
         ctx.repathTimer -= dt;
 
-        if (dist < min)
+        if (ctx.DistanceToTarget() < min)
         {
             if (ctx.repathTimer <= 0f)
             {
-                ctx.repathTimer = 1f / Mathf.Max(1f, ctx.repathRateHz);
+                ctx.repathTimer = 1f / Mathf.Max(1f, ctx.stats.repathRateHz);
 
-                Vector3 away = (ctx.self.position - ctx.target.position);
+                Vector3 away = ctx.self.position - ctx.target.position;
                 away.y = 0f;
                 if (away.sqrMagnitude < 0.001f) away = ctx.self.forward;
                 away.Normalize();
 
-                Vector3 desired = ctx.self.position + away * retreatStep;
+                Vector3 desired = ctx.self.position + away * ctx.stats.retreatStep;
                 SetAgentDestinationSafe(desired);
             }
             return;
         }
 
-        if (dist > max)
+        if (ctx.DistanceToTarget() > max)
         {
             if (ctx.repathTimer <= 0f)
             {
-                ctx.repathTimer = 1f / Mathf.Max(1f, ctx.repathRateHz);
+                ctx.repathTimer = 1f / Mathf.Max(1f, ctx.stats.repathRateHz);
 
-                Vector3 to = (ctx.target.position - ctx.self.position);
+                Vector3 to = ctx.target.position - ctx.self.position;
                 to.y = 0f;
                 if (to.sqrMagnitude < 0.001f) to = ctx.self.forward;
                 to.Normalize();
 
-                Vector3 desired = ctx.self.position + to * approachStep;
+                Vector3 desired = ctx.self.position + to * ctx.stats.approachStep;
                 SetAgentDestinationSafe(desired);
             }
             return;
@@ -124,9 +113,10 @@ public class EnemyRangedKiteState : IEnemyState
         orbitTimer -= dt;
         if (orbitTimer <= 0f)
         {
-            orbitTimer = 1f / orbitRecalcHz;
+            orbitTimer = 1f / Mathf.Max(0.01f, ctx.stats.orbitRecalcHz);
 
-            if (Random.value < 0.15f) orbitDir *= -1;
+            if (Random.value < ctx.stats.orbitFlipChance)
+                orbitDir *= -1;
 
             Vector3 to = ctx.target.position - ctx.self.position;
             to.y = 0f;
@@ -135,10 +125,11 @@ public class EnemyRangedKiteState : IEnemyState
 
             Vector3 side = Vector3.Cross(Vector3.up, to) * orbitDir;
 
+            float dist = ctx.DistanceToTarget();
             float bias = Mathf.InverseLerp(min, max, dist);
-            float radial = Mathf.Lerp(+1.2f, -1.2f, bias);
+            float radial = Mathf.Lerp(ctx.stats.orbitRadialBiasNear, ctx.stats.orbitRadialBiasFar, bias);
 
-            Vector3 desired = ctx.self.position + side * orbitStep + to * radial;
+            Vector3 desired = ctx.self.position + side * ctx.stats.orbitStep + to * radial;
             SetAgentDestinationSafe(desired);
         }
     }
@@ -161,11 +152,11 @@ public class EnemyRangedKiteState : IEnemyState
 
         ctx.agent.isStopped = false;
 
-        if (NavMesh.SamplePosition(desiredWorldPos, out NavMeshHit hit, 2.5f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(desiredWorldPos, out NavMeshHit hit, ctx.stats.navSampleDistance, NavMesh.AllAreas))
             ctx.agent.SetDestination(hit.position);
         else
         {
-            NavMesh.SamplePosition(ctx.self.position, out hit, 2.5f, NavMesh.AllAreas);
+            NavMesh.SamplePosition(ctx.self.position, out hit, ctx.stats.navSampleDistance, NavMesh.AllAreas);
             ctx.agent.SetDestination(hit.position);
         }
     }
@@ -174,7 +165,6 @@ public class EnemyRangedKiteState : IEnemyState
     {
         if (ctx.agent) ctx.agent.isStopped = false;
         scheduledProjectileTimes.Clear();
-
         fireAnim?.PlayWindDown();
     }
 }

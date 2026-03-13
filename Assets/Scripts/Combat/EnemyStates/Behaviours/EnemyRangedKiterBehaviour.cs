@@ -4,5 +4,7 @@ using UnityEngine;
 public class EnemyRangedKiterBehaviour : EnemyBehaviour
 {
     public override IEnemyState CreateInitialState(EnemyContext ctx, EnemyStateMachine fsm)
-        => new EnemyIdleState(ctx, fsm, nextOnAggro: () => new EnemyRangedKiteState(ctx, fsm));
+    {
+        return new EnemyIdleState(ctx, fsm, () => new EnemyRangedKiteState(ctx, fsm));
+    }
 }

@@ -11,7 +11,9 @@ public class EnemyIdleState : IEnemyState
 
     public EnemyIdleState(EnemyContext ctx, EnemyStateMachine fsm, Func<IEnemyState> nextOnAggro)
     {
-        this.ctx = ctx; this.fsm = fsm; this.nextOnAggro = nextOnAggro;
+        this.ctx = ctx;
+        this.fsm = fsm;
+        this.nextOnAggro = nextOnAggro;
     }
 
     public void Enter()
@@ -26,7 +28,8 @@ public class EnemyIdleState : IEnemyState
     public void Tick(float dt)
     {
         if (!ctx.HasTarget) return;
-        if (ctx.DistanceToTarget() <= ctx.aggroRange)
+
+        if (ctx.IsTargetInAggroRange())
             fsm.SetState(nextOnAggro());
     }
 

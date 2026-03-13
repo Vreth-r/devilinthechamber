@@ -5,52 +5,30 @@ public class EnemyContext
 {
     public readonly Transform self;
     public readonly NavMeshAgent agent;
+
     public Transform target;
-
-    // tuning
-    public float aggroRange;
-    public float attackRange;
-    public float stopRange;
-    public float repathRateHz;
-
-    // combat
     public Transform firePoint;
-    public float fireRate;
-    public float projectileSpeed;
-    public float lastFireTime;
-    public int damage;
+    public EnemyStats stats;
 
-    // ranged spacing
-    public float preferredRange;
-    public float rangeTolerance;
-
-    public bool faceTargetWhenStopped;
-    public float faceTurnSpeed;
-
-    // working data
+    // runtime / working data
     public float repathTimer;
+    public float lastFireTime;
 
     public EnemyContext(
         Transform self,
         NavMeshAgent agent,
         Transform target,
-        float aggroRange,
-        float attackRange,
-        float stopRange,
-        float repathRateHz,
-        bool faceTargetWhenStopped,
-        float faceTurnSpeed)
+        Transform firePoint,
+        EnemyStats stats)
     {
         this.self = self;
         this.agent = agent;
         this.target = target;
-        this.aggroRange = aggroRange;
-        this.attackRange = attackRange;
-        this.stopRange = stopRange;
-        this.repathRateHz = repathRateHz;
-        this.faceTargetWhenStopped = faceTargetWhenStopped;
-        this.faceTurnSpeed = faceTurnSpeed;
+        this.firePoint = firePoint;
+        this.stats = stats;
     }
+
+    public bool HasTarget => target != null;
 
     public float DistanceToTarget()
     {
@@ -58,5 +36,18 @@ public class EnemyContext
         return Vector3.Distance(self.position, target.position);
     }
 
-    public bool HasTarget => target != null;
+    public bool IsTargetInAggroRange()
+    {
+        return HasTarget && DistanceToTarget() <= stats.aggroRange;
+    }
+
+    public bool IsTargetInAttackRange()
+    {
+        return HasTarget && DistanceToTarget() <= stats.attackRange;
+    }
+
+    public bool IsTargetOutOfLeashRange()
+    {
+        return !HasTarget || DistanceToTarget() > stats.leashRange;
+    }
 }

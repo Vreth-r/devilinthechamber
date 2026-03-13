@@ -8,23 +8,29 @@ public class EnemyMeleeChaseState : IEnemyState
     public string Name => "MeleeChase";
 
     public EnemyMeleeChaseState(EnemyContext ctx, EnemyStateMachine fsm)
-    { this.ctx = ctx; this.fsm = fsm; }
+    {
+        this.ctx = ctx;
+        this.fsm = fsm;
+    }
 
     public void Enter()
     {
+        if (!ctx.agent) return;
+
         ctx.agent.isStopped = false;
-        ctx.agent.stoppingDistance = ctx.attackRange;
+        ctx.agent.stoppingDistance = ctx.stats.attackRange;
         ctx.repathTimer = 0f;
     }
 
     public void Tick(float dt)
     {
-        if (!ctx.HasTarget) { fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm))); return; }
+        if (!ctx.HasTarget || ctx.IsTargetOutOfLeashRange())
+        {
+            fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm)));
+            return;
+        }
 
-        float dist = ctx.DistanceToTarget();
-        if (dist > ctx.aggroRange) { fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm))); return; }
-
-        if (dist <= ctx.attackRange)
+        if (ctx.IsTargetInAttackRange())
         {
             fsm.SetState(new EnemyMeleeAttackState(ctx, fsm));
             return;
@@ -33,7 +39,7 @@ public class EnemyMeleeChaseState : IEnemyState
         ctx.repathTimer -= dt;
         if (ctx.repathTimer <= 0f)
         {
-            ctx.repathTimer = 1f / Mathf.Max(1f, ctx.repathRateHz);
+            ctx.repathTimer = 1f / Mathf.Max(1f, ctx.stats.repathRateHz);
             ctx.agent.SetDestination(ctx.target.position);
         }
     }

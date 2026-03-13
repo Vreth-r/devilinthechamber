@@ -14,9 +14,9 @@ public class EnemyTurretState : IEnemyState
     readonly Queue<float> scheduledProjectileTimes = new Queue<float>(8);
 
     public EnemyTurretState(EnemyContext ctx, EnemyStateMachine fsm)
-    { 
-        this.ctx = ctx; 
-        this.fsm = fsm; 
+    {
+        this.ctx = ctx;
+        this.fsm = fsm;
     }
 
     public void Enter()
@@ -39,20 +39,18 @@ public class EnemyTurretState : IEnemyState
 
         scheduledProjectileTimes.Clear();
 
-        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
-        nextShotAt = Time.time + interval;
+        float interval = 1f / Mathf.Max(0.01f, ctx.stats.fireRate);
+        nextShotAt = Time.time + (interval * ctx.stats.initialShotDelayMultiplier);
     }
 
     public void Tick(float dt)
     {
         if (!ctx.HasTarget) return;
-
-        float dist = ctx.DistanceToTarget();
-        if (dist > ctx.aggroRange) return;
+        if (!ctx.IsTargetInAggroRange()) return;
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        float interval = 1f / Mathf.Max(0.01f, ctx.fireRate);
+        float interval = 1f / Mathf.Max(0.01f, ctx.stats.fireRate);
 
         if (Time.time >= nextShotAt)
         {
