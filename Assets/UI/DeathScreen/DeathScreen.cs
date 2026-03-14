@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -74,37 +76,45 @@ public class DeathScreen : MonoBehaviour
         }).StartingIn((long)(fadeMs + 6000));
 
     }
-    string NumToRoman (int num)
+    Dictionary<int, string> baseRomanNums = new Dictionary<int, string>
     {
-        switch (num)
+        {1, "I"},
+        {4, "IV"},
+        {5, "V"},
+        {9, "IX"},
+        {10, "X"},
+        {40, "XL"},
+        {50, "L"},
+    };
+    string NumToRoman (int num)
+    { 
+        string romanNum = "";
+        int d = 1;
+        while (num >= d)
+            d *= 10;
+        
+        d /= 10;
+
+        while (num > 0)
         {
-            case 0:
-                return "0";
-            case 1:
-                return "I";
-            case 2:
-                return "II";
-            case 3:
-                return "III";
-            case 4:
-                return "IV";
-            case 5:
-                return "V";
-            case 6:
-                return "VI";
-            case 7:
-                return "VII";
-            case 8:
-                return "VIII";
-            case 9:
-                return "IX";
-            case 10:
-                return "X";
-            case 11:
-                return "XI";
-            default:
-                return "";
-            
+            int last = num / d;
+            if (last <= 3)
+            {
+                for (int i = 0; i < last; i++) romanNum += baseRomanNums[d];
+            }
+            else if (last == 4)
+                romanNum += baseRomanNums[d] + baseRomanNums[d * 5];
+            else if (5 <= last && last <= 8)
+            {
+                romanNum += baseRomanNums[d * 5];
+                for (int i = 0; i < last - 5; i++) romanNum += baseRomanNums[d];
+            }
+            else if (last == 9)
+                romanNum += baseRomanNums[d] + baseRomanNums[d * 10];
+            num = num % d;
+            d /= 10;
         }
+
+        return romanNum;
     }
 }
