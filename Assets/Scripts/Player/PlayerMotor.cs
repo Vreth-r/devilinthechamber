@@ -16,7 +16,7 @@ public class PlayerMotor : MonoBehaviour
     public float movementSpeedMod = 1f; // from stat mods
 
     [Header("Jump")]
-    public float jumpHeight = 1.2f;
+    public float jumpHeight = 3.4f;
     public float gravity = 22f;
     public float coyoteTime = 0.08f;
     public float jumpBuffer = 0.08f;

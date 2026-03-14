@@ -160,7 +160,7 @@ public class Tutorial_DealMenu : MonoBehaviour
         // Deals source might not exist in tutorial scenes — guard it
         if (DeckManager.Instance != null)
         {
-            deals = DeckManager.Instance.GetRandomDeals();
+            deals = DeckManager.Instance.DrawDeals();
         }
         else
         {

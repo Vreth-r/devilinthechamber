@@ -8,7 +8,8 @@ public class DealMenu : MonoBehaviour
 {  
     public static DealMenu Instance;
 
-    public Texture2D deathCard;
+    public Texture2D cardBackground;
+    public Texture2D deathCardBackground;
 
     Button deal1;
     Button deal2;
@@ -23,7 +24,6 @@ public class DealMenu : MonoBehaviour
     [SerializeField]PauseMenu pauseMenu;
 
     VisualElement root;
-    GameManager gameManager;
     PlayerControls controls;
     
     public bool dealMenuOpen;
@@ -86,7 +86,7 @@ public class DealMenu : MonoBehaviour
         //hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         dealsDoc.sortingOrder = 1;
 
-        deals = DeckManager.Instance.GetRandomDeals();
+        deals = DeckManager.Instance.DrawDeals();
 
         SetDealsText();
 
@@ -106,6 +106,8 @@ public class DealMenu : MonoBehaviour
         Cursor.visible = false;
         cameraScript.enabled = true;
         dealMenuOpen = false;
+
+        DeckManager.Instance.AddDeathCard(2);
         
         //hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 1;
@@ -185,10 +187,11 @@ public class DealMenu : MonoBehaviour
             {
                 if (ability.AbilityName == AbilityName.DEATH)
                 {
-                    dealButtons[i].style.backgroundImage = new StyleBackground(deathCard);
+                    dealButtons[i].style.backgroundImage = new StyleBackground(deathCardBackground);
                 }
                 else
                 {
+                    dealButtons[i].style.backgroundImage = new StyleBackground(cardBackground);
                     string t;
                     if (ability.duration != -1)
                         t = $"{Mathf.Round(ability.duration)}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";

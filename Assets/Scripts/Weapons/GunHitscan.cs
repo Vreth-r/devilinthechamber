@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using FMODUnity;
 using FMOD.Studio;
+using System;
 
 public class GunHitscan : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class GunHitscan : MonoBehaviour
     public int currentMagazine = 10;
     public int magazineSizeMod = 0; // stat mods
 
+    public bool doesReload = false;
     public bool reloading = false;
     public float reloadSpeed = 1.25f;
     public float reloadSpeedMod = 1f; // stat mods
@@ -60,7 +62,7 @@ public class GunHitscan : MonoBehaviour
     {
         if (GameManager.Instance.gamePaused) return;
         
-        if (controls.Player.Reload.IsPressed() && !reloading)
+        if (doesReload && controls.Player.Reload.IsPressed() && !reloading)
         {
             //PlayerManager.Instance.health.Die(true);
             StartCoroutine(Reload());
@@ -81,17 +83,15 @@ public class GunHitscan : MonoBehaviour
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 aimPoint;
-        if (Physics.Raycast(aimRay, out RaycastHit aimHit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
-            aimPoint = aimHit.point;
-        else
-            aimPoint = aimRay.origin + aimRay.direction * range * rangeMod;
+
+        aimPoint = aimRay.origin + aimRay.direction * range * rangeMod; // Magic!
 
         Vector3 origin = muzzle.position;
         Vector3 dir = (aimPoint - origin).normalized;
 
-        Vector3 endPoint = origin + dir * range * rangeMod;
+        Vector3 endPoint = origin + dir * range * rangeMod; // Magic 2!
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, Mathf.Infinity, hitMask, QueryTriggerInteraction.Ignore))
         {
             endPoint = hit.point;
 
@@ -114,9 +114,12 @@ public class GunHitscan : MonoBehaviour
 
         if (tracerPrefab) SpawnTracer(origin, endPoint);
 
-        currentMagazine -= 1;
-        UIEvents.SetAmmo();
-        if (currentMagazine == 0) StartCoroutine(Reload());
+        if (doesReload)
+        {
+            currentMagazine -= 1;
+            UIEvents.SetAmmo();
+            if (currentMagazine == 0) StartCoroutine(Reload());   
+        }
     }
 
     IEnumerator FlashLight()

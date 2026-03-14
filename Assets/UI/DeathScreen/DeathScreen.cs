@@ -41,7 +41,7 @@ public class DeathScreen : MonoBehaviour
         // set timers for transitions
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.lives + 1);
+            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.deaths - 1);
         }).StartingIn((long)fadeMs);
 
         livesRemaining.schedule.Execute(() =>
@@ -52,7 +52,7 @@ public class DeathScreen : MonoBehaviour
         livesRemaining.schedule.Execute(() =>
         {
             livesRemaining.visible = false;
-            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.lives);
+            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.deaths);
         }).StartingIn((long)(fadeMs + 2250));
 
         livesRemaining.schedule.Execute(() =>

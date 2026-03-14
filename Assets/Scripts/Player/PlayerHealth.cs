@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public int maxHealth = 15;
     public int maxHealthMod = 0;
     public int currentHealth;
-    public int lives = 10;
+    public int deaths = 0;
 
     public bool takesKnockback = false;
     private float knockbackForce = 10f;
@@ -90,7 +90,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {
-            lives -= 1;
+            deaths += 1;
             Die();
         }
     }
@@ -101,21 +101,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         UIEvents.DoDeathAnim();
         invincible = true;
+        currentHealth = maxHealth + maxHealthMod;
     }
-    async void DiePart2()
+    void DiePart2()
     {
         invincible = false;
-        if (lives > 0)
-        {
-            CheckpointManager.Instance.RespawnPlayer(gameObject);
-            DealMenu.Instance.OpenMenu();
-        }
-        else
-        {
-            StatModManager.ResetStatMods();
-            GameManager.Instance.StopMusic();
-            Destroy(GameManager.Instance.gameObject);
-            await SceneFader.Instance.FadeToScene("GameOver");
-        }
+
+        CheckpointManager.Instance.RespawnPlayer(gameObject);
+        DealMenu.Instance.OpenMenu();
+        
     }
 }

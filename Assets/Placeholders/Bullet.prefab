@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6755529254949167870}
   - component: {fileID: 6873007495049795472}
   - component: {fileID: 2021965342627534742}
+  - component: {fileID: -1832351022036954224}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.01973, y: 4.72777, z: 2.844}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -160,3 +161,19 @@ MonoBehaviour:
   useGravity: 0
   lifetime: 3
   impactPrefab: {fileID: 0}
+--- !u!114 &-1832351022036954224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441187341332188329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e71fe8823c6864985038ce3547d64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextureScroller
+  scrollX: 1
+  scrollSpeedX: 1
+  scrollY: 1
+  scrollSpeedY: 1
