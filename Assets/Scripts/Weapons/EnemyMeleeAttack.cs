@@ -2,36 +2,72 @@ using UnityEngine;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
-    public Transform attackOrigin;       // optional (chest/hands). If null, uses transform
-    public float attackRadius = 1.2f;
-    public float attackRangeForward = 0.6f;
-    public int damage = 12;
+    [Header("Refs")]
+    [SerializeField] private Transform attackOrigin;
 
-    public LayerMask hitMask = ~0;
+    [Header("Collision")]
+    [SerializeField] private LayerMask hitMask = ~0;
+
+    private EnemyBrain brain;
+    private EnemyStats stats;
+
+    void Awake()
+    {
+        CacheDependencies();
+    }
+
+    void CacheDependencies()
+    {
+        if (!brain) brain = GetComponent<EnemyBrain>();
+        stats = brain != null ? brain.stats : null;
+    }
+
+    bool HasValidSetup()
+    {
+        if (!brain) brain = GetComponent<EnemyBrain>();
+        if (brain != null) stats = brain.stats;
+
+        return stats != null;
+    }
 
     public void DoMeleeHit()
     {
-        Transform o = attackOrigin ? attackOrigin : transform;
+        if (!HasValidSetup())
+            return;
 
-        Vector3 center = o.position + o.forward * attackRangeForward + Vector3.up * 1.0f;
+        Transform originTransform = attackOrigin ? attackOrigin : transform;
+
+        Vector3 center =
+            originTransform.position +
+            originTransform.forward * stats.meleeAttackRangeForward +
+            Vector3.up * stats.meleeAttackHeightOffset;
 
         Collider[] hits = new Collider[8];
-        int count = Physics.OverlapSphereNonAlloc(center, attackRadius, hits, hitMask, QueryTriggerInteraction.Ignore);
+        int count = Physics.OverlapSphereNonAlloc(
+            center,
+            stats.meleeAttackRadius,
+            hits,
+            hitMask,
+            QueryTriggerInteraction.Ignore
+        );
 
         for (int i = 0; i < count; i++)
         {
-            var col = hits[i];
+            Collider col = hits[i];
             if (!col) continue;
 
             if (col.transform.IsChildOf(transform)) continue;
 
-            var dmg = col.GetComponentInParent<IDamageable>();
-            if (dmg != null)
+            IDamageable damageable = col.GetComponentInParent<IDamageable>();
+            if (damageable != null)
             {
                 Vector3 hitPoint = col.ClosestPoint(center);
-                Vector3 normal = (hitPoint - center).sqrMagnitude > 0.0001f ? (hitPoint - center).normalized : -o.forward;
+                Vector3 normal =
+                    (hitPoint - center).sqrMagnitude > 0.0001f
+                        ? (hitPoint - center).normalized
+                        : -originTransform.forward;
 
-                dmg.TakeDamage(damage, hitPoint, normal);
+                damageable.TakeDamage(stats.damage, hitPoint, normal);
                 return;
             }
         }
@@ -40,10 +76,19 @@ public class EnemyMeleeAttack : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        Transform o = attackOrigin ? attackOrigin : transform;
-        Vector3 center = o.position + o.forward * attackRangeForward + Vector3.up * 1.0f;
+        EnemyBrain localBrain = GetComponent<EnemyBrain>();
+        EnemyStats localStats = localBrain ? localBrain.stats : null;
+        if (!localStats) return;
+
+        Transform originTransform = attackOrigin ? attackOrigin : transform;
+
+        Vector3 center =
+            originTransform.position +
+            originTransform.forward * localStats.meleeAttackRangeForward +
+            Vector3.up * localStats.meleeAttackHeightOffset;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(center, attackRadius);
+        Gizmos.DrawWireSphere(center, localStats.meleeAttackRadius);
     }
 #endif
 }

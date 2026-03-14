@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd345ed9c43363e4584968ec0129e412, type: 3}
+  m_Name: Dog Stats
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  maxHealth: 100
+  damage: 10
+  aggroRange: 25
+  leashRange: 30
+  moveSpeed: 3.5
+  stopRange: 1.8
+  repathRateHz: 10
+  faceTargetWhenStopped: 1
+  faceTurnSpeed: 12
+  attackRange: 2
+  meleeWindupTime: 0
+  meleeCooldownTime: 0.5
+  meleeAttackMoveStoppingDistance: 0
+  fireRate: 3
+  projectileSpeed: 20
+  initialShotDelayMultiplier: 1
+  preferredRange: 12
+  rangeTolerance: 2
+  orbitStep: 10
+  retreatStep: 11
+  approachStep: 6
+  orbitRecalcHz: 6
+  orbitFlipChance: 0.15
+  orbitRadialBiasNear: 1.2
+  orbitRadialBiasFar: -1.2
+  navSampleDistance: 2.5

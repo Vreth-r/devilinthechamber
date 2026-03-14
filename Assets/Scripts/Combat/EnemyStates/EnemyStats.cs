@@ -20,20 +20,49 @@ public class EnemyStats : ScriptableObject
     public bool faceTargetWhenStopped = true;
     public float faceTurnSpeed = 12f;
 
-    [Header("Melee")]
+    [Header("Melee State Timing")]
     public float attackRange = 2.0f;
     public float meleeWindupTime = 0.0f;
     public float meleeCooldownTime = 0.5f;
     public float meleeAttackMoveStoppingDistance = 0f;
 
+    [Header("Melee Hit")]
+    public float meleeAttackRadius = 1.2f;
+    public float meleeAttackRangeForward = 0.6f;
+    public float meleeAttackHeightOffset = 1.0f;
+
     [Header("Ranged Combat")]
     public float fireRate = 3f;
-    public float projectileSpeed = 20f;
+    public float projectileSpeed = 28f;
     public float initialShotDelayMultiplier = 1f;
+    public float projectileAimHeight = 1.2f;
+    public bool leadTarget = true;
+    public float maxLeadTime = 0.75f;
+    public float fallbackLeadBlend = 0.35f;
+    public float velocitySmoothing = 12f;
+
+    [Header("Ranged Fire Rules")]
+    public float rangedFireMinRange = 6f;
+    public float rangedFireMaxRange = 14f;
+
+    [Header("Ranged Dodge / Dart")]
+    public float dartStep = 4f;
+    public float dartIntervalMin = 0.4f;
+    public float dartIntervalMax = 1.1f;
+    [Range(0f, 1f)] public float dartChance = 0.35f;
+
+    [Header("Separation")]
+    public float allySeparationRadius = 2.5f;
+    public float allySeparationStrength = 2.5f;
+    public LayerMask allySeparationMask = ~0;
 
     [Header("Ranged Spacing")]
     public float preferredRange = 12f;
     public float rangeTolerance = 2f;
+
+    [Header("Projectile Lifetime")]
+    public float projectileMaxTravelDistance = 30f;
+    public float projectileLifetimeSafetyBuffer = 0.25f;
 
     [Header("Ranged Kiting")]
     public float orbitStep = 10f;

@@ -1,77 +1,77 @@
-using UnityEngine;
+// using UnityEngine;
 
-public class EnemyMeleeAttackState : IEnemyState
-{
-    readonly EnemyContext ctx;
-    readonly EnemyStateMachine fsm;
+// public class EnemyMeleeAttackState : IEnemyState
+// {
+//     readonly EnemyContext ctx;
+//     readonly EnemyStateMachine fsm;
 
-    public string Name => "MeleeAttack";
+//     public string Name => "MeleeAttack";
 
-    EnemyMeleeAttack melee;
+//     EnemyMeleeAttack melee;
 
-    float timer;
-    bool didHit;
+//     float timer;
+//     bool didHit;
 
-    public EnemyMeleeAttackState(EnemyContext ctx, EnemyStateMachine fsm)
-    {
-        this.ctx = ctx;
-        this.fsm = fsm;
-        melee = ctx.self.GetComponent<EnemyMeleeAttack>();
-    }
+//     public EnemyMeleeAttackState(EnemyContext ctx, EnemyStateMachine fsm)
+//     {
+//         this.ctx = ctx;
+//         this.fsm = fsm;
+//         melee = ctx.self.GetComponent<EnemyMeleeAttack>();
+//     }
 
-    public void Enter()
-    {
-        if (ctx.agent)
-        {
-            ctx.agent.isStopped = true;
-            ctx.agent.ResetPath();
-        }
+//     public void Enter()
+//     {
+//         if (ctx.agent)
+//         {
+//             ctx.agent.isStopped = true;
+//             ctx.agent.ResetPath();
+//         }
 
-        timer = ctx.stats.meleeWindupTime;
-        didHit = false;
-    }
+//         timer = ctx.stats.meleeWindupTime;
+//         didHit = false;
+//     }
 
-    public void Tick(float dt)
-    {
-        if (!ctx.HasTarget || ctx.IsTargetOutOfLeashRange())
-        {
-            fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm)));
-            return;
-        }
+//     public void Tick(float dt)
+//     {
+//         if (!ctx.HasTarget || ctx.IsTargetOutOfLeashRange())
+//         {
+//             fsm.SetState(new EnemyIdleState(ctx, fsm, () => new EnemyMeleeChaseState(ctx, fsm)));
+//             return;
+//         }
 
-        if (!ctx.IsTargetInAttackRange())
-        {
-            fsm.SetState(new EnemyMeleeChaseState(ctx, fsm));
-            return;
-        }
+//         if (!ctx.IsTargetInAttackRange())
+//         {
+//             fsm.SetState(new EnemyMeleeChaseState(ctx, fsm));
+//             return;
+//         }
 
-        EnemyCombatUtil.FaceTarget(ctx, dt);
+//         EnemyCombatUtil.FaceTarget(ctx, dt);
 
-        timer -= dt;
+//         timer -= dt;
 
-        if (!didHit && timer <= 0f)
-        {
-            didHit = true;
-            melee?.DoMeleeHit();
+//         if (!didHit && timer <= 0f)
+//         {
+//             didHit = true;
+//             melee?.DoMeleeHit();
 
-            timer = ctx.stats.meleeCooldownTime * StatModManager.GetStatModifier(StatName.DOG_RECOVERY_SPEED);
-        }
-        else if (didHit && timer <= 0f)
-        {
-            didHit = false;
-            timer = ctx.stats.meleeWindupTime;
-        }
+//             timer = ctx.stats.meleeCooldownTime * StatModManager.GetStatModifier(StatName.DOG_RECOVERY_SPEED);
+//         }
+//         else if (didHit && timer <= 0f)
+//         {
+//             didHit = false;
+//             timer = ctx.stats.meleeWindupTime;
+//         }
 
-        if (ctx.agent && ctx.agent.enabled && ctx.agent.isOnNavMesh)
-        {
-            ctx.agent.isStopped = false;
-            ctx.agent.stoppingDistance = ctx.stats.meleeAttackMoveStoppingDistance;
-            ctx.agent.SetDestination(ctx.target.position);
-        }
-    }
+//         if (ctx.agent && ctx.agent.enabled && ctx.agent.isOnNavMesh)
+//         {
+//             ctx.agent.isStopped = false;
+//             ctx.agent.stoppingDistance = ctx.stats.meleeAttackMoveStoppingDistance;
+//             ctx.agent.SetDestination(ctx.target.position);
+//         }
+//     }
 
-    public void Exit()
-    {
-        if (ctx.agent) ctx.agent.isStopped = false;
-    }
-}
+//     public void Exit()
+//     {
+//         if (ctx.agent) ctx.agent.isStopped = false;
+//     }
+// }

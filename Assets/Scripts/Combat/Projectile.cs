@@ -11,14 +11,17 @@ public class Projectile : MonoBehaviour
     public float speed = 25f;
     public bool useGravity = false;
 
-    [Header("Lifetime")]
+    [Header("Fallback Lifetime")]
     public float lifetime = 5f;
 
     [Header("Impact FX (optional)")]
     public GameObject impactPrefab;
 
-    Rigidbody rb;
-    float dieAt;
+    private Rigidbody rb;
+
+    private Vector3 spawnPosition;
+    private float maxTravelDistance;
+    private float dieAt;
 
     void Awake()
     {
@@ -27,33 +30,54 @@ public class Projectile : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
-    public void Launch(Vector3 position, Vector3 direction, float speedOverride = -1f)
+    public void Launch(
+        Vector3 position,
+        Vector3 direction,
+        float speedOverride = -1f,
+        float maxDistanceOverride = -1f,
+        float safetyBuffer = 0.25f)
     {
         transform.position = position;
         transform.rotation = Quaternion.LookRotation(direction);
 
-        float spd = speedOverride > 0f ? speedOverride : speed;
-        rb.useGravity = useGravity;
-        rb.linearVelocity = direction.normalized * spd;
+        float finalSpeed = speedOverride > 0f ? speedOverride : speed;
+        speed = finalSpeed;
 
-        dieAt = Time.time + lifetime;
+        rb.useGravity = useGravity;
+        rb.linearVelocity = direction.normalized * finalSpeed;
+
+        spawnPosition = position;
+        maxTravelDistance = maxDistanceOverride > 0f ? maxDistanceOverride : finalSpeed * lifetime;
+
+        float derivedLifetime = maxTravelDistance / Mathf.Max(0.01f, finalSpeed);
+        dieAt = Time.time + derivedLifetime + Mathf.Max(0f, safetyBuffer);
+
         gameObject.SetActive(true);
     }
 
     void Update()
     {
-        if (Time.time >= dieAt)
+        float traveled = Vector3.Distance(spawnPosition, transform.position);
+
+        if (traveled >= maxTravelDistance || Time.time >= dieAt)
             Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        var col = collision.collider;
+        Collider col = collision.collider;
 
-        Vector3 hitPoint = collision.GetContact(0).point;
-        Vector3 hitNormal = collision.GetContact(0).normal;
+        if (((1 << col.gameObject.layer) & hitMask) == 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        var dmg =
+        ContactPoint contact = collision.GetContact(0);
+        Vector3 hitPoint = contact.point;
+        Vector3 hitNormal = contact.normal;
+
+        IDamageable dmg =
             col.GetComponentInParent<IDamageable>() ??
             col.GetComponent<IDamageable>() ??
             col.transform.root.GetComponentInChildren<IDamageable>();
@@ -63,7 +87,7 @@ public class Projectile : MonoBehaviour
 
         if (impactPrefab)
         {
-            var fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
+            GameObject fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
             Destroy(fx, 2f);
         }
 

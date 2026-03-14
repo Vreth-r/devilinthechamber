@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd345ed9c43363e4584968ec0129e412, type: 3}
+  m_Name: Nun Stats
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  maxHealth: 15
+  damage: 2
+  aggroRange: 25
+  leashRange: 30
+  moveSpeed: 10
+  stopRange: 1.8
+  repathRateHz: 10
+  faceTargetWhenStopped: 1
+  faceTurnSpeed: 12
+  attackRange: 2
+  meleeWindupTime: 0
+  meleeCooldownTime: 0.5
+  meleeAttackMoveStoppingDistance: 0
+  meleeAttackRadius: 1.2
+  meleeAttackRangeForward: 0.6
+  meleeAttackHeightOffset: 1
+  fireRate: 2.5
+  projectileSpeed: 20
+  initialShotDelayMultiplier: 1
+  projectileAimHeight: 1.2
+  leadTarget: 1
+  maxLeadTime: 0.75
+  fallbackLeadBlend: 0.35
+  velocitySmoothing: 12
+  rangedFireMinRange: 0
+  rangedFireMaxRange: 20
+  dartStep: 4
+  dartIntervalMin: 0.4
+  dartIntervalMax: 1.1
+  dartChance: 0.35
+  allySeparationRadius: 2.5
+  allySeparationStrength: 2.5
+  allySeparationMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  preferredRange: 10
+  rangeTolerance: 4
+  projectileMaxTravelDistance: 30
+  projectileLifetimeSafetyBuffer: 0.25
+  orbitStep: 10
+  retreatStep: 11
+  approachStep: 6
+  orbitRecalcHz: 6
+  orbitFlipChance: 0.15
+  orbitRadialBiasNear: 1.2
+  orbitRadialBiasFar: -1.2
+  navSampleDistance: 2.5

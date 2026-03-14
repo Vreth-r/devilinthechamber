@@ -8,23 +8,25 @@ public class EnemyContext
 
     public Transform target;
     public Transform firePoint;
+    public Projectile projectilePrefab;
+    public LayerMask projectileHitMask;
     public EnemyStats stats;
-
-    // runtime / working data
-    public float repathTimer;
-    public float lastFireTime;
 
     public EnemyContext(
         Transform self,
         NavMeshAgent agent,
         Transform target,
         Transform firePoint,
+        Projectile projectilePrefab,
+        LayerMask projectileHitMask,
         EnemyStats stats)
     {
         this.self = self;
         this.agent = agent;
         this.target = target;
         this.firePoint = firePoint;
+        this.projectilePrefab = projectilePrefab;
+        this.projectileHitMask = projectileHitMask;
         this.stats = stats;
     }
 
@@ -39,15 +41,5 @@ public class EnemyContext
     public bool IsTargetInAggroRange()
     {
         return HasTarget && DistanceToTarget() <= stats.aggroRange;
-    }
-
-    public bool IsTargetInAttackRange()
-    {
-        return HasTarget && DistanceToTarget() <= stats.attackRange;
-    }
-
-    public bool IsTargetOutOfLeashRange()
-    {
-        return !HasTarget || DistanceToTarget() > stats.leashRange;
     }
 }

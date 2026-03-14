@@ -13,8 +13,10 @@ public class EnemyBrain : MonoBehaviour
     [Header("Target")]
     public Transform target;
 
-    [Header("Combat")]
+    [Header("Projectile")]
     public Transform firePoint;
+    public Projectile projectilePrefab;
+    public LayerMask projectileHitMask = ~0;
 
     EnemyStateMachine fsm;
     EnemyContext ctx;
@@ -26,8 +28,8 @@ public class EnemyBrain : MonoBehaviour
 
         if (!target)
         {
-            var go = GameObject.FindGameObjectWithTag("Player");
-            if (go) target = go.transform;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player) target = player.transform;
         }
 
         ctx = new EnemyContext(
@@ -35,26 +37,20 @@ public class EnemyBrain : MonoBehaviour
             agent: agent,
             target: target,
             firePoint: firePoint,
+            projectilePrefab: projectilePrefab,
+            projectileHitMask: projectileHitMask,
             stats: stats
         );
 
         fsm = new EnemyStateMachine();
-
         ApplyStatsToAgent();
     }
 
     void OnEnable()
     {
-        if (!behaviour)
+        if (!behaviour || !stats)
         {
-            Debug.LogError($"{name}: No EnemyBehaviour assigned.");
-            enabled = false;
-            return;
-        }
-
-        if (!stats)
-        {
-            Debug.LogError($"{name}: No EnemyStats assigned.");
+            Debug.LogError($"{name}: Missing EnemyBehaviour or EnemyStats.");
             enabled = false;
             return;
         }
@@ -66,10 +62,11 @@ public class EnemyBrain : MonoBehaviour
     {
         ctx.target = target;
         ctx.firePoint = firePoint;
+        ctx.projectilePrefab = projectilePrefab;
+        ctx.projectileHitMask = projectileHitMask;
         ctx.stats = stats;
 
         ApplyStatsToAgent();
-
         fsm.Tick(Time.deltaTime);
     }
 
@@ -80,20 +77,4 @@ public class EnemyBrain : MonoBehaviour
         agent.speed = stats.moveSpeed;
         agent.stoppingDistance = stats.stopRange;
     }
-
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        if (!stats) return;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, stats.aggroRange);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stats.attackRange);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, stats.leashRange);
-    }
-#endif
 }
