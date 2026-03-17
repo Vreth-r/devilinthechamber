@@ -12,24 +12,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd345ed9c43363e4584968ec0129e412, type: 3}
   m_Name: Dog Stats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  maxHealth: 100
-  damage: 10
+  maxHealth: 12
+  damage: 1
   aggroRange: 25
   leashRange: 30
-  moveSpeed: 3.5
+  moveSpeed: 10
   stopRange: 1.8
   repathRateHz: 10
   faceTargetWhenStopped: 1
   faceTurnSpeed: 12
-  attackRange: 2
-  meleeWindupTime: 0
-  meleeCooldownTime: 0.5
+  attackRange: 1.2
+  meleeWindupTime: 0.18
+  meleeCooldownTime: 0.35
   meleeAttackMoveStoppingDistance: 0
+  meleeAttackRadius: 0.95
+  meleeAttackRangeForward: 0.9
+  meleeAttackHeightOffset: 0.8
+  meleeLungeStartRange: 1.8
+  meleeLungeDistance: 5
+  meleeLungeTime: 0.14
+  meleeLungeHitTime: 0.07
+  meleeCommitRangePadding: 0.75
+  meleeMinSeparationDistance: 0.75
+  meleeBackstepDistance: 0.6
+  meleeBackstepTime: 0.1
+  meleeHitMask:
+    serializedVersion: 2
+    m_Bits: 64
   fireRate: 3
   projectileSpeed: 20
   initialShotDelayMultiplier: 1
+  projectileAimHeight: 1.2
+  leadTarget: 1
+  maxLeadTime: 0.75
+  fallbackLeadBlend: 0.35
+  velocitySmoothing: 12
+  rangedFireMinRange: 6
+  rangedFireMaxRange: 14
+  dartStep: 4
+  dartIntervalMin: 0.4
+  dartIntervalMax: 1.1
+  dartChance: 0.35
+  allySeparationRadius: 2.5
+  allySeparationStrength: 2.5
+  allySeparationMask:
+    serializedVersion: 2
+    m_Bits: 128
   preferredRange: 12
   rangeTolerance: 2
+  projectileMaxTravelDistance: 30
+  projectileLifetimeSafetyBuffer: 0.25
   orbitStep: 10
   retreatStep: 11
   approachStep: 6
@@ -38,3 +70,10 @@ MonoBehaviour:
   orbitRadialBiasNear: 1.2
   orbitRadialBiasFar: -1.2
   navSampleDistance: 2.5
+  animParamAttackTrigger: Attack
+  animParamWindupTrigger: Windup
+  animParamRecoverTrigger: Recover
+  animParamWinddownTrigger: Winddown
+  animParamSpeed: Speed
+  useWindupAnimation: 1
+  useRecoverAnimation: 0

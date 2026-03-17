@@ -31,6 +31,21 @@ public class EnemyStats : ScriptableObject
     public float meleeAttackRangeForward = 0.6f;
     public float meleeAttackHeightOffset = 1.0f;
 
+    [Header("Melee Lunge")]
+    public float meleeLungeStartRange = 1.8f;
+    public float meleeLungeDistance = 1.2f;
+    public float meleeLungeTime = 0.12f;
+    public float meleeLungeHitTime = 0.06f;
+    public float meleeCommitRangePadding = 0.6f;
+
+    [Header("Melee Close Reposition")]
+    public float meleeMinSeparationDistance = 0.9f;
+    public float meleeBackstepDistance = 0.8f;
+    public float meleeBackstepTime = 0.12f;
+
+    [Header("Melee Hit Filtering")]
+    public LayerMask meleeHitMask = ~0;
+
     [Header("Ranged Combat")]
     public float fireRate = 3f;
     public float projectileSpeed = 28f;
@@ -75,4 +90,13 @@ public class EnemyStats : ScriptableObject
 
     [Header("Navigation Sampling")]
     public float navSampleDistance = 2.5f;
+
+    [Header("Animation")]
+    public string animParamAttackTrigger = "Attack";
+    public string animParamWindupTrigger = "Windup";
+    public string animParamRecoverTrigger = "Recover"; // fuckin, tutorials man
+    public string animParamWinddownTrigger = "Winddown";
+    public string animParamSpeed = "Speed";
+    public bool useWindupAnimation = true;
+    public bool useRecoverAnimation = false;
 }

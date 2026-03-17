@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
 
         float derivedLifetime = maxTravelDistance / Mathf.Max(0.01f, finalSpeed);
         dieAt = Time.time + derivedLifetime + Mathf.Max(0f, safetyBuffer);
-
+        Debug.DrawRay(spawnPosition, direction * 2f, Color.red, 1f);
         gameObject.SetActive(true);
     }
 
@@ -63,19 +63,15 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider col)
     {
-        Collider col = collision.collider;
-
         if (((1 << col.gameObject.layer) & hitMask) == 0)
-        {
-            Destroy(gameObject);
             return;
-        }
 
-        ContactPoint contact = collision.GetContact(0);
-        Vector3 hitPoint = contact.point;
-        Vector3 hitNormal = contact.normal;
+        Vector3 hitPoint = col.ClosestPoint(transform.position);
+        Vector3 hitNormal = (transform.position - hitPoint).normalized;
+        if (hitNormal.sqrMagnitude < 0.0001f)
+            hitNormal = -transform.forward;
 
         IDamageable dmg =
             col.GetComponentInParent<IDamageable>() ??
@@ -83,14 +79,15 @@ public class Projectile : MonoBehaviour
             col.transform.root.GetComponentInChildren<IDamageable>();
 
         if (dmg != null && damage > 0)
+        {
             dmg.TakeDamage(damage, hitPoint, hitNormal);
+        }
 
         if (impactPrefab)
         {
             GameObject fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
             Destroy(fx, 2f);
         }
-
         Destroy(gameObject);
     }
 }

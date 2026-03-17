@@ -8,6 +8,8 @@ public class EnemyRangedKiteState : IEnemyState
 
     private readonly Collider[] separationHits = new Collider[16];
 
+    private EnemyAnimDriver anim;
+
     private float shotTimer;
     private float repathTimer;
     private float orbitDecisionTimer;
@@ -26,6 +28,8 @@ public class EnemyRangedKiteState : IEnemyState
 
     public void Enter()
     {
+        anim = ctx.self.GetComponent<EnemyAnimDriver>();
+
         if (ctx.agent)
         {
             ctx.agent.isStopped = false;
@@ -43,6 +47,8 @@ public class EnemyRangedKiteState : IEnemyState
 
         orbitDir = Random.value < 0.5f ? -1 : 1;
         dartDir = Random.value < 0.5f ? -1 : 1;
+
+        anim?.PlayWindUp();
     }
 
     public void Tick(float dt)
@@ -51,6 +57,9 @@ public class EnemyRangedKiteState : IEnemyState
             return;
 
         EnemyCombatUtil.FaceTarget(ctx, dt);
+
+        if (ctx.agent && anim != null)
+            anim.SetSpeed(ctx.agent.velocity.magnitude);
 
         UpdateFire(dt);
         UpdateMovementTimers(dt);
@@ -61,6 +70,8 @@ public class EnemyRangedKiteState : IEnemyState
     {
         if (ctx.agent)
             ctx.agent.isStopped = false;
+
+        anim?.PlayWindDown();
     }
 
     private void UpdateFire(float dt)
@@ -213,10 +224,12 @@ public class EnemyRangedKiteState : IEnemyState
         if (!ctx.firePoint || !ctx.projectilePrefab || !ctx.target)
             return;
 
+        anim?.PlayShoot();
+
         float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
         float finalSpeed = ctx.stats.projectileSpeed * speedMod;
 
-        Vector3 origin = ctx.firePoint.position;
+        Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 0.4f;
         Vector3 aimPoint = GetAimPoint(ctx.target, ctx.stats.projectileAimHeight);
         Vector3 direction = aimPoint - origin;
 
