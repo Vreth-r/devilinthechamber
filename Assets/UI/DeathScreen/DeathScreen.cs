@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +7,7 @@ public class DeathScreen : MonoBehaviour
     UIDocument doc;
 
     VisualElement background;
+    VisualElement deathMarker;
     Label livesRemaining;
     float fadeDuration = 1.2f;
     Vector3 textRGB = new Vector3 (0.7294118f, 0.1215686f, 0.1215686f);
@@ -21,9 +19,10 @@ public class DeathScreen : MonoBehaviour
         var root = doc.rootVisualElement;
 
         background = root.Q<VisualElement>("Background");
+        deathMarker = root.Q<VisualElement>("DeathMarker");
         livesRemaining = root.Q<Label>("Text");
 
-        livesRemaining.visible = false;
+        deathMarker.visible = false;
 
         UIEvents.Die += PlayDeathAnimation;
     }
@@ -48,18 +47,18 @@ public class DeathScreen : MonoBehaviour
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = true;
+            deathMarker.visible = true;
         }).StartingIn((long)(fadeMs + 750));
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = false;
+            deathMarker.visible = false;
             livesRemaining.text = NumToRoman(PlayerManager.Instance.health.deaths);
         }).StartingIn((long)(fadeMs + 2250));
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = true;
+            deathMarker.visible = true;
         }).StartingIn((long)(fadeMs + 2750));
 
         livesRemaining.schedule.Execute(() =>
@@ -71,7 +70,7 @@ public class DeathScreen : MonoBehaviour
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = false;
+            deathMarker.visible = false;
             livesRemaining.style.color = new Color(textRGB.x, textRGB.y, textRGB.z, 1);
         }).StartingIn((long)(fadeMs + 6000));
 
@@ -88,6 +87,7 @@ public class DeathScreen : MonoBehaviour
     };
     string NumToRoman (int num)
     { 
+        if (num == 0) return "O";
         string romanNum = "";
         int d = 1;
         while (num >= d)

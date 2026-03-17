@@ -90,7 +90,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {
-            deaths += 1;
             Die();
         }
     }
@@ -99,6 +98,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        deaths += 1;
+        DeckManager.Instance.AddDeathCard(1);
         UIEvents.DoDeathAnim();
         invincible = true;
         currentHealth = maxHealth + maxHealthMod;
