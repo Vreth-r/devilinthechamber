@@ -22,7 +22,7 @@ public class Deal : ScriptableObject
     public List<StatMod> statDeals;
     public List<Ability> abilityDeals;
 
-    public async void ApplyDeal ()
+    public void ApplyDeal ()
     {
         foreach (StatMod statDeal in statDeals)
         {
@@ -31,14 +31,6 @@ public class Deal : ScriptableObject
 
         foreach (Ability abilityDeal in abilityDeals)
         {
-            if (abilityDeal.AbilityName == AbilityName.DEATH)
-            {
-                StatModManager.ResetStatMods();
-                GameManager.Instance.StopMusic();
-                Destroy(GameManager.Instance.gameObject);
-                await SceneFader.Instance.FadeToScene("GameOver");
-                return;
-            }
             AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
         }
     }

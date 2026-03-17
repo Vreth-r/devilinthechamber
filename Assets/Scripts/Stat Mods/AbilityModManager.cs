@@ -53,14 +53,14 @@ public class AbilityModManager {
         { AbilityName.ONE_EYED, new OneEyedAbility() },
         { AbilityName.AOE_ON_DAMAGE, new DamageAOEAbiliity()},
         { AbilityName.CRAWLING_HEALTH_DEGEN, new CrawlingHealthDegenAbility()},
-        { AbilityName.DEATH, null }
+        { AbilityName.DEATH, new DeathAbility() }
     };
 
     public static void StartAbility (AbilityName abilityName, float duration)
     {   
         abilities[abilityName].initialize(duration);
         abilities[abilityName].startFunction(); // run the start function (the effect)
-        if (duration != -1) 
+        if (abilities[abilityName].duration != -1) 
             TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
     }
 }
