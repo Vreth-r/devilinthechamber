@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [Header("Hit Feedback")]
     public Renderer[] renderersToFlash;
     public float flashTime = 0.06f;
+    public GameObject deathParticleFX;
 
     int hp;
     float flashTimer;
@@ -79,7 +80,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         GameManager.Instance.enemyKilled(this.gameObject);
-        // later play death animation or smth
+
+        if (deathParticleFX != null)
+        {
+            Debug.Log("explode");
+            Instantiate(deathParticleFX, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        }
+
         if (destroyOnDeath)
             Destroy(gameObject);
         else

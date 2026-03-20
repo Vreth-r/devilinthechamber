@@ -31,12 +31,6 @@ public class Deal : ScriptableObject
 
         foreach (Ability abilityDeal in abilityDeals)
         {
-            if (abilityDeal.AbilityName == AbilityName.DEATH)
-            {
-                // do thing
-                PlayerManager.Instance.health.Die();
-                return;
-            }
             AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
         }
     }
