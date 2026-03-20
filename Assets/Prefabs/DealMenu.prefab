@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5893683351090983118}
   - component: {fileID: 3197320199430918025}
   - component: {fileID: 397260805013743078}
+  - component: {fileID: -5232355701605541158}
   m_Layer: 0
   m_Name: DealMenu
   m_TagString: Untagged
@@ -45,9 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8cb7b56bddd274d9acb87ddd71c31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DealMenu
+  deathCard: {fileID: 0}
   dealsDoc: {fileID: 397260805013743078}
   hudDoc: {fileID: 0}
   cameraScript: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  dealMenuOpen: 0
+  dealPicked: 0
 --- !u!114 &397260805013743078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,3 +76,16 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &-5232355701605541158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343428631023649416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bfeba3f78902c4c90e7e9bdd2f983b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeckManager
+  deathCardsInDeck: 0

@@ -1,5 +1,4 @@
-using System.Collections;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +7,7 @@ public class DeathScreen : MonoBehaviour
     UIDocument doc;
 
     VisualElement background;
+    VisualElement deathMarker;
     Label livesRemaining;
     float fadeDuration = 1.2f;
     Vector3 textRGB = new Vector3 (0.7294118f, 0.1215686f, 0.1215686f);
@@ -19,9 +19,10 @@ public class DeathScreen : MonoBehaviour
         var root = doc.rootVisualElement;
 
         background = root.Q<VisualElement>("Background");
+        deathMarker = root.Q<VisualElement>("DeathMarker");
         livesRemaining = root.Q<Label>("Text");
 
-        livesRemaining.visible = false;
+        deathMarker.visible = false;
 
         UIEvents.Die += PlayDeathAnimation;
     }
@@ -41,23 +42,23 @@ public class DeathScreen : MonoBehaviour
         // set timers for transitions
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.lives + 1);
+            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.deaths - 1);
         }).StartingIn((long)fadeMs);
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = true;
+            deathMarker.visible = true;
         }).StartingIn((long)(fadeMs + 750));
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = false;
-            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.lives);
+            deathMarker.visible = false;
+            livesRemaining.text = NumToRoman(PlayerManager.Instance.health.deaths);
         }).StartingIn((long)(fadeMs + 2250));
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = true;
+            deathMarker.visible = true;
         }).StartingIn((long)(fadeMs + 2750));
 
         livesRemaining.schedule.Execute(() =>
@@ -69,42 +70,51 @@ public class DeathScreen : MonoBehaviour
 
         livesRemaining.schedule.Execute(() =>
         {
-            livesRemaining.visible = false;
+            deathMarker.visible = false;
             livesRemaining.style.color = new Color(textRGB.x, textRGB.y, textRGB.z, 1);
         }).StartingIn((long)(fadeMs + 6000));
 
     }
-    string NumToRoman (int num)
+    Dictionary<int, string> baseRomanNums = new Dictionary<int, string>
     {
-        switch (num)
+        {1, "I"},
+        {4, "IV"},
+        {5, "V"},
+        {9, "IX"},
+        {10, "X"},
+        {40, "XL"},
+        {50, "L"},
+    };
+    string NumToRoman (int num)
+    { 
+        if (num == 0) return "O";
+        string romanNum = "";
+        int d = 1;
+        while (num >= d)
+            d *= 10;
+        
+        d /= 10;
+
+        while (num > 0)
         {
-            case 0:
-                return "0";
-            case 1:
-                return "I";
-            case 2:
-                return "II";
-            case 3:
-                return "III";
-            case 4:
-                return "IV";
-            case 5:
-                return "V";
-            case 6:
-                return "VI";
-            case 7:
-                return "VII";
-            case 8:
-                return "VIII";
-            case 9:
-                return "IX";
-            case 10:
-                return "X";
-            case 11:
-                return "XI";
-            default:
-                return "";
-            
+            int last = num / d;
+            if (last <= 3)
+            {
+                for (int i = 0; i < last; i++) romanNum += baseRomanNums[d];
+            }
+            else if (last == 4)
+                romanNum += baseRomanNums[d] + baseRomanNums[d * 5];
+            else if (5 <= last && last <= 8)
+            {
+                romanNum += baseRomanNums[d * 5];
+                for (int i = 0; i < last - 5; i++) romanNum += baseRomanNums[d];
+            }
+            else if (last == 9)
+                romanNum += baseRomanNums[d] + baseRomanNums[d * 10];
+            num = num % d;
+            d /= 10;
         }
+
+        return romanNum;
     }
 }
