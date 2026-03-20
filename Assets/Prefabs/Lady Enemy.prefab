@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 7547240879553611530}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.337, z: -0.843}
+  m_LocalPosition: {x: 0, y: 2.812, z: 1.889}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -534,18 +534,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   behaviour: {fileID: 11400000, guid: 1ee649ebdbee1ba40a6a0b6e6bade219, type: 2}
+  stats: {fileID: 11400000, guid: e1f1ce19caad2d34aa0e536f58d0c115, type: 2}
   target: {fileID: 0}
-  aggroRange: 25
-  attackRange: 4
-  stopRange: 1.8
-  repathRateHz: 10
-  faceTargetWhenStopped: 1
-  faceTurnSpeed: 12
   firePoint: {fileID: 7831975565888927440}
-  fireRate: 0.7
-  damage: 10
-  preferredRange: 12
-  rangeTolerance: 2
+  projectilePrefab: {fileID: 2021965342627534742, guid: db797da0c4add054cbdacd339989c817, type: 3}
+  projectileHitMask:
+    serializedVersion: 2
+    m_Bits: 577
 --- !u!114 &7800068546288498979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,17 +576,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectileWeapon
   firePoint: {fileID: 7831975565888927440}
   projectilePrefab: {fileID: 2021965342627534742, guid: db797da0c4add054cbdacd339989c817, type: 3}
-  fireRate: 0.7
-  projectileSpeed: 40
-  damage: 10
   projectileHitMask:
     serializedVersion: 2
     m_Bits: 119
-  aimHeight: 1.2
-  leadTarget: 1
-  maxLeadTime: 0.75
-  fallbackLeadBlend: 0.35
-  velocitySmoothing: 12
   muzzleFlash: {fileID: 0}
   muzzleLight: {fileID: 0}
 --- !u!95 &7530001062295190559
@@ -628,13 +615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce09dbc78e97bc4da9b3c3f8a155f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimDriver
-  fireLayerIndex: 1
-  crossFade: 0.05
-  windUpState: shoot-windup
-  shootState: shoot-main
-  windDownState: shoot-reset
-  emptyState: Empty
-  shootClip: {fileID: 7400000, guid: 6911479ccd389f04998588f68cf6a08d, type: 2}
 --- !u!1 &2059554155105268801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
