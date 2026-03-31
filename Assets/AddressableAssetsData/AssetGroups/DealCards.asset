@@ -15,146 +15,26 @@ MonoBehaviour:
   m_GroupName: DealCards
   m_GUID: e8419f7dc28c7ee43a8f36fdf9658528
   m_SerializeEntries:
-  - m_GUID: 0637bea8812241b4092d9394202ad3b1
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 7.asset
+  - m_GUID: 03ab5f2db64f0764abc81793d3406008
+    m_Address: Assets/Scripts/Deals/Cards/RecklessAbandon.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e9b3252b764a8248878beaad976caea
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 2.asset
+  - m_GUID: 07fe230285e69f14ba8a1b5cc7244282
+    m_Address: Assets/Scripts/Deals/Cards/InfiniteMag.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13eb8a2af92f2a9408dd4fc87aadc60f
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 6.asset
+  - m_GUID: 108f32a319cab5747b9740f210dd4ec1
+    m_Address: Assets/Scripts/Deals/Cards/Running Blind.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1466c8bed31fab240975f9207072c7fb
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 10.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21ae6678b7fae7e438bbacf1764fea1f
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 2.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 24869b406ae6d5544b590dbb705961e1
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3b841de43642dca458fdd4e7eaed49a8
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 3.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bf40d1e6a9e3fa43b6cc413daa2d71e
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 7.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4fb359cbab12d5e4bad00d1ed60a6a53
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 10.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 50edd4b2eadd5914989091e11f0920e3
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 7.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 57b91f7e26014f646847a3e77a57c5b8
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ad825b76f7a2af44b1a75d42749fc8e
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 5.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5e5cac855cc4ee04ca179cf03229e985
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 10.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 632bd879c69678542aecc6040dc3e989
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 8.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6371aa66f7f23b947bbd6b4e54b5cb62
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6ed703fd306b1584eba038864b1f8c22
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 8.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 73410b93c5c73c742884be6b8e8b6f09
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7646a3af5fe76e042895c6687f15255b
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 8.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e52c03fca058f9478f6de6a8751a045
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 9.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 868d6e13a4fc49444bc8b8d431e430e5
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 875a067cdf1e2fd408bb9194facfcd87
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 9.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9999a2f14c79e8d4180532ec550c03cc
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 5.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b4219581073052f408fcc2b579f2d524
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 5.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5e8d713dfd83eb45bf81c47d29c9261
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 6.asset
+  - m_GUID: 6ec94c0777676b843867729e8531901d
+    m_Address: Assets/Scripts/Deals/Cards/ShortSlide.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
@@ -162,41 +42,34 @@ MonoBehaviour:
   - m_GUID: c8edc5f408c6db04eb7eb6206bc25b18
     m_Address: Assets/Scripts/Deals/Death.asset
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ca3d4b863db35c74ca5a1103a90de474
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 6.asset
+  - m_GUID: cadf287739692d5469e4fc2172fa2f8a
+    m_Address: Assets/Scripts/Deals/Cards/MegaMag.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5cdd661cbd106b49a3ff89ba2507abc
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 2.asset
+  - m_GUID: ef720368aeb04b94d90ff6de916a9dac
+    m_Address: Assets/Scripts/Deals/Cards/Hop.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: da27bf5a2e7c8a044a876e31a814f904
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 9.asset
+  - m_GUID: f0af2e0100474ff439ac81bc99930dfb
+    m_Address: Assets/Scripts/Deals/Cards/GlassCannon.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e535189bbd5455d43824f0027a93f094
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 3.asset
+  - m_GUID: f3485f2292c6e6540b7b0d831cf6ac16
+    m_Address: Assets/Scripts/Deals/Cards/SteadyAim.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: efa7088ca0fe3c94e8810c3b44064e14
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - DealCard
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f2c8b26956bde8f4c99bc552461f6de1
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 3.asset
+  - m_GUID: ffb6bc1df6cfe72449675be0bdf813c0
+    m_Address: Assets/Scripts/Deals/Cards/BrinkBoost.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard

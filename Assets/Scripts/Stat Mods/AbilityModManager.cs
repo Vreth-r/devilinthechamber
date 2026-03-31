@@ -60,7 +60,7 @@ public class AbilityModManager {
     {   
         abilities[abilityName].initialize(duration);
         abilities[abilityName].startFunction(); // run the start function (the effect)
-        if (abilities[abilityName].duration != -1) 
+        if (abilities[abilityName].duration != 0) 
             TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
     }
 }

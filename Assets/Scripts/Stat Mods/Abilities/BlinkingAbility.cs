@@ -10,7 +10,7 @@ public class BlinkingAbility : AbilityBase
     }
     public override bool startFunction()
     {
-        float t = Random.Range(2, 5);
+        float t = Random.Range(1, 4);
         TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), t, DoBlink);
         Debug.Log($"START: {abilityName}");
         return true;
@@ -18,7 +18,7 @@ public class BlinkingAbility : AbilityBase
     bool DoBlink ()
     {
         UIEvents.DoBlink();
-        float t = Random.Range(2, 5);
+        float t = Random.Range(1, 4);
         TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), t, DoBlink);
         return true;
     }

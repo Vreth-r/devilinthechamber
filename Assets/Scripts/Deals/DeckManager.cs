@@ -24,6 +24,7 @@ public class DeckManager : MonoBehaviour
     void OnDealLoaded(Deal deal)
     {
         deck.Add(deal);
+        Debug.Log($"loaded: {deal.dealName}");
         if (deal.abilityDeals.Count != 0 && deal.abilityDeals[0].AbilityName == AbilityName.DEATH)
             deathCardsInDeck++;
 
@@ -32,8 +33,28 @@ public class DeckManager : MonoBehaviour
 
     public List<Deal> DrawDeals ()
     {
-        List<Deal> drawnDeals = new List<Deal>(deck.GetRange(0, 3));
-        deck.RemoveRange(0, 3);
+        List<Deal> drawnDeals = new List<Deal>();
+        List<int> removeInds = new List<int>();
+        int i = 0;
+        bool passFlag = false;
+        while (i < deck.Count && removeInds.Count < 3)
+        {
+            for (int j = 0; j < deck[i].drawConditions.Count; j++)
+            {
+                if (!deck[i].drawConditions[j].ConditionMet()) passFlag = true;
+            }
+            if (passFlag == false) 
+            {
+                Debug.Log(deck[i].dealName);
+                drawnDeals.Add(deck[i]);
+                removeInds.Add(i);
+            }
+            i++;
+            passFlag = false;
+            
+        }
+        for (int k = removeInds.Count - 1; k >= 0; k--) deck.RemoveAt(k);
+
         return drawnDeals;
     }
 
@@ -41,6 +62,8 @@ public class DeckManager : MonoBehaviour
     {
         deathCardsInDeck += count;
         for (int i = 0; i < count; i++) deck.Add(Instantiate(deathCardPrefab));
+
+        if (deck.Count < 3) deck.Add(Instantiate(deathCardPrefab));
 
         Shuffle();
     }

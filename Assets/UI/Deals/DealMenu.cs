@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
+using Unity.VisualScripting;
 
 public class DealMenu : MonoBehaviour
 {  
@@ -81,9 +82,6 @@ public class DealMenu : MonoBehaviour
         if (cameraScript!=null) cameraScript.enabled = false;
         dealMenuOpen = true;
 
-        //hudDoc.enabled = false;
-        //hudDoc.gameObject.SetActive(false);
-        //hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         dealsDoc.sortingOrder = 1;
 
         deals = DeckManager.Instance.DrawDeals();
@@ -104,7 +102,7 @@ public class DealMenu : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        cameraScript.enabled = true;
+        if (cameraScript!=null) cameraScript.enabled = true;
         dealMenuOpen = false;
 
         DeckManager.Instance.AddDeathCard(2);
@@ -141,85 +139,29 @@ public class DealMenu : MonoBehaviour
     void SetDealsText()
     {
 
-        for (int i = 0; i < dealButtons.Count; i++)
+        for (int i = 0; i < deals.Count; i++)
         {
-            VisualElement posDealBox = new VisualElement();
-            VisualElement negDealBox = new VisualElement();
-            posDealBox.AddToClassList("CardTextBox");
-            negDealBox.AddToClassList("CardTextBox");
-
-            Deal curDeal = deals[i];
-
-            foreach (StatMod statMod in curDeal.statDeals)
+            if (deals[i].dealName == "Death")
             {
-                Label l = new Label();
-
-                if (statMod.dealType == DealType.POSITIVE)
-                {
-                    string t;
-                    if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"+{statMod.modifier}{DealsLocalization.StatLocale(statMod.statName)}";
-                    else
-                    {
-                        if (statMod.modifier >= 1) 
-                            t = $"+{Mathf.Round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
-                        else
-                            t = $"{Mathf.Round(100 * (statMod.modifier - 1))}{DealsLocalization.StatLocale(statMod.statName)}";
-                    }
-                    l.AddToClassList("BuffTitle");
-                    l.text = t;
-                    posDealBox.Add(l);
-                }
-                else
-                {
-                    string t;
-                    if (statMod.statName == StatName.MAGAZINE_SIZE || statMod.statName == StatName.PERMA_HEALTH)
-                        t = $"{Mathf.Round(statMod.modifier)}{DealsLocalization.StatLocale(statMod.statName)}";
-                    else
-                        t = $"{Mathf.Round(100 * (statMod.modifier - 1))} {DealsLocalization.StatLocale(statMod.statName)}";
-                    l.AddToClassList("DebuffTitle");
-                    l.text = t;
-                    negDealBox.Add(l);
-                }
+                dealButtons[i].style.backgroundImage = new StyleBackground(deathCardBackground);
+                continue;
             }
+            Debug.Log($"Drew {deals[i].dealName}");
+            VisualElement dealCardInfo = new VisualElement();
+            dealCardInfo.AddToClassList("CardTextBox");
 
-            foreach (Ability ability in curDeal.abilityDeals)
-            {
-                if (ability.AbilityName == AbilityName.DEATH)
-                {
-                    dealButtons[i].style.backgroundImage = new StyleBackground(deathCardBackground);
-                }
-                else
-                {
-                    dealButtons[i].style.backgroundImage = new StyleBackground(cardBackground);
-                    string t;
-                    if (ability.duration != -1)
-                        t = $"{Mathf.Round(ability.duration)}s{DealsLocalization.AbilityLocale(ability.AbilityName)}";
-                    else
-                        t = $"{DealsLocalization.AbilityLocale(ability.AbilityName)}";
+            Label dealName = new Label();
+            dealName.AddToClassList("DealTitle");
+            dealName.text = deals[i].dealName;
 
-                    Label l = new Label();
+            Label dealDesc = new Label();
+            dealDesc.AddToClassList("DealDescription");
+            dealDesc.text = deals[i].dealDescription;
 
-                    if (ability.dealType == DealType.POSITIVE)
-                    {
-                        l.AddToClassList("BuffTitle");
-                        l.text = t;
-                        posDealBox.Add(l);
-                    }
-                    else
-                    {
-                        l.AddToClassList("DebuffTitle");
-                        l.text = t;
-                        negDealBox.Add(l);
-                    }
+            dealCardInfo.Add(dealName);
+            dealCardInfo.Add(dealDesc);
 
-                    l.text = t;
-                }
-            }
-
-            dealButtons[i].Add(posDealBox);
-            dealButtons[i].Add(negDealBox);
-            
+            dealButtons[i].Add(dealCardInfo);
         }
     }
 }

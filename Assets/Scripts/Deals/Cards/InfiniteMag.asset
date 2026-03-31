@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
-  m_Name: Death
+  m_Name: InfiniteMag
   m_EditorClassIdentifier: Assembly-CSharp::Deal
-  dealName: Death
-  dealDescription: 
+  dealName: Inifinite Magazine
+  dealDescription: For a brief moment you will have infinite ammo and shoot faster,
+    but being hit will knock you back.
   statDeals: []
   abilityDeals:
-  - AbilityName: 21
-    duration: 0
+  - AbilityName: 0
+    duration: 15
+  drawConditions:
+  - {fileID: 11400000, guid: ee5c3a4ae4e97d64c86fb0e487fdf99f, type: 2}

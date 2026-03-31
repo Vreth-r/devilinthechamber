@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
-  m_Name: Death
-  m_EditorClassIdentifier: Assembly-CSharp::Deal
-  dealName: Death
-  dealDescription: 
-  statDeals: []
-  abilityDeals:
-  - AbilityName: 21
-    duration: 0
+  m_Script: {fileID: 11500000, guid: 2e5789a88a0a67e438cfbfd847151f0e, type: 3}
+  m_Name: Infinite Mag Condition
+  m_EditorClassIdentifier: Assembly-CSharp::InfiniteMagCondition

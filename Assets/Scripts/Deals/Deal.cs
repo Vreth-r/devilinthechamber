@@ -6,21 +6,22 @@ public class StatMod
 {
     public StatName statName;
     public float modifier;
-    public DealType dealType;
 }
 [System.Serializable]
 public class Ability
 {
     public AbilityName AbilityName;
     public float duration;
-    public DealType dealType;
 }
 
 [CreateAssetMenu(menuName = "Deals/Deal")]
 public class Deal : ScriptableObject
 {
+    public string dealName;
+    public string dealDescription;
     public List<StatMod> statDeals;
     public List<Ability> abilityDeals;
+    public List<DrawCondition> drawConditions;
 
     public void ApplyDeal ()
     {
