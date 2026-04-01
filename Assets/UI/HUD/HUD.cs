@@ -220,7 +220,7 @@ public class HUD : MonoBehaviour
     void RefreshHealth ()
     {
         if (!uiReady) return;
-        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + PlayerManager.Instance.health.maxHealthMod)));
+        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))));
     }
 
     void RefreshAmmo ()

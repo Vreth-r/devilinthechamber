@@ -4,23 +4,23 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public enum StatName {
-    MOVEMENT_SPEED,
-    DAMAGE_OUTPUT,
-    FIRE_SPEED,
-    RELOAD_SPEED,
-    MAGAZINE_SIZE,
-    PERMA_HEALTH,
-    JUMP_HEIGHT,
-    SLIDE_DISTANCE,
-    HEADSHOT_BONUS,
-    LADY_PROJECTILE_SPEED,
-    DOG_RECOVERY_SPEED,
     BULLET_RANGE,
+    DAMAGE_OUTPUT,
+    DOG_MOVEMENT_SPEED,
+    DOG_RECOVERY_SPEED,
+    FIRE_SPEED,
+    HEADSHOT_BONUS,
+    JUMP_HEIGHT,
     LADY_FIRE_RATE,
     LADY_MOVEMENT_SPEED,
-    DOG_MOVEMENT_SPEED,
+    LADY_PROJECTILE_SPEED,
+    MAGAZINE_SIZE,
+    MOVEMENT_SPEED,
+    PERMA_HEALTH,
+    RELOAD_SPEED,
+    SLIDE_COOLDOWN,
+    SLIDE_DISTANCE,
     SLIDE_SPEED,
-    SLIDE_COOLDOWN
 }
 
 public enum DealType
@@ -58,10 +58,8 @@ public class StatModManager
     // add a stat modifier, can be timed but idk if that would be used for stats
     public static void AddStatModifier (StatName statName, float modifier)
     {
-
         StatModifiers[statName].Add(modifier);
-        GameManager.Instance.SetStatMod(statName);
-        
+        UIEvents.ForceHUDRefresh();
     }
 
     public static float GetStatModifier (StatName statName)

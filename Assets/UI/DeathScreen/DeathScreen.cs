@@ -34,6 +34,7 @@ public class DeathScreen : MonoBehaviour
 
     void PlayDeathAnimation()
     {
+        doc.sortingOrder = 2;
         float fadeMs = fadeDuration * 1000f;
 
         // Fade to black
@@ -72,8 +73,8 @@ public class DeathScreen : MonoBehaviour
         {
             deathMarker.visible = false;
             livesRemaining.style.color = new Color(textRGB.x, textRGB.y, textRGB.z, 1);
+            doc.sortingOrder = 0;
         }).StartingIn((long)(fadeMs + 6000));
-
     }
     Dictionary<int, string> baseRomanNums = new Dictionary<int, string>
     {

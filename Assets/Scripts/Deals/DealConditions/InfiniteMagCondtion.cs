@@ -5,6 +5,6 @@ public class InfiniteMagCondition : DrawCondition
 {
     public override bool ConditionMet()
     {
-        return PlayerManager.Instance.gunHitscan.doesReload;
+        return DeckManager.Instance.pickedDeals.Contains("Reload");
     }
 }

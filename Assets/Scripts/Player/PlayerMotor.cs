@@ -13,15 +13,12 @@ public class PlayerMotor : MonoBehaviour
     public float groundAcceleration = 60f;
     public float airAcceleration = 25f;
     public float groundFriction = 14f;
-    public float movementSpeedMod = 1f; // from stat mods
 
     [Header("Jump")]
     public float jumpHeight = 3.4f;
     public float gravity = 22f;
     public float coyoteTime = 0.08f;
     public float jumpBuffer = 0.08f;
-    public float jumpHeightMod = 1f; // stat mods
-    public bool canJumpMod = true; // ability mods
 
     [Header("Crouch")]
     public float standingHeight = 1.8f;
@@ -35,7 +32,6 @@ public class PlayerMotor : MonoBehaviour
     public float slideBurstSpeed = 50f;
     public float slideMinStartSpeed = 4.5f;
     public float slideAdditiveBoost = 10f;
-    public float slideSpeedMod = 1f;
 
     // decay
     public float slideDecayHalfLife = 0.10f;
@@ -46,9 +42,6 @@ public class PlayerMotor : MonoBehaviour
 
     public float slideFriction = 2.5f;
     public float slideCooldown = 0.12f;
-    public float slideCooldownMod = 1f;
-    public float slideDistMod = 1f;
-    public bool canSlideMod = true; // ability mods
 
     [Header("Air -> Slide Buffer")]
     public float slideLandBuffer = 0.20f;
@@ -171,7 +164,10 @@ public class PlayerMotor : MonoBehaviour
                 slideBufferTimer = 0f;
                 StartSlide(wishDir);
             }
-            else if (crouchPressed && CanStartSlideNow(grounded) && canSlideMod)
+            else if (crouchPressed && CanStartSlideNow(grounded) && 
+            !AbilityModManager.abilityFlags[AbilityName.NO_SLIDING] && 
+            !(AbilityModManager.abilityFlags[AbilityName.NO_SLIDE_OR_JUMP_LOW_HP] && 
+            (PlayerManager.Instance.health.currentHealth / PlayerManager.Instance.health.maxHealth) <= 0.15))
             {
                 StartSlide(wishDir);
             }
@@ -222,22 +218,25 @@ public class PlayerMotor : MonoBehaviour
             if (grounded)
             {
                 planarVelocity = ApplyFriction(planarVelocity, groundFriction, Time.deltaTime);
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult * movementSpeedMod, groundAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxGroundSpeed * speedMult * StatModManager.GetStatModifier(StatName.MOVEMENT_SPEED), groundAcceleration, Time.deltaTime);
             }
             else
             {
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult * movementSpeedMod, airAcceleration, Time.deltaTime);
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult *  StatModManager.GetStatModifier(StatName.MOVEMENT_SPEED), airAcceleration, Time.deltaTime);
             }
         }
 
-        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide && canJumpMod)
+        if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide && 
+        !AbilityModManager.abilityFlags[AbilityName.NO_JUMPING] &&
+        !(AbilityModManager.abilityFlags[AbilityName.NO_SLIDE_OR_JUMP_LOW_HP] && 
+        (PlayerManager.Instance.health.currentHealth / PlayerManager.Instance.health.maxHealth) <= 0.15))
         {
             jumpBufferTimer = 0f;
             coyoteTimer = 0f;
 
             if (stance == Stance.Crouch) TryStandUp(force: true);
 
-            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight) * jumpHeightMod;
+            velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight) * StatModManager.GetStatModifier(StatName.JUMP_HEIGHT);
             sound.PlayJump();
         }
 
@@ -267,8 +266,8 @@ public class PlayerMotor : MonoBehaviour
         slideJumpUsed = false;
         sound.StartSlideLoop();
 
-        slideTimer = slideDuration * slideDistMod;
-        slideCooldownTimer = slideCooldown * slideCooldownMod;
+        slideTimer = slideDuration * StatModManager.GetStatModifier(StatName.SLIDE_DISTANCE);
+        slideCooldownTimer = slideCooldown * StatModManager.GetStatModifier(StatName.SLIDE_COOLDOWN);;
 
         // direction prefer current velocity, else wishDir, else forward
         Vector3 dir =
@@ -280,8 +279,8 @@ public class PlayerMotor : MonoBehaviour
         float startSpeed = Mathf.Max(currentSpeed, slideMinStartSpeed);
 
         float boosted = startSpeed + slideAdditiveBoost;
-        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed * slideSpeedMod);
-        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed * slideSpeedMod);
+        planarVelocity = dir * Mathf.Max(boosted, slideBurstSpeed * StatModManager.GetStatModifier(StatName.SLIDE_SPEED));
+        planarVelocity = dir * Mathf.Max(startSpeed, slideBurstSpeed * StatModManager.GetStatModifier(StatName.SLIDE_SPEED));
         if (fovKick)
         {
             fovKick.BeginSlide(planarVelocity.magnitude);

@@ -16,9 +16,9 @@ MonoBehaviour:
   dealDescription: Move much faster, you may find it hard to keep your eyes open
     through the wind.
   statDeals:
-  - statName: 0
+  - statName: 11
     modifier: 1.25
   abilityDeals:
-  - AbilityName: 7
+  - AbilityName: 3
     duration: 0
   drawConditions: []

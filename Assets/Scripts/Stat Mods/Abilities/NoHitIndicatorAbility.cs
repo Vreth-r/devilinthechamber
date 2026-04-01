@@ -2,22 +2,15 @@ using UnityEngine;
 
 public class NoHitIndicatorAbility : AbilityBase
 {
-    public override void initialize (float duration)
-    {
-        abilityName = AbilityName.NO_HIT_INDICATOR;
-        this.duration = duration;
-    }
-    public override bool startFunction()
+    public override void startFunction()
     {
         UIEvents.SetShowHitIndicator(false);
-        Debug.Log($"START: {abilityName}");
-        return true;
+        base.startFunction();
     }
 
-    public override bool endFunction()
+    public override void endFunction()
     {
         UIEvents.SetShowHitIndicator(true);
-        Debug.Log($"STOP: {abilityName}");
-        return true;
+        base.startFunction();
     }
 }

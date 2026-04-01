@@ -153,7 +153,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &188521218
 MeshCollider:
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8126246197411789737, guid: 0550e88acb0a27944a71cd4d0d1d6a44, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -912,7 +912,7 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 41492d353fc68ba40aac506e2a414bf7, type: 3}
     - target: {fileID: 7561635846338231625, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7561635846338231625, guid: 187e69a96a2c3700792ee613acb86368, type: 3}
       propertyPath: m_ParentUI
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 747da2dbdc570e34586b1e9996041d75, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 8db8310db805ba14a8c53d03b1a57489, type: 3}
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 214272240}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 

@@ -16,5 +16,7 @@ MonoBehaviour:
   dealDescription: Deal double damage when on the brink of death.
   statDeals: []
   abilityDeals:
-  - AbilityName: 17
+  - AbilityName: 9
     duration: 0
+  drawConditions:
+  - {fileID: 11400000, guid: 1b0c1fda24dffc04182106563c1dedd2, type: 2}

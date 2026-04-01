@@ -15,11 +15,9 @@ MonoBehaviour:
   dealName: Reckless Abandon
   dealDescription: Fire faster, but care not where your bullets land.
   statDeals:
-  - statName: 2
+  - statName: 4
     modifier: 1.5
   abilityDeals:
-  - AbilityName: 10
-    duration: 0
-  - AbilityName: 0
+  - AbilityName: 24
     duration: 0
   drawConditions: []

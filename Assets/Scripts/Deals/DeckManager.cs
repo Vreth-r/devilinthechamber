@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
-using Unity.VisualScripting;
 
 public class DeckManager : MonoBehaviour
 {
     public static DeckManager Instance;
     List<Deal> deck = new List<Deal>();
+    public List<string> pickedDeals = new List<string>();
     public Deal deathCardPrefab;
 
     public int deathCardsInDeck = 0;
@@ -45,9 +45,9 @@ public class DeckManager : MonoBehaviour
             }
             if (passFlag == false) 
             {
-                Debug.Log(deck[i].dealName);
                 drawnDeals.Add(deck[i]);
                 removeInds.Add(i);
+                pickedDeals.Add(deck[i].dealName);
             }
             i++;
             passFlag = false;

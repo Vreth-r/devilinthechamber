@@ -17,8 +17,7 @@ MonoBehaviour:
   statDeals:
   - statName: 1
     modifier: 1.35
-    dealType: 0
-  - statName: 5
+  - statName: 12
     modifier: -5
-    dealType: 1
   abilityDeals: []
+  drawConditions: []

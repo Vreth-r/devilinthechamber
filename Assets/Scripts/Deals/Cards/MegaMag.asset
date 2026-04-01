@@ -16,9 +16,10 @@ MonoBehaviour:
   dealDescription: Load twice as many bullets into your chamber, but reloading will
     hurt.
   statDeals:
-  - statName: 4
+  - statName: 10
     modifier: 10
   abilityDeals:
-  - AbilityName: 0
+  - AbilityName: 8
     duration: 0
-  drawConditions: []
+  drawConditions:
+  - {fileID: 11400000, guid: ee5c3a4ae4e97d64c86fb0e487fdf99f, type: 2}

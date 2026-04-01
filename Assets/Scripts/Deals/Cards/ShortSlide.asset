@@ -15,13 +15,11 @@ MonoBehaviour:
   dealName: Short Slide
   dealDescription: You can slide faster and more often, but for a much shorter distance.
   statDeals:
-  - statName: 7
-    modifier: 0.5
-    dealType: 1
-  - statName: 15
-    modifier: 2
-    dealType: 0
   - statName: 16
     modifier: 0.5
-    dealType: 0
+  - statName: 14
+    modifier: 2
+  - statName: 15
+    modifier: 0.5
   abilityDeals: []
+  drawConditions: []
