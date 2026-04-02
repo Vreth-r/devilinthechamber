@@ -87,6 +87,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             Instantiate(deathParticleFX, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
         }
 
+        if (AbilityModManager.abilityFlags[AbilityName.KILL_BULLET_RESTORE])
+            PlayerManager.Instance.gunHitscan.AddBulletToMagazine();
+
         if (destroyOnDeath)
             Destroy(gameObject);
         else

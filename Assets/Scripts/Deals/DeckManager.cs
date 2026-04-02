@@ -6,9 +6,10 @@ public class DeckManager : MonoBehaviour
 {
     public static DeckManager Instance;
     List<Deal> deck = new List<Deal>();
-    public List<string> pickedDeals = new List<string>();
+    public List<Deal> chosenDeals = new List<Deal>();
     public Deal deathCardPrefab;
-
+    
+    public float cardFlipChance = 0.2f;
     public int deathCardsInDeck = 0;
 
     void Awake()
@@ -21,7 +22,7 @@ public class DeckManager : MonoBehaviour
         Addressables.LoadAssetsAsync<Deal>("DealCard", OnDealLoaded);
     }
 
-    void OnDealLoaded(Deal deal)
+    public void OnDealLoaded(Deal deal)
     {
         deck.Add(deal);
         Debug.Log($"loaded: {deal.dealName}");
@@ -36,22 +37,13 @@ public class DeckManager : MonoBehaviour
         List<Deal> drawnDeals = new List<Deal>();
         List<int> removeInds = new List<int>();
         int i = 0;
-        bool passFlag = false;
+
+        // weird
         while (i < deck.Count && removeInds.Count < 3)
         {
-            for (int j = 0; j < deck[i].drawConditions.Count; j++)
-            {
-                if (!deck[i].drawConditions[j].ConditionMet()) passFlag = true;
-            }
-            if (passFlag == false) 
-            {
-                drawnDeals.Add(deck[i]);
-                removeInds.Add(i);
-                pickedDeals.Add(deck[i].dealName);
-            }
+            drawnDeals.Add(deck[i]);
+            removeInds.Add(i);
             i++;
-            passFlag = false;
-            
         }
         for (int k = removeInds.Count - 1; k >= 0; k--) deck.RemoveAt(k);
 
@@ -76,6 +68,28 @@ public class DeckManager : MonoBehaviour
             Deal temp = deck[i];
             deck[i] = deck[j];
             deck[j] = temp;
+        }
+    }
+
+    public void AddToChosenDeals (Deal deal)
+    {
+        chosenDeals.Add(deal);
+    }
+
+    public void RemoveLastChosenDeal ()
+    {
+        if (chosenDeals.Count == 0) return;
+        Deal d = chosenDeals[chosenDeals.Count - 1];
+
+        foreach (StatMod statDeal in d.statDeals)
+        {
+            StatModManager.AddStatModifier(statDeal.statName, 1 / statDeal.modifier);
+        }
+
+        foreach (Ability abilityDeal in d.abilityDeals)
+        {
+            if (AbilityModManager.abilities[abilityDeal.AbilityName] != null) AbilityModManager.abilities[abilityDeal.AbilityName].endFunction();
+            AbilityModManager.abilityFlags[abilityDeal.AbilityName] = false;
         }
     }
 

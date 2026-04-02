@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
+  m_Name: WhileYoureDown
+  m_EditorClassIdentifier: Assembly-CSharp::Deal
+  dealName: While You're Down
+  dealDescription: Your bones will become brittle. You will not be able to jump or
+    slide at low health. You should probably drink more milk.
+  statDeals: []
+  abilityDeals:
+  - AbilityName: 28
+    duration: 0

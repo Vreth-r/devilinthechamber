@@ -3,14 +3,16 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
-using Unity.VisualScripting;
 
 public class DealMenu : MonoBehaviour
 {  
     public static DealMenu Instance;
 
-    public Texture2D cardBackground;
-    public Texture2D deathCardBackground;
+    public Texture2D cardFront;
+    public Texture2D cardBack;
+    public Texture2D deathCard;
+
+    int flippedCards = 0;
 
     Button deal1;
     Button deal2;
@@ -116,18 +118,21 @@ public class DealMenu : MonoBehaviour
     {
         dealPicked = true;
         deals[0].ApplyDeal();
+        DeckManager.Instance.AddToChosenDeals(deals[0]);
         CloseMenu();
     }
     void ChooseDeal2 ()
     {
         dealPicked = true;
-        deals[1].ApplyDeal(); 
+        deals[1].ApplyDeal();
+        DeckManager.Instance.AddToChosenDeals(deals[1]);
         CloseMenu();
     }
     void ChooseDeal3 ()
     {
         dealPicked = true;
         deals[2].ApplyDeal(); 
+        DeckManager.Instance.AddToChosenDeals(deals[2]);
         CloseMenu();
     }
 
@@ -138,30 +143,62 @@ public class DealMenu : MonoBehaviour
 
     void SetDealsText()
     {
-
+        flippedCards = 0;
+        if (AbilityModManager.abilityFlags[AbilityName.ALL_CARDS_FLIPPED])
+        {
+            for (int i = 0; i < deals.Count; i++)
+            {
+                dealButtons[i].style.backgroundImage = new StyleBackground(cardBack);
+            }
+            AbilityModManager.abilityFlags[AbilityName.ALL_CARDS_FLIPPED] = false;
+            return;
+        }
         for (int i = 0; i < deals.Count; i++)
         {
-            if (deals[i].dealName == "Death")
+            if (Random.value < DeckManager.Instance.cardFlipChance * StatModManager.GetStatModifier(StatName.FLIPPED_CARD_CHANCE))
             {
-                dealButtons[i].style.backgroundImage = new StyleBackground(deathCardBackground);
+                flippedCards++;
+                dealButtons[i].style.backgroundImage = new StyleBackground(cardBack);
                 continue;
             }
-            Debug.Log($"Drew {deals[i].dealName}");
-            VisualElement dealCardInfo = new VisualElement();
-            dealCardInfo.AddToClassList("CardTextBox");
-
-            Label dealName = new Label();
-            dealName.AddToClassList("DealTitle");
-            dealName.text = deals[i].dealName;
-
-            Label dealDesc = new Label();
-            dealDesc.AddToClassList("DealDescription");
-            dealDesc.text = deals[i].dealDescription;
-
-            dealCardInfo.Add(dealName);
-            dealCardInfo.Add(dealDesc);
-
-            dealButtons[i].Add(dealCardInfo);
+            populateDealData(i);
         }
+        if (flippedCards == 0 && AbilityModManager.abilityFlags[AbilityName.ONE_CARD_ALWAYS_FLIPPED])
+        {
+            int i = Random.Range(0, 2);
+            dealButtons[i].Clear();
+            dealButtons[i].style.backgroundImage = new StyleBackground(cardBack);
+        }
+        if (flippedCards == 3 && AbilityModManager.abilityFlags[AbilityName.ONE_CARD_NEVER_FLIPPED])
+        {
+            int i = Random.Range(0, 2);
+            populateDealData(i);
+        }
+    }
+
+    void populateDealData(int i)
+    {
+        if (deals[i].dealName == "Death")
+        {
+            dealButtons[i].style.backgroundImage = new StyleBackground(deathCard);
+            return;
+        }
+        dealButtons[i].style.backgroundImage = new StyleBackground(cardFront);
+        Debug.Log($"Drew {deals[i].dealName}");
+        VisualElement dealCardInfo = new VisualElement();
+        dealCardInfo.AddToClassList("CardTextBox");
+
+        Label dealName = new Label();
+        dealName.AddToClassList("DealTitle");
+        dealName.text = deals[i].dealName;
+
+        Label dealDesc = new Label();
+        dealDesc.AddToClassList("DealDescription");
+        dealDesc.text = deals[i].dealDescription;
+
+        dealCardInfo.Add(dealName);
+        dealCardInfo.Add(dealDesc);
+
+        dealButtons[i].Add(dealCardInfo);
     }
 }

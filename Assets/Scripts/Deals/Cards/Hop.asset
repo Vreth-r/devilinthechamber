@@ -20,4 +20,5 @@ MonoBehaviour:
   abilityDeals:
   - AbilityName: 27
     duration: 0
-  drawConditions: []
+  - AbilityName: 27
+    duration: 0

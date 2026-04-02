@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public PlayerSound sound;
-    public int maxHealth = 15;
+    public int maxHealth = 100;
     public int currentHealth;
     public int deaths = 0;
 
@@ -35,7 +35,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Heal (int amount)
     {
-        
         currentHealth += amount;
 
         currentHealth = math.min(currentHealth, maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH));
@@ -53,7 +52,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
     {
-
+        if (AbilityModManager.abilityFlags[AbilityName.NO_DAMAGE_CHANCE] && UnityEngine.Random.value < 0.1) return; 
         if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY])
         {
             Vector3 knockbackDirection = hitNormal.normalized;
@@ -62,7 +61,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
         
         if (AbilityModManager.abilityFlags[AbilityName.INVINCIBILITY]) return;
-        currentHealth -= amount;
+        int dmg = AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? 2 * amount : amount;
+        currentHealth = AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
         currentHealth = Mathf.Max(0, currentHealth);
 
         UIEvents.SetHealth();
@@ -73,8 +73,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Die();
         }
     }
-
-    public void Stun (float f) {}
 
     public void Die()
     {

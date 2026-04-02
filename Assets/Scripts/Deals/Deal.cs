@@ -21,7 +21,6 @@ public class Deal : ScriptableObject
     public string dealDescription;
     public List<StatMod> statDeals;
     public List<Ability> abilityDeals;
-    public List<DrawCondition> drawConditions;
 
     public void ApplyDeal ()
     {

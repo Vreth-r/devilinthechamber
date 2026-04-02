@@ -24,7 +24,7 @@ public enum AbilityName {
     INVINCIBILITY,
     NEAR_SIGHTED,
     NO_AMMO_COUNTER,
-    NO_BODY_DAMAGE,
+    ONLY_HEADSHOTS,
     NO_CROSSHAIR,
     NO_HEALTH_BAR,
     NO_HIT_INDICATOR,
@@ -39,6 +39,19 @@ public enum AbilityName {
     SLOW_ENEMY_ON_HIT,
     DEATH,
     BULLET_RANGED,
+    HOP,
+    BACKWARDS_LOGIC,
+    ALL_CARDS_FLIPPED,
+    NO_DAMAGE_CHANCE,
+    ONE_CARD_ALWAYS_FLIPPED,
+    ONE_CARD_NEVER_FLIPPED,
+    NO_GUN_MODEL,
+    DAMAGE_BONUS_OUTSIDE_SIGHT_RANGE,
+    MIND_WIPE,
+    DAMAGE_BONUS_HIGH_HEALTH,
+    INSATIABLE_GREED,
+    TWO_CARDS_NEVER_FLIPPED,
+    SURVIVOR
 }
 public class AbilityModManager {
 
@@ -51,7 +64,7 @@ public class AbilityModManager {
         { AbilityName.KILL_BULLET_RESTORE, new BulletRestoreAbility() },
         { AbilityName.BLINDNESS, new BlindnessAbility() },
         { AbilityName.BLINKING, new BlinkingAbility() },
-        { AbilityName.NO_HIT_INDICATOR, new NoHitIndicatorAbility() },
+        { AbilityName.NO_HIT_INDICATOR, null },
         { AbilityName.NO_SLIDING, new NoSlideAbility() },
         { AbilityName.NO_JUMPING, new NoJumpAbility() },
         { AbilityName.HALF_HEALTH, new HalfHealthAbility() },
@@ -62,15 +75,15 @@ public class AbilityModManager {
         { AbilityName.DEATH, new DeathAbility() },
         { AbilityName.BALLOON_SHOES, null },
         { AbilityName.BULLET_PIERCE, null },
-        { AbilityName.CRAWLING_HEALTH_GAIN, null },
-        { AbilityName.DAMAGE_ON_RELOAD, null },
+        { AbilityName.CRAWLING_HEALTH_GAIN, new CrawlingHealthGainAbility() },
+        { AbilityName.DAMAGE_ON_RELOAD, new ReloadAbility() },
         { AbilityName.HALF_DAMAGE_TAKEN_LOW_HP, null },
         { AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP, null },
         { AbilityName.JUMP_SPEED_BOOST, null },
         { AbilityName.NEAR_SIGHTED, null },
         { AbilityName.NO_AMMO_COUNTER, null },
-        { AbilityName.NO_BODY_DAMAGE, null },
-        { AbilityName.NO_CROSSHAIR, null },
+        { AbilityName.ONLY_HEADSHOTS, null },
+        { AbilityName.NO_CROSSHAIR, new HideCrosshairAbility() },
         { AbilityName.NO_HEALTH_BAR, null },
         { AbilityName.NO_PLAYER_MODEL, null },
         { AbilityName.NO_SLIDE_OR_JUMP_LOW_HP, null },
@@ -78,6 +91,17 @@ public class AbilityModManager {
         { AbilityName.REMOVE_DEATH_CARD, null },
         { AbilityName.SLOW_ENEMY_ON_HIT, null },
         { AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP, null },
+        { AbilityName.HOP, new HopAbility() },
+        { AbilityName.BACKWARDS_LOGIC, new BackwardsLogicAbility() },
+        { AbilityName.NO_DAMAGE_CHANCE, null },
+        { AbilityName.ONE_CARD_ALWAYS_FLIPPED, null },
+        { AbilityName.ONE_CARD_NEVER_FLIPPED, null },
+        { AbilityName.DAMAGE_BONUS_OUTSIDE_SIGHT_RANGE, null },
+        { AbilityName.MIND_WIPE, new MindWipeAbility() },
+        { AbilityName.DAMAGE_BONUS_HIGH_HEALTH, null },
+        { AbilityName.INSATIABLE_GREED, null },
+        { AbilityName.TWO_CARDS_NEVER_FLIPPED, null },
+        { AbilityName.SURVIVOR, null },
     };
 
     public static Dictionary<AbilityName, bool> abilityFlags = new Dictionary<AbilityName, bool> ()
@@ -105,7 +129,7 @@ public class AbilityModManager {
         { AbilityName.JUMP_SPEED_BOOST, false },
         { AbilityName.NEAR_SIGHTED, false },
         { AbilityName.NO_AMMO_COUNTER, false },
-        { AbilityName.NO_BODY_DAMAGE, false },
+        { AbilityName.ONLY_HEADSHOTS, false },
         { AbilityName.NO_CROSSHAIR, false },
         { AbilityName.NO_HEALTH_BAR, false },
         { AbilityName.NO_PLAYER_MODEL, false },
@@ -117,13 +141,26 @@ public class AbilityModManager {
         { AbilityName.RELOAD, false },
         { AbilityName.KNOCKBACK_ABILITY, false },
         { AbilityName.BULLET_RANGED, false },
+        { AbilityName.ALL_CARDS_FLIPPED, false },
+        { AbilityName.NO_DAMAGE_CHANCE, false },
+        { AbilityName.ONE_CARD_ALWAYS_FLIPPED, false },
+        { AbilityName.ONE_CARD_NEVER_FLIPPED, false },
+        { AbilityName.DAMAGE_BONUS_OUTSIDE_SIGHT_RANGE, false },
+        { AbilityName.MIND_WIPE, false },
+        { AbilityName.DAMAGE_BONUS_HIGH_HEALTH, false },
+        { AbilityName.INSATIABLE_GREED, false },
+        { AbilityName.TWO_CARDS_NEVER_FLIPPED, false },
+        { AbilityName.SURVIVOR, false },
     };
 
     public static void StartAbility (AbilityName abilityName, float duration)
     {   
-        abilities[abilityName].initialize(abilityName, duration);
-        abilities[abilityName].startFunction(); // run the start function (the effect)
-        if (abilities[abilityName].duration != 0) 
-            TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
+        if (abilities[abilityName] != null)
+        {
+            abilities[abilityName].initialize(abilityName, duration);
+            abilities[abilityName].startFunction(); // run the start function (the effect)
+            if (abilities[abilityName].duration != 0) 
+                TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
+        }
     }
 }

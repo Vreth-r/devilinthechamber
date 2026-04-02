@@ -7,7 +7,6 @@ public abstract class AbilityBase
 {
     public AbilityName abilityName; // prob remove
     public float duration = 1f;
-    public DealType dealType;
     public virtual void initialize(AbilityName abilityName, float duration)
     {
         this.abilityName = abilityName;

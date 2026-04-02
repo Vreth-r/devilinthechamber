@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
+  m_Name: InsatiableGreed
+  m_EditorClassIdentifier: Assembly-CSharp::Deal
+  dealName: Insatiable Greed
+  dealDescription: If you have full health when you take a deal, you will never draw
+    more than 1 death card. However, each time you do this there will be an increased
+    chance for cards to be flipped. Give in to your greed my child. Take the deal!
+  statDeals: []
+  abilityDeals:
+  - AbilityName: 46
+    duration: 0
+  - AbilityName: 47
+    duration: 0

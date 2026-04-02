@@ -1222,7 +1222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bfeba3f78902c4c90e7e9bdd2f983b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
+  pickedDeals: []
   deathCardPrefab: {fileID: 11400000, guid: c8edc5f408c6db04eb7eb6206bc25b18, type: 2}
+  cardFlipChance: 0.5
   deathCardsInDeck: 0
 --- !u!4 &1530084560 stripped
 Transform:

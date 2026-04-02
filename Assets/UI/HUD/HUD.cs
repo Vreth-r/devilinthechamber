@@ -14,8 +14,6 @@ public class HUD : MonoBehaviour
 
     bool uiReady;
 
-    public bool showHitIndicator = true;
-
     public Texture2D oneEyedImage;
 
     Color baseBackgroundTint = new Color(0, 0, 0, 0.3f);
@@ -47,7 +45,6 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateAmmo += SetAmmo;
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
-        UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
         UIEvents.ForceRefresh += ForceRefreshAll;
@@ -62,7 +59,6 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateAmmo -= SetAmmo;
         UIEvents.SetBlind -= SetBlind;
         UIEvents.IndicateHit -= IndicateHit;
-        UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
         UIEvents.blink -= BlinkWrapper;
         UIEvents.OneEye -= SetOneEyed;
         UIEvents.ForceRefresh -= ForceRefreshAll;
@@ -194,7 +190,7 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
-        if (!showHitIndicator) return;
+        if (!AbilityModManager.abilityFlags[AbilityName.NO_HIT_INDICATOR]) return;
         if (!uiReady) return;
         if (backgroundVignette == null) return;
 
@@ -207,10 +203,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void SetShowHitIndicator (bool showHitIndicator)
-    {
-        this.showHitIndicator = showHitIndicator;
-    }
 
     void ForceRefreshAll ()
     {
@@ -226,6 +218,11 @@ public class HUD : MonoBehaviour
     void RefreshAmmo ()
     {
         if (!uiReady) return;
+        if (AbilityModManager.abilityFlags[AbilityName.NO_AMMO_COUNTER])
+        {
+            ammoPanel.visible = false;
+            return;
+        }
         ammoPanel.Clear();
         if (PlayerManager.Instance.gunHitscan.magazineSize == int.MaxValue)
         {

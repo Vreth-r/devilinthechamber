@@ -56,6 +56,10 @@ public class GunHitscan : MonoBehaviour
         {
             //PlayerManager.Instance.health.Die(true);
             StartCoroutine(Reload());
+            if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
+            {
+                PlayerManager.Instance.health.TakeDamage(5, Vector3.zero, Vector3.zero);
+            }
         }
         if ((controls.Player.Fire.IsPressed() || AbilityModManager.abilityFlags[AbilityName.FULL_AUTO]) && Time.time >= nextFireTime && !reloading)
         {
@@ -81,19 +85,34 @@ public class GunHitscan : MonoBehaviour
 
         Vector3 endPoint = origin + dir * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic 2!
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, Mathf.Infinity, hitMask, QueryTriggerInteraction.Ignore))
-        {
-            endPoint = hit.point;
+        RaycastHit[] hits = Physics.RaycastAll(origin, dir, AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000, hitMask, QueryTriggerInteraction.Ignore);
 
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (var hit in hits)
+        {
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
             if (dmg != null)
             {
-                if (AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP] && PlayerManager.Instance.health.currentHealth <= 2)
-                    dmg.TakeDamage((int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT) * 2), hit.point, hit.normal);
-                else
-                    dmg.TakeDamage((int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT)), hit.point, hit.normal);
-                
+                int finalDamage = (int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT));
+
+                if (AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP] &&
+                    PlayerManager.Instance.health.currentHealth <= 0.15f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                {
+                    finalDamage *= 2;
+                }
+
+                dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+
+                if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
+                {
+                    endPoint = hit.point;
+                    break;
+                }
             }
+
+            endPoint = hit.point;
         }
 
         if (muzzleFlash) muzzleFlash.Play();
@@ -104,6 +123,7 @@ public class GunHitscan : MonoBehaviour
 
         if (tracerPrefab) SpawnTracer(origin, endPoint);
 
+        if (AbilityModManager.abilityFlags[AbilityName.INFINITE_MAG]) return;
         if (AbilityModManager.abilityFlags[AbilityName.RELOAD])
         {
             currentMagazine -= 1;
@@ -153,5 +173,11 @@ public class GunHitscan : MonoBehaviour
         currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
         UIEvents.SetAmmo();
         reloading = false;
+    }
+
+    public void AddBulletToMagazine ()
+    {
+        if (currentMagazine == magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE)) return;
+        currentMagazine += 1;
     }
 }
