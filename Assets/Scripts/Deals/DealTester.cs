@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
+public struct DealTest
+{
+    public Deal deal;
+    public float activationDelay;
+}
 public class DealTester : MonoBehaviour
 {
 
-    public List<Deal> deals;
+    public List<DealTest> dealTests;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = 0; i < deals.Count; i++)
+        for (int i = 0; i < dealTests.Count; i++)
         {
-            deals[i].ApplyDeal();
+            TimerHandler.Instance.CreateTimerHandle(nameof(i), dealTests[i].activationDelay, dealTests[i].deal.ApplyDeal);
         }
     }
 }

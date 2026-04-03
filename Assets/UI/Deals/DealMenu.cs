@@ -118,21 +118,18 @@ public class DealMenu : MonoBehaviour
     {
         dealPicked = true;
         deals[0].ApplyDeal();
-        DeckManager.Instance.AddToChosenDeals(deals[0]);
         CloseMenu();
     }
     void ChooseDeal2 ()
     {
         dealPicked = true;
         deals[1].ApplyDeal();
-        DeckManager.Instance.AddToChosenDeals(deals[1]);
         CloseMenu();
     }
     void ChooseDeal3 ()
     {
         dealPicked = true;
         deals[2].ApplyDeal(); 
-        DeckManager.Instance.AddToChosenDeals(deals[2]);
         CloseMenu();
     }
 
@@ -184,7 +181,7 @@ public class DealMenu : MonoBehaviour
             return;
         }
         dealButtons[i].style.backgroundImage = new StyleBackground(cardFront);
-        Debug.Log($"Drew {deals[i].dealName}");
+        Debug.Log($"Drew: {deals[i].dealName}");
         VisualElement dealCardInfo = new VisualElement();
         dealCardInfo.AddToClassList("CardTextBox");
 

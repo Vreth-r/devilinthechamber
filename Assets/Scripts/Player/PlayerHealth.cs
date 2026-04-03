@@ -52,7 +52,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
     {
-        if (AbilityModManager.abilityFlags[AbilityName.NO_DAMAGE_CHANCE] && UnityEngine.Random.value < 0.1) return; 
+        if (AbilityModManager.abilityFlags[AbilityName.NO_DAMAGE_CHANCE] && UnityEngine.Random.value <= 0.1) return; 
         if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY])
         {
             Vector3 knockbackDirection = hitNormal.normalized;
@@ -62,11 +62,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         
         if (AbilityModManager.abilityFlags[AbilityName.INVINCIBILITY]) return;
         int dmg = AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? 2 * amount : amount;
-        currentHealth = AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
+        currentHealth -= AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
         currentHealth = Mathf.Max(0, currentHealth);
-
+        Debug.Log(currentHealth);
         UIEvents.SetHealth();
-        UIEvents.Hit();
+
+        if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])
+        {
+            UIEvents.Hit();
+        }
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {

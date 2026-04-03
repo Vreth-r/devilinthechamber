@@ -56,10 +56,6 @@ public class GunHitscan : MonoBehaviour
         {
             //PlayerManager.Instance.health.Die(true);
             StartCoroutine(Reload());
-            if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
-            {
-                PlayerManager.Instance.health.TakeDamage(5, Vector3.zero, Vector3.zero);
-            }
         }
         if ((controls.Player.Fire.IsPressed() || AbilityModManager.abilityFlags[AbilityName.FULL_AUTO]) && Time.time >= nextFireTime && !reloading)
         {
@@ -69,23 +65,31 @@ public class GunHitscan : MonoBehaviour
     }
 
 
-    void Fire()
+    void Fire(float offset = 0)
     {
         if (reloading) return;
         if (!cam) cam = Camera.main;
+
 
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 aimPoint;
 
-        aimPoint = aimRay.origin + aimRay.direction * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic!
+        Vector3 right = Camera.main.transform.right;
 
-        Vector3 origin = muzzle.position;
-        Vector3 dir = (aimPoint - origin).normalized;
+        aimPoint = aimRay.origin + aimRay.direction * 
+                    (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] 
+                    ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) 
+                    : 100000)
+                + right * offset;
 
-        Vector3 endPoint = origin + dir * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic 2!
+        Vector3 gunOrigin = muzzle.position;
+        Vector3 camOrigin = cam.transform.position;
+        Vector3 dir = (aimPoint - camOrigin).normalized;
 
-        RaycastHit[] hits = Physics.RaycastAll(origin, dir, AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000, hitMask, QueryTriggerInteraction.Ignore);
+        Vector3 endPoint = camOrigin + dir * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic 2!
+
+        RaycastHit[] hits = Physics.RaycastAll(camOrigin, dir, AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000, hitMask, QueryTriggerInteraction.Ignore);
 
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
@@ -99,9 +103,21 @@ public class GunHitscan : MonoBehaviour
                 if (AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP] &&
                     PlayerManager.Instance.health.currentHealth <= 0.15f *
                     (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
-                {
                     finalDamage *= 2;
-                }
+
+                if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_BONUS_LOW_HEALTH] &&
+                    PlayerManager.Instance.health.currentHealth <= 0.15f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                    finalDamage = (int)(finalDamage * 1.15f);
+
+                if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_BONUS_HIGH_HEALTH] &&
+                    PlayerManager.Instance.health.currentHealth >= 0.75f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                    finalDamage = (int)(finalDamage * 1.25f);
+
+                if (UnityEngine.Random.value <= StatModManager.GetStatModifier(StatName.CRITICAL_HIT_CHANCE)) finalDamage *= 2;
+
+
 
                 dmg.TakeDamage(finalDamage, hit.point, hit.normal);
 
@@ -121,7 +137,13 @@ public class GunHitscan : MonoBehaviour
         animator.SetTrigger("Fire");
         animator.speed = fireRate * StatModManager.GetStatModifier(StatName.FIRE_SPEED);
 
-        if (tracerPrefab) SpawnTracer(origin, endPoint);
+        if (tracerPrefab) SpawnTracer(gunOrigin, endPoint);
+
+        if (AbilityModManager.abilityFlags[AbilityName.THREE_GUNS_IN_ONE] && offset == 0)
+        {
+            Fire(-5);
+            Fire(5);
+        }
 
         if (AbilityModManager.abilityFlags[AbilityName.INFINITE_MAG]) return;
         if (AbilityModManager.abilityFlags[AbilityName.RELOAD])
@@ -173,6 +195,10 @@ public class GunHitscan : MonoBehaviour
         currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
         UIEvents.SetAmmo();
         reloading = false;
+        if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
+        {
+            PlayerManager.Instance.health.TakeDamage(5, Vector3.zero, Vector3.zero);
+        }
     }
 
     public void AddBulletToMagazine ()

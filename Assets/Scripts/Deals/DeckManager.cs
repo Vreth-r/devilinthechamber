@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
+using FMOD;
 
 public class DeckManager : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class DeckManager : MonoBehaviour
     public void OnDealLoaded(Deal deal)
     {
         deck.Add(deal);
-        Debug.Log($"loaded: {deal.dealName}");
         if (deal.abilityDeals.Count != 0 && deal.abilityDeals[0].AbilityName == AbilityName.DEATH)
             deathCardsInDeck++;
 
@@ -83,14 +83,16 @@ public class DeckManager : MonoBehaviour
 
         foreach (StatMod statDeal in d.statDeals)
         {
-            StatModManager.AddStatModifier(statDeal.statName, 1 / statDeal.modifier);
+            StatModManager.RemoveStatModifierExact(statDeal.statName, statDeal.modifier);
         }
 
         foreach (Ability abilityDeal in d.abilityDeals)
         {
-            if (AbilityModManager.abilities[abilityDeal.AbilityName] != null) AbilityModManager.abilities[abilityDeal.AbilityName].endFunction();
+            if (AbilityModManager.abilities.ContainsKey(abilityDeal.AbilityName)) AbilityModManager.abilities[abilityDeal.AbilityName].endFunction();
             AbilityModManager.abilityFlags[abilityDeal.AbilityName] = false;
         }
+        UnityEngine.Debug.Log($"Removed {d.dealName}");
+        chosenDeals.RemoveAt(chosenDeals.Count - 1);
     }
 
 }

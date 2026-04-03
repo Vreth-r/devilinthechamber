@@ -74,6 +74,7 @@ public class DeathScreen : MonoBehaviour
             deathMarker.visible = false;
             livesRemaining.style.color = new Color(textRGB.x, textRGB.y, textRGB.z, 1);
             doc.sortingOrder = 0;
+            UIEvents.ForceHUDRefresh();
         }).StartingIn((long)(fadeMs + 6000));
     }
     Dictionary<int, string> baseRomanNums = new Dictionary<int, string>

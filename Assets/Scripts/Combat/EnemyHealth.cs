@@ -36,7 +36,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         hp -= amount;
         hp = Mathf.Max(hp, 0);
 
-        Flash();
+        if (!AbilityModManager.abilityFlags[AbilityName.NO_ENEMY_HIT_INDICATOR]) Flash();
 
         if (hp <= 0)
             Die();

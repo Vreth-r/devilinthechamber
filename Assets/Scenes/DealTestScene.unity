@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52935cd85efdbc45b8e393798f11d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DealTester
-  deals: []
+  dealTests: []
 --- !u!4 &393968249
 Transform:
   m_ObjectHideFlags: 0
@@ -487,6 +487,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5174947433759290317, guid: 15dbdfbe674f6fd478135a304fceebc0, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -576,10 +580,22 @@ PrefabInstance:
       propertyPath: sound
       value: 
       objectReference: {fileID: 712771981}
+    - target: {fileID: 7331182200460546764, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898788842459009431, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8536200438810518271, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
       propertyPath: sound
       value: 
       objectReference: {fileID: 712771981}
+    - target: {fileID: 8716468776832707917, guid: ebb4fe589844da24aa83045214a7dc2b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -989,6 +1005,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lady Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7800068546288498979, guid: 4f46757e7b939f64ebedf637f9ae18c6, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1056,7 +1076,6 @@ MonoBehaviour:
   hpMax: 10
   ammoInMag: 10
   ammoReserve: 10
-  showHitIndicator: 1
   oneEyedImage: {fileID: 2800000, guid: 27d1d3d43d0d1224a9bf5721f841f717, type: 3}
   filledHP: {fileID: 21300000, guid: 7138a2ae7f54b677c9375439a7f5d8fe, type: 3}
   emptyHP: {fileID: 21300000, guid: 08f673832a7116594b25f5e14caa2e96, type: 3}
@@ -1200,6 +1219,10 @@ PrefabInstance:
       propertyPath: muzzleFlash
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7800068546288498979, guid: 4f46757e7b939f64ebedf637f9ae18c6, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1222,7 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bfeba3f78902c4c90e7e9bdd2f983b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
-  pickedDeals: []
+  chosenDeals: []
   deathCardPrefab: {fileID: 11400000, guid: c8edc5f408c6db04eb7eb6206bc25b18, type: 2}
   cardFlipChance: 0.5
   deathCardsInDeck: 0
@@ -1510,6 +1533,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5174947433759290317, guid: 15dbdfbe674f6fd478135a304fceebc0, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1567,6 +1594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lady Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7800068546288498979, guid: 4f46757e7b939f64ebedf637f9ae18c6, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1624,6 +1655,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5174947433759290317, guid: 15dbdfbe674f6fd478135a304fceebc0, type: 3}
+      propertyPath: deathParticleFX
+      value: 
+      objectReference: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

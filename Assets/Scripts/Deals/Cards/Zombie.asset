@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Deal
   dealName: Zombie
   dealDescription: For a permanent blood price, remove 7 death cards from your deck.
-  statDeals:
-  - statName: 12
-    modifier: -5
+  statDeals: []
   abilityDeals:
   - AbilityName: 32
     duration: 0
@@ -31,4 +29,6 @@ MonoBehaviour:
   - AbilityName: 32
     duration: 0
   - AbilityName: 32
+    duration: 0
+  - AbilityName: 12
     duration: 0

@@ -8,6 +8,7 @@ public class DeathAbility : AbilityBase
     }
     async void Die()
     {
+        if (AbilityModManager.abilityFlags[AbilityName.SURVIVOR]) return;
         StatModManager.ResetStatMods();
         GameManager.Instance.StopMusic();
         Object.Destroy(GameManager.Instance.gameObject);

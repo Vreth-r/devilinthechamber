@@ -18,6 +18,5 @@ MonoBehaviour:
   - statName: 4
     modifier: 1.5
   abilityDeals:
-  - AbilityName: 24
+  - AbilityName: 49
     duration: 0
-  drawConditions: []

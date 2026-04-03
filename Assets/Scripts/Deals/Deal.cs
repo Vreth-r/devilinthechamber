@@ -32,6 +32,9 @@ public class Deal : ScriptableObject
         foreach (Ability abilityDeal in abilityDeals)
         {
             AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
+            AbilityModManager.abilityFlags[abilityDeal.AbilityName] = true;
         }
+        Debug.Log($"START: {dealName}");
+        DeckManager.Instance.AddToChosenDeals(this);
     }
 }

@@ -17,9 +17,7 @@ MonoBehaviour:
     Invisible. Make sure you don't drop it.
   statDeals: []
   abilityDeals:
-  - AbilityName: 42
-    duration: 0
-  - AbilityName: 20
+  - AbilityName: 51
     duration: 0
   - AbilityName: 32
     duration: 0

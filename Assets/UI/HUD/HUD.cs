@@ -190,7 +190,6 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
-        if (!AbilityModManager.abilityFlags[AbilityName.NO_HIT_INDICATOR]) return;
         if (!uiReady) return;
         if (backgroundVignette == null) return;
 
@@ -212,13 +211,19 @@ public class HUD : MonoBehaviour
     void RefreshHealth ()
     {
         if (!uiReady) return;
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
+        {
+            healthBar.visible = false;
+            healthBar.parent.visible = false;
+            return;
+        }
         healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))));
     }
 
     void RefreshAmmo ()
     {
         if (!uiReady) return;
-        if (AbilityModManager.abilityFlags[AbilityName.NO_AMMO_COUNTER])
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_GUN] || !AbilityModManager.abilityFlags[AbilityName.RELOAD])
         {
             ammoPanel.visible = false;
             return;
@@ -226,6 +231,8 @@ public class HUD : MonoBehaviour
         ammoPanel.Clear();
         if (PlayerManager.Instance.gunHitscan.magazineSize == int.MaxValue)
         {
+            ammoPanel.visible = false;
+            return;
         }
         else
         {

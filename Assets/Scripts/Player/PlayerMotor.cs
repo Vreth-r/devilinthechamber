@@ -164,10 +164,11 @@ public class PlayerMotor : MonoBehaviour
                 slideBufferTimer = 0f;
                 StartSlide(wishDir);
             }
+            
             else if (crouchPressed && CanStartSlideNow(grounded) && 
             !AbilityModManager.abilityFlags[AbilityName.NO_SLIDING] && 
             !(AbilityModManager.abilityFlags[AbilityName.NO_SLIDE_OR_JUMP_LOW_HP] && 
-            (PlayerManager.Instance.health.currentHealth / PlayerManager.Instance.health.maxHealth) <= 0.15))
+            (PlayerManager.Instance.health.currentHealth / (float)PlayerManager.Instance.health.maxHealth) <= 0.25))
             {
                 StartSlide(wishDir);
             }
@@ -229,7 +230,7 @@ public class PlayerMotor : MonoBehaviour
         if (jumpBufferTimer > 0f && coyoteTimer > 0f && stance != Stance.Slide && 
         !AbilityModManager.abilityFlags[AbilityName.NO_JUMPING] &&
         !(AbilityModManager.abilityFlags[AbilityName.NO_SLIDE_OR_JUMP_LOW_HP] && 
-        (PlayerManager.Instance.health.currentHealth / PlayerManager.Instance.health.maxHealth) <= 0.15))
+        (PlayerManager.Instance.health.currentHealth / (float)PlayerManager.Instance.health.maxHealth) <= 0.25))
         {
             jumpBufferTimer = 0f;
             coyoteTimer = 0f;

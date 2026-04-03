@@ -82,6 +82,16 @@ public class StatModManager
         return totalMod;
     }
 
+    public static void RemoveStatModifierExact (StatName statName, float modifier)
+    {
+        StatModifiers[statName].Remove(modifier);
+    }
+
+    public static void RemoveStatModifier (StatName statName, float modifier)
+    {
+        AddStatModifier(statName, 1 / modifier);
+    }
+
     public static void ResetStatMods()
     {
         foreach (List<float> statMods in StatModifiers.Values)

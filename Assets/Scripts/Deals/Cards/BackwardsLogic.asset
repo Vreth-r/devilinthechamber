@@ -17,7 +17,7 @@ MonoBehaviour:
     overtime.
   statDeals: []
   abilityDeals:
-  - AbilityName: 9
+  - AbilityName: 50
     duration: 0
   - AbilityName: 6
     duration: 0

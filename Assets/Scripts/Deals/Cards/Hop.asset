@@ -20,5 +20,3 @@ MonoBehaviour:
   abilityDeals:
   - AbilityName: 27
     duration: 0
-  - AbilityName: 27
-    duration: 0
