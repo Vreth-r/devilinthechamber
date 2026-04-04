@@ -74,7 +74,7 @@ public class EnemyBrain : MonoBehaviour
     {
         if (!agent || stats == null) return;
 
-        agent.speed = stats.moveSpeed;
+        agent.speed = stats.moveSpeed * (stats.type == EnemyType.LADY ? StatModManager.GetStatModifier(StatName.LADY_MOVEMENT_SPEED) : StatModManager.GetStatModifier(StatName.DOG_MOVEMENT_SPEED));
         agent.stoppingDistance = stats.stopRange;
     }
 }

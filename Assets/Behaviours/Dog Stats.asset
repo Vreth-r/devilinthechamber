@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd345ed9c43363e4584968ec0129e412, type: 3}
   m_Name: Dog Stats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  type: 1
   maxHealth: 12
   damage: 1
   aggroRange: 25

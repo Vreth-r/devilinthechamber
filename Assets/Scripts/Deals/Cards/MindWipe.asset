@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
+  m_Name: MindWipe
+  m_EditorClassIdentifier: Assembly-CSharp::Deal
+  dealName: Mind Wipe
+  dealDescription: 'Regretting your choices yet? How about this: I will remove the
+    effects of the last three deals we''ve made, and take 5 death cards out of your
+    deck... For a small price of course.'
+  statDeals:
+  - statName: 17
+    modifier: 0.15
+  abilityDeals:
+  - AbilityName: 44
+    duration: 0
+  - AbilityName: 32
+    duration: 0
+  - AbilityName: 32
+    duration: 0
+  - AbilityName: 32
+    duration: 0
+  - AbilityName: 32
+    duration: 0
+  - AbilityName: 32
+    duration: 0

@@ -7,10 +7,10 @@ public class TimerHandle
     public string timerName;
     private float currentTime = 0f;
     public float length; // total length of timer
-    public Func<bool> timerEndFunction; // function to run on end
+    public Action timerEndFunction; // function to run on end
     public bool timerDone = false;
 
-    public TimerHandle (string timerName, float length, Func<bool> timerEndFunction)
+    public TimerHandle (string timerName, float length, Action timerEndFunction)
     {
         this.timerName = timerName;
         this.length = length;
@@ -67,7 +67,7 @@ public class TimerHandler : MonoBehaviour
     }
 
     // adds a new timer handle to the list
-    public void CreateTimerHandle (string timerName, float length, Func<bool> timerEndFunction)
+    public void CreateTimerHandle (string timerName, float length, Action timerEndFunction)
     {
         timerHandles.Add(new TimerHandle(timerName, length, timerEndFunction));
     }

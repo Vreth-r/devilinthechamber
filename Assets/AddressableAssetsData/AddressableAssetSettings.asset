@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e8419f7dc28c7ee43a8f36fdf9658528
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: de26ce493b54188b90cbcea9017a41f0
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -102,6 +102,9 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - DealCard
+    - Reload
+    - Backwards Logic
+    - Hop
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9c8344b62e973084ba86a51ba67e82c7, type: 2}

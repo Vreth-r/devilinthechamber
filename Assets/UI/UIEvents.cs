@@ -6,6 +6,7 @@ public static class UIEvents
 {
     public static Action UpdateHealth;
     public static Action UpdateAmmo;
+    public static Action<bool> UpdateReticleVisibility;
     public static Action<bool> SetBlind;
     public static Action IndicateHit;
     public static Action<bool> UpdateShowHitIndicator;
@@ -33,6 +34,11 @@ public static class UIEvents
     public static void SetShowHitIndicator (bool showHitIndicator)
     {
         UpdateShowHitIndicator?.Invoke(showHitIndicator);
+    }
+
+    public static void SetReticleVisibility (bool newVisibility)
+    {
+        UpdateReticleVisibility?.Invoke(newVisibility);
     }
 
     public static void SetPerk(int index, Sprite sprite)

@@ -14,8 +14,6 @@ public class HUD : MonoBehaviour
 
     bool uiReady;
 
-    public bool showHitIndicator = true;
-
     public Texture2D oneEyedImage;
 
     Color baseBackgroundTint = new Color(0, 0, 0, 0.3f);
@@ -47,7 +45,6 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateAmmo += SetAmmo;
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
-        UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
         UIEvents.ForceRefresh += ForceRefreshAll;
@@ -62,7 +59,6 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateAmmo -= SetAmmo;
         UIEvents.SetBlind -= SetBlind;
         UIEvents.IndicateHit -= IndicateHit;
-        UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
         UIEvents.blink -= BlinkWrapper;
         UIEvents.OneEye -= SetOneEyed;
         UIEvents.ForceRefresh -= ForceRefreshAll;
@@ -194,7 +190,6 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
-        if (!showHitIndicator) return;
         if (!uiReady) return;
         if (backgroundVignette == null) return;
 
@@ -207,10 +202,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void SetShowHitIndicator (bool showHitIndicator)
-    {
-        this.showHitIndicator = showHitIndicator;
-    }
 
     void ForceRefreshAll ()
     {
@@ -220,15 +211,28 @@ public class HUD : MonoBehaviour
     void RefreshHealth ()
     {
         if (!uiReady) return;
-        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + PlayerManager.Instance.health.maxHealthMod)));
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
+        {
+            healthBar.visible = false;
+            healthBar.parent.visible = false;
+            return;
+        }
+        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))));
     }
 
     void RefreshAmmo ()
     {
         if (!uiReady) return;
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_GUN] || !AbilityModManager.abilityFlags[AbilityName.RELOAD])
+        {
+            ammoPanel.visible = false;
+            return;
+        }
         ammoPanel.Clear();
         if (PlayerManager.Instance.gunHitscan.magazineSize == int.MaxValue)
         {
+            ammoPanel.visible = false;
+            return;
         }
         else
         {

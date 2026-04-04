@@ -1,28 +1,18 @@
 using UnityEngine;
 public class DeathAbility : AbilityBase
 {
-    public override void initialize(float duration)
+    public override void startFunction()
     {
-        abilityName = AbilityName.DEATH;
-        this.duration = -1;
-    }
-
-    public override bool startFunction()
-    {
+        base.startFunction();
         Die();
-        return true;
     }
     async void Die()
     {
+        if (AbilityModManager.abilityFlags[AbilityName.SURVIVOR]) return;
         StatModManager.ResetStatMods();
         GameManager.Instance.StopMusic();
         Object.Destroy(GameManager.Instance.gameObject);
         await SceneFader.Instance.FadeToScene("GameOver");
         return;
-    }
-
-    public override bool endFunction()
-    {
-        return true;
     }
 }

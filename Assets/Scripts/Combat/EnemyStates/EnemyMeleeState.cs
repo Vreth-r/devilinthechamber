@@ -492,7 +492,7 @@ public class EnemyMeleeState : IEnemyState
                     ? (hitPoint - samplePoint).normalized
                     : -attackDir;
 
-            damageable.TakeDamage(ctx.stats.damage, hitPoint, normal);
+            damageable.TakeDamage((int)(ctx.stats.damage * StatModManager.GetStatModifier(StatName.DOG_DAMAGE)), hitPoint, normal);
             return;
         }
     }

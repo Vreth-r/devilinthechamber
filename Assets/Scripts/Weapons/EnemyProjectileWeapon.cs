@@ -18,6 +18,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
     private EnemyBrain brain;
     private EnemyStats stats;
     private NavMeshAgent agent;
+    private LadyEnemySound sound;
 
     private Vector3 smoothedRelVel;
 
@@ -38,6 +39,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
     {
         if (!brain) brain = GetComponent<EnemyBrain>();
         if (!agent) agent = GetComponent<NavMeshAgent>();
+        if (!sound) sound = GetComponent<LadyEnemySound>();
 
         stats = brain != null ? brain.stats : null;
     }
@@ -96,6 +98,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
             }
         }
 
+
         Vector3 dir = aimPoint - origin;
         if (dir.sqrMagnitude < 0.0001f)
             dir = firePoint.forward;
@@ -105,6 +108,7 @@ public class EnemyProjectileWeapon : MonoBehaviour
 
         Projectile projectileInstance = Instantiate(projectilePrefab);
         IgnoreShooterCollisions(projectileInstance.gameObject, transform);
+        sound.PlayShootSound();
 
         projectileInstance.damage = stats.damage;
         projectileInstance.hitMask = projectileHitMask;

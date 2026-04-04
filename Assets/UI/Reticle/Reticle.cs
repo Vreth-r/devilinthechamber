@@ -22,7 +22,7 @@ public class Reticle : MonoBehaviour
         right = root.Q<VisualElement>("pip-right");
 
         ForceVisibleFallback(root, top, bottom, left, right);
-
+        UIEvents.UpdateReticleVisibility += SetVisibility;
         // SetSpread(0); // do this later
     }
 
@@ -57,5 +57,10 @@ public class Reticle : MonoBehaviour
         if (bottom != null) bottom.style.top = gap;
         if (left != null) left.style.right = gap;
         if (right != null) right.style.left = gap;
+    }
+
+    void SetVisibility (bool newVisibility)
+    {
+        root.visible = newVisibility;
     }
 }

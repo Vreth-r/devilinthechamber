@@ -216,7 +216,7 @@ public class EnemyRangedKiteState : IEnemyState
 
     private float GetFireInterval()
     {
-        return 1f / Mathf.Max(0.01f, ctx.stats.fireRate);
+        return 1f / Mathf.Max(0.01f, ctx.stats.fireRate * StatModManager.GetStatModifier(StatName.LADY_FIRE_RATE));
     }
 
     private void FireProjectile()
@@ -225,9 +225,8 @@ public class EnemyRangedKiteState : IEnemyState
             return;
 
         anim?.PlayShoot();
-
-        float speedMod = StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
-        float finalSpeed = ctx.stats.projectileSpeed * speedMod;
+;
+        float finalSpeed = ctx.stats.projectileSpeed * StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
 
         Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 0.4f;
         Vector3 aimPoint = GetAimPoint(ctx.target, ctx.stats.projectileAimHeight);

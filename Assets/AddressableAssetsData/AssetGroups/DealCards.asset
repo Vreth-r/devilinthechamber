@@ -15,191 +15,293 @@ MonoBehaviour:
   m_GroupName: DealCards
   m_GUID: e8419f7dc28c7ee43a8f36fdf9658528
   m_SerializeEntries:
-  - m_GUID: 0637bea8812241b4092d9394202ad3b1
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 7.asset
+  - m_GUID: 03991316d3e1eec4e93e2d052b9487dd
+    m_Address: Assets/Scripts/Deals/Cards/WheresMe.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e9b3252b764a8248878beaad976caea
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 2.asset
+  - m_GUID: 03ab5f2db64f0764abc81793d3406008
+    m_Address: Assets/Scripts/Deals/Cards/RecklessAbandon.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13eb8a2af92f2a9408dd4fc87aadc60f
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 6.asset
+  - m_GUID: 07fe230285e69f14ba8a1b5cc7244282
+    m_Address: Assets/Scripts/Deals/Cards/InfiniteMag.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 098b6f7cd2c062e44b3a2a6efdfd209f
+    m_Address: Assets/Scripts/Deals/Cards/3GunsIn1.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1466c8bed31fab240975f9207072c7fb
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 10.asset
+  - m_GUID: 108f32a319cab5747b9740f210dd4ec1
+    m_Address: Assets/Scripts/Deals/Cards/Running Blind.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21ae6678b7fae7e438bbacf1764fea1f
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 2.asset
+  - m_GUID: 193604868bc51f7419008b679a200d98
+    m_Address: Assets/Scripts/Deals/Cards/SmallGift.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 24869b406ae6d5544b590dbb705961e1
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 4.asset
+  - m_GUID: 1af51d6a062be1a4894182583975cd73
+    m_Address: Assets/Scripts/Deals/Cards/UnderPressure.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3b841de43642dca458fdd4e7eaed49a8
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 3.asset
+  - m_GUID: 1d9670c9cd4510e48bd73d4b45b8a717
+    m_Address: Assets/Scripts/Deals/Cards/Tazer.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bf40d1e6a9e3fa43b6cc413daa2d71e
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 7.asset
+  - m_GUID: 1f98d94a031f32c49b04e455001702ca
+    m_Address: Assets/Scripts/Deals/Cards/Paranoia.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4fb359cbab12d5e4bad00d1ed60a6a53
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 10.asset
+  - m_GUID: 210fae0216ec7104a9b2831e80f8fd29
+    m_Address: Assets/Scripts/Deals/Cards/Turtling.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 50edd4b2eadd5914989091e11f0920e3
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 7.asset
+  - m_GUID: 23377f900838e4a4e99d8a1849252b20
+    m_Address: Assets/Scripts/Deals/Cards/BackwardsLogic.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 57b91f7e26014f646847a3e77a57c5b8
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 1.asset
+  - m_GUID: 2f0fc0c7bf684f24d87bb6f1aa9b236b
+    m_Address: Assets/Scripts/Deals/Cards/UnlockableCards/BulletHell.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35770a99941be3f46b984761d161d254
+    m_Address: Assets/Scripts/Deals/Cards/HearNoEvil.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ad825b76f7a2af44b1a75d42749fc8e
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 5.asset
+  - m_GUID: 374daae9863a7bd48a7e04485f253781
+    m_Address: Assets/Scripts/Deals/Cards/HeadshotsOnly.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5e5cac855cc4ee04ca179cf03229e985
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 10.asset
+  - m_GUID: 43de8ac531dc46349b8211253e28adcb
+    m_Address: Assets/Scripts/Deals/Cards/PiercingShot.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 632bd879c69678542aecc6040dc3e989
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 8.asset
+  - m_GUID: 479205b17f51e044fb1063a7e300cf10
+    m_Address: Assets/Scripts/Deals/Cards/SnailGun.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6371aa66f7f23b947bbd6b4e54b5cb62
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 1.asset
+  - m_GUID: 525634bd7b6ca8d4494166ba13ba64e5
+    m_Address: Assets/Scripts/Deals/Cards/Reload.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6ed703fd306b1584eba038864b1f8c22
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 8.asset
+  - m_GUID: 5afa62ebea1e6c84aaa093d6d38997b1
+    m_Address: Assets/Scripts/Deals/Cards/NunTurrets.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 73410b93c5c73c742884be6b8e8b6f09
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 4.asset
+  - m_GUID: 5fee6a1e7cd270b4984ff9b73c20eb63
+    m_Address: Assets/Scripts/Deals/Cards/BalloonShoes.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7646a3af5fe76e042895c6687f15255b
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 8.asset
+  - m_GUID: 63570474d4d02bc43888d76ff58e8412
+    m_Address: Assets/Scripts/Deals/Cards/Zombie.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e52c03fca058f9478f6de6a8751a045
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 9.asset
+  - m_GUID: 6a9dac5bfec686c4c8bf4019d2560c7b
+    m_Address: Assets/Scripts/Deals/Cards/IWillBreakYourLegs.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 868d6e13a4fc49444bc8b8d431e430e5
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 4.asset
+  - m_GUID: 6aa4d85e4d2ad5c41998569085a38d61
+    m_Address: Assets/Scripts/Deals/Cards/MoveFastBreakThings.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 875a067cdf1e2fd408bb9194facfcd87
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 9.asset
+  - m_GUID: 6ec94c0777676b843867729e8531901d
+    m_Address: Assets/Scripts/Deals/Cards/ShortSlide.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9999a2f14c79e8d4180532ec550c03cc
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 5.asset
+  - m_GUID: 76b9caa88ee26b14bb805ca0a33faae2
+    m_Address: Assets/Scripts/Deals/Cards/MindWipe.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b4219581073052f408fcc2b579f2d524
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 5.asset
+  - m_GUID: 772425bcbda06d440a76e1a41cd63a34
+    m_Address: Assets/Scripts/Deals/Cards/Analgesia.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5e8d713dfd83eb45bf81c47d29c9261
-    m_Address: Assets/Scripts/Deals/Teir 2 Deals/T2 D 6.asset
+  - m_GUID: 8fcd545594fabdd46a7f4356f6852440
+    m_Address: Assets/Scripts/Deals/Cards/InsatiableGreed.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b154f5b5156b464cb1726a9fbe22fa0
+    m_Address: Assets/Scripts/Deals/Cards/GoodBoy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b3884657060ba24e91e7174516e3bb7
+    m_Address: Assets/Scripts/Deals/Cards/LiveToDieAnotherDay.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d2b357fa672a134682853e7fb77d44f
+    m_Address: Assets/Scripts/Deals/Cards/CriticalDeal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3f328c235f5d134f8c1717f9e007e66
+    m_Address: Assets/Scripts/Deals/Cards/DeadEye.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abfa4789debfdf04c9c56415f2838e3f
+    m_Address: Assets/Scripts/Deals/Cards/SpeedyShot.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1119d38e938e034bb63ccb1c3dc3069
+    m_Address: Assets/Scripts/Deals/Cards/SunglassesIndoors.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b55c0b4764bdcc24fa5df2f1d41fd3e8
+    m_Address: Assets/Scripts/Deals/Cards/IWillBreakYourGun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7d5607f0d9a26e47b6340cd5a4b64e6
+    m_Address: Assets/Scripts/Deals/Cards/FlippingOut.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c077584286420a7439e1db70c1b996d4
+    m_Address: Assets/Scripts/Deals/Cards/Rabies.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c8edc5f408c6db04eb7eb6206bc25b18
-    m_Address: Assets/Scripts/Deals/Death.asset
+    m_Address: Assets/Scripts/Deals/Cards/Death.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ca3d4b863db35c74ca5a1103a90de474
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 6.asset
+  - m_GUID: cadf287739692d5469e4fc2172fa2f8a
+    m_Address: Assets/Scripts/Deals/Cards/MegaMag.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cde37361f225b7e4daf4d0ec7659391c
+    m_Address: Assets/Scripts/Deals/Cards/MachineGun.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5cdd661cbd106b49a3ff89ba2507abc
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 2.asset
+  - m_GUID: d467917c8d4e6ac40a0b58dd2ed44aed
+    m_Address: Assets/Scripts/Deals/Cards/StoneSkin.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: da27bf5a2e7c8a044a876e31a814f904
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 9.asset
+  - m_GUID: e217ea98b1891d74cb6108a70b9c4bdf
+    m_Address: Assets/Scripts/Deals/Cards/UnlockableCards/FrogsLegs.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Hop
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec61d30ef5f737e43bed542139915967
+    m_Address: Assets/Scripts/Deals/Cards/Survivor.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e535189bbd5455d43824f0027a93f094
-    m_Address: Assets/Scripts/Deals/Teir 3 Deals/T3 D 3.asset
+  - m_GUID: ef720368aeb04b94d90ff6de916a9dac
+    m_Address: Assets/Scripts/Deals/Cards/Hop.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: efa7088ca0fe3c94e8810c3b44064e14
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 1.asset
+  - m_GUID: efd8c8c3370981f42adbfdee5803b505
+    m_Address: Assets/Scripts/Deals/Cards/SeeNoEvil.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f2c8b26956bde8f4c99bc552461f6de1
-    m_Address: Assets/Scripts/Deals/Teir 1 Deals/T1 D 3.asset
+  - m_GUID: f0121f85be654904d879cc39b4324a17
+    m_Address: Assets/Scripts/Deals/Cards/WheresMyGun.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0af2e0100474ff439ac81bc99930dfb
+    m_Address: Assets/Scripts/Deals/Cards/GlassCannon.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3485f2292c6e6540b7b0d831cf6ac16
+    m_Address: Assets/Scripts/Deals/Cards/SteadyAim.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbf04203cb9e6c542b5cdd794d3a8ec0
+    m_Address: Assets/Scripts/Deals/Cards/WhileYoureDown.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffb6bc1df6cfe72449675be0bdf813c0
+    m_Address: Assets/Scripts/Deals/Cards/BrinkBoost.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Backwards Logic
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 745c4878b7077eb4fa2894693f6edfa8, type: 2}

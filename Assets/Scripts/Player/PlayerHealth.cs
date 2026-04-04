@@ -8,20 +8,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public PlayerSound sound;
-    public int maxHealth = 15;
-    public int maxHealthMod = 0;
+    public int maxHealth = 100;
     public int currentHealth;
     public int deaths = 0;
 
-    public bool takesKnockback = false;
     private float knockbackForce = 10f;
     private Vector3 knockbackVelocity;
     private float knockbackDuration = 0.2f;
     private float knockbackTimer;
-
-    public bool invincible = false;
-    public bool doubleHeal = false;
-    public bool AOEOnDamage = false;
 
     void Awake()
     {
@@ -41,18 +35,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Heal (int amount)
     {
-        if (doubleHeal)
-            currentHealth += amount * 2;
-        else
-            currentHealth += amount;
+        currentHealth += amount;
 
-        currentHealth = math.min(currentHealth, maxHealth + maxHealthMod);
+        currentHealth = math.min(currentHealth, maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH));
         UIEvents.SetHealth();
     }
 
     void Update()
     {
-        if (takesKnockback && knockbackTimer > 0)
+        if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] && knockbackTimer > 0)
         {
             PlayerManager.Instance.controller.Move(knockbackVelocity * Time.deltaTime);
             knockbackTimer -= Time.deltaTime;
@@ -61,32 +52,25 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
     {
-
-        if (takesKnockback)
+        if (AbilityModManager.abilityFlags[AbilityName.NO_DAMAGE_CHANCE] && UnityEngine.Random.value <= 0.1) return; 
+        if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY])
         {
             Vector3 knockbackDirection = hitNormal.normalized;
             knockbackVelocity = -knockbackDirection * knockbackForce;
             knockbackTimer = knockbackDuration;
         }
         
-        if (invincible) return;
-        currentHealth -= amount;
+        if (AbilityModManager.abilityFlags[AbilityName.INVINCIBILITY]) return;
+        int dmg = AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? 2 * amount : amount;
+        currentHealth -= AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
         currentHealth = Mathf.Max(0, currentHealth);
-
-        if (AOEOnDamage)
-        {
-            Collider[] enemies = Physics.OverlapSphere(transform.position, 100, 7);
-
-            foreach (Collider enemy in enemies)
-            {
-                Debug.Log(enemy.gameObject.name);
-                if (enemy.gameObject.TryGetComponent(out IDamageable damageable))
-                    damageable.Stun(2f); // stun for 2 seconds
-            }
-        }
-
+        Debug.Log(currentHealth);
         UIEvents.SetHealth();
-        UIEvents.Hit();
+
+        if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])
+        {
+            UIEvents.Hit();
+        }
         sound.PlayPlayerDamage();
         if (currentHealth <= 0)
         {
@@ -94,19 +78,17 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
     }
 
-    public void Stun (float f) {}
-
     public void Die()
     {
         deaths += 1;
         DeckManager.Instance.AddDeathCard(1);
         UIEvents.DoDeathAnim();
-        invincible = true;
-        currentHealth = maxHealth + maxHealthMod;
+        AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] = true;
+        currentHealth = maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH);
     }
     void DiePart2()
     {
-        invincible = false;
+        AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] = false;
 
         CheckpointManager.Instance.RespawnPlayer(gameObject);
         DealMenu.Instance.OpenMenu();

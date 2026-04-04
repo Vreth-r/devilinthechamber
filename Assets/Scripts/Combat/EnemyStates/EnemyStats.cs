@@ -1,9 +1,16 @@
 using UnityEngine;
 
+public enum EnemyType
+{
+    LADY,
+    DOG
+}
+
 [CreateAssetMenu(menuName = "Enemies/Enemy Stats")]
 public class EnemyStats : ScriptableObject
 {
     [Header("Core")]
+    public EnemyType type = EnemyType.LADY;
     public float maxHealth = 100f;
     public int damage = 10;
 

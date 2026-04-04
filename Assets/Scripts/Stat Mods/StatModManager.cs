@@ -4,31 +4,28 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public enum StatName {
-    MOVEMENT_SPEED,
-    DAMAGE_OUTPUT,
-    FIRE_SPEED,
-    RELOAD_SPEED,
-    MAGAZINE_SIZE,
-    PERMA_HEALTH,
-    JUMP_HEIGHT,
-    SLIDE_DISTANCE,
-    HEADSHOT_BONUS,
-    LADY_PROJECTILE_SPEED,
-    DOG_RECOVERY_SPEED,
     BULLET_RANGE,
+    DAMAGE_OUTPUT,
+    DOG_MOVEMENT_SPEED,
+    DOG_RECOVERY_SPEED,
+    FIRE_SPEED,
+    HEADSHOT_BONUS,
+    JUMP_HEIGHT,
     LADY_FIRE_RATE,
     LADY_MOVEMENT_SPEED,
-    DOG_MOVEMENT_SPEED,
+    LADY_PROJECTILE_SPEED,
+    MAGAZINE_SIZE,
+    MOVEMENT_SPEED,
+    PERMA_HEALTH,
+    RELOAD_SPEED,
+    SLIDE_COOLDOWN,
+    SLIDE_DISTANCE,
     SLIDE_SPEED,
-    SLIDE_COOLDOWN
+    FLIPPED_CARD_CHANCE,
+    DOG_DAMAGE,
+    CRITICAL_HIT_CHANCE,
+    GUN_JAM_CHANCE
 }
-
-public enum DealType
-{
-    POSITIVE,
-    NEGATIVE
-}
-
 
 public class StatModManager
 {
@@ -53,20 +50,22 @@ public class StatModManager
         { StatName.DOG_MOVEMENT_SPEED,     new List<float>() },
         { StatName.SLIDE_SPEED,            new List<float>() },
         { StatName.SLIDE_COOLDOWN,         new List<float>() },
+        { StatName.FLIPPED_CARD_CHANCE,    new List<float>() },
+        { StatName.DOG_DAMAGE,             new List<float>() },
+        { StatName.CRITICAL_HIT_CHANCE,    new List<float>() },
+        { StatName.GUN_JAM_CHANCE,         new List<float>() },
     };
 
     // add a stat modifier, can be timed but idk if that would be used for stats
     public static void AddStatModifier (StatName statName, float modifier)
     {
-
         StatModifiers[statName].Add(modifier);
-        GameManager.Instance.SetStatMod(statName);
-        
+        UIEvents.ForceHUDRefresh();
     }
 
     public static float GetStatModifier (StatName statName)
     {
-        if (statName == StatName.MAGAZINE_SIZE || statName == StatName.PERMA_HEALTH) // bc magazine size is additive
+        if (statName == StatName.MAGAZINE_SIZE || statName == StatName.PERMA_HEALTH || statName == StatName.FLIPPED_CARD_CHANCE || statName == StatName.CRITICAL_HIT_CHANCE) // bc magazine size is additive
         {
             if (StatModifiers[statName].Count == 0) return 0;
             return StatModifiers[statName].Sum(x => x);
@@ -81,6 +80,16 @@ public class StatModManager
         }
 
         return totalMod;
+    }
+
+    public static void RemoveStatModifierExact (StatName statName, float modifier)
+    {
+        StatModifiers[statName].Remove(modifier);
+    }
+
+    public static void RemoveStatModifier (StatName statName, float modifier)
+    {
+        AddStatModifier(statName, 1 / modifier);
     }
 
     public static void ResetStatMods()
