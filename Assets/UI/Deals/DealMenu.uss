@@ -32,7 +32,7 @@
 }
 
 .DealDescription {
-    font-size: 14px;
+    font-size: 24px;
     -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
     color: rgb(148, 148, 148);
     -unity-text-align: middle-left;
@@ -54,8 +54,9 @@
 .DealTitle {
     align-self: center;
     -unity-font-style: bold;
-    font-size: 24px;
-}
-
-.DealDescription {
+    font-size: 32px;
+    white-space: normal;
+    -unity-text-align: upper-center;
+    color: rgb(206, 180, 78);
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellDoublePica-Regular.ttf?fileID=12800000&guid=60d52b811ed8b934bb3e8612482c3f26&type=3#IMFellDoublePica-Regular");
 }

@@ -80,7 +80,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         GameManager.Instance.enemyKilled(this.gameObject);
-
+        PlayerManager.Instance.willpower.AddWillpower(1);
+        PlayerManager.Instance.willpower.AddWillpowerTime(0.5f);
         if (deathParticleFX != null)
         {
             Debug.Log("explode");

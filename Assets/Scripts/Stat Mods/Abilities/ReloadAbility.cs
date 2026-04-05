@@ -8,5 +8,6 @@ public class ReloadAbility : AbilityBase
     {
         base.startFunction();
         Addressables.LoadAssetsAsync<Deal>("Reload", DeckManager.Instance.OnDealLoaded);
+        UIEvents.ForceHUDRefresh();
     }
 }

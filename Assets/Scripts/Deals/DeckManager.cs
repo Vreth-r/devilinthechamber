@@ -10,7 +10,7 @@ public class DeckManager : MonoBehaviour
     public List<Deal> chosenDeals = new List<Deal>();
     public Deal deathCardPrefab;
     
-    public float cardFlipChance = 0.2f;
+    public float cardFlipChance = 0.05f;
     public int deathCardsInDeck = 0;
 
     void Awake()
@@ -36,13 +36,22 @@ public class DeckManager : MonoBehaviour
     {
         List<Deal> drawnDeals = new List<Deal>();
         List<int> removeInds = new List<int>();
+        int deathCardsInHand = 0;
         int i = 0;
 
         // weird
         while (i < deck.Count && removeInds.Count < 3)
         {
-            drawnDeals.Add(deck[i]);
-            removeInds.Add(i);
+            if (deck[i].dealName == "Death") deathCardsInHand += 1;
+            if (AbilityModManager.abilityFlags[AbilityName.INSATIABLE_GREED] && deathCardsInHand == 1 && deck.Count - deathCardsInDeck >= 2)
+            {
+                StatModManager.AddStatModifier(StatName.FLIPPED_CARD_CHANCE, 0.05f);
+            }
+            else 
+            {
+                drawnDeals.Add(deck[i]);
+                removeInds.Add(i);   
+            }
             i++;
         }
         for (int k = removeInds.Count - 1; k >= 0; k--) deck.RemoveAt(k);
@@ -93,6 +102,19 @@ public class DeckManager : MonoBehaviour
         }
         UnityEngine.Debug.Log($"Removed {d.dealName}");
         chosenDeals.RemoveAt(chosenDeals.Count - 1);
+    }
+    
+    public void RemoveDeathCard ()
+    {
+        for (int i = 0; i < deck.Count; i++)
+        {
+            if (deck[i].dealName == "Death")
+            {
+                deck.RemoveAt(i);
+                deathCardsInDeck -= 1;
+                return;
+            }
+        }
     }
 
 }

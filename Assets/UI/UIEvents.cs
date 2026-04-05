@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public static class UIEvents
 {
     public static Action UpdateHealth;
+    public static Action UpdateWillpower;
     public static Action UpdateAmmo;
     public static Action<bool> UpdateReticleVisibility;
     public static Action<bool> SetBlind;
@@ -20,6 +21,10 @@ public static class UIEvents
     public static void SetHealth()
     {
         UpdateHealth?.Invoke();
+    }
+    public static void SetWillpower()
+    {
+        UpdateWillpower?.Invoke();
     }
     public static void SetAmmo()
     {
