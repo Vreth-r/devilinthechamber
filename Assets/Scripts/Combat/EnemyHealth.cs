@@ -58,6 +58,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         foreach (var r in renderersToFlash)
         {
+            Debug.Log("Flash");
             if (!r) continue;
 
             foreach (var mat in r.materials)

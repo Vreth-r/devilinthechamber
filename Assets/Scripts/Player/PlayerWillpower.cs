@@ -9,6 +9,8 @@ public class PlayerWillpower : MonoBehaviour
     float willpowerTimer = 1;
     float willPowerDrainTimer = 0.1f;
     int willpowerDecrementAuto = 2;
+    [Header("DEV")]
+    public bool autotick = true;
     PlayerControls controls;
     void Awake()
     {
@@ -20,6 +22,7 @@ public class PlayerWillpower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!autotick) return;
         if (willpowerTimer <= 0)
         {
             currentWillpower -= willpowerDecrementAuto;
