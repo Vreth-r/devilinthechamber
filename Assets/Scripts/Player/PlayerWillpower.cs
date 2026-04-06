@@ -33,7 +33,7 @@ public class PlayerWillpower : MonoBehaviour
         if (controls.Player.DrainWP.IsPressed())
         {
             willPowerDrainTimer -= Time.deltaTime;
-            if (willPowerDrainTimer <= 0)
+            if (willPowerDrainTimer <= 0 && PlayerManager.Instance.health.currentHealth != PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))
             {
                 willPowerDrainTimer = 0.1f;
                 AddWillpower(-1);

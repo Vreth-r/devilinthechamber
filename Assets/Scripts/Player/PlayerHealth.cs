@@ -67,8 +67,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Debug.Log(currentHealth);
         UIEvents.SetHealth();
 
-        PlayerManager.Instance.willpower.AddWillpower(-1);
-
         if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])
         {
             UIEvents.Hit();

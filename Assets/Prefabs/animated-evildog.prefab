@@ -760,7 +760,7 @@ MonoBehaviour:
   renderersToFlash:
   - {fileID: 7903713354974400117}
   flashTime: 0.06
-  hitParticleFX: {fileID: 8357312290143317456, guid: 6c344ced2e570374bb1729da513b262e, type: 3}
+  hitParticleFX: {fileID: 2405915955513778904, guid: 3cf2731018d153c45a061ffc3b9ce949, type: 3}
   deathParticleFX: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
 --- !u!114 &933218969007074109
 MonoBehaviour:
