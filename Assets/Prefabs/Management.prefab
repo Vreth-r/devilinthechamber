@@ -97,5 +97,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   chosenDeals: []
   deathCardPrefab: {fileID: 11400000, guid: c8edc5f408c6db04eb7eb6206bc25b18, type: 2}
-  cardFlipChance: 0.05
+  cardFlipChance: 0
   deathCardsInDeck: 0

@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
         if (cathedralEnemies.Count <= 0)
         {
             //await SceneFader.Instance.FadeToScene("Credits-Animation");
-            Debug.Log("Penis Monkey");
         }
     }
 

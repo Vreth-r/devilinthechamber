@@ -156,7 +156,7 @@ MonoBehaviour:
   damage: 2
   hitMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 576
   speed: 25
   useGravity: 0
   lifetime: 3

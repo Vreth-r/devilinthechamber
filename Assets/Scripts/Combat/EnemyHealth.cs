@@ -43,7 +43,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             return;
         }
         if (AbilityModManager.abilityFlags[AbilityName.NO_ENEMY_HIT_INDICATOR]) return;
-        Debug.Log("Hello");
         Instantiate(hitParticleFX, hitPoint, Quaternion.LookRotation(hitNormal));
         Flash();
     }
@@ -86,11 +85,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         GameManager.Instance.enemyKilled(this.gameObject);
-        PlayerManager.Instance.willpower.AddWillpower(1);
+        PlayerManager.Instance.willpower.AddWillpower(5);
         PlayerManager.Instance.willpower.AddWillpowerTime(0.5f);
         if (deathParticleFX != null)
         {
-            Debug.Log("explode");
             Instantiate(deathParticleFX, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
         }
 
