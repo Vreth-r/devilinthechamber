@@ -136,11 +136,14 @@ public class GunHitscan : MonoBehaviour
 
                 if (isHeadshot)
                 {
-                    finalDamage = (int)(finalDamage * headShotDamageBonus);
+                    finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
                     Debug.Log("HEADSHOT");
                 }
 
-                dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                if ((AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) || !AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS])
+                {
+                    dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                }
 
                 if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
                 {
