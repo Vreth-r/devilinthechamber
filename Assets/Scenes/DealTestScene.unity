@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DealTester
   dealTests:
-  - deal: {fileID: 11400000, guid: a0ebc59f3f8c6ab40975003090593b7e, type: 2}
-    activationDelay: 0
+  - deal: {fileID: 11400000, guid: 525634bd7b6ca8d4494166ba13ba64e5, type: 2}
+    activationDelay: 1
 --- !u!4 &393968249
 Transform:
   m_ObjectHideFlags: 0

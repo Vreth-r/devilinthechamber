@@ -29,6 +29,8 @@ public class DeckManager : MonoBehaviour
         if (deal.abilityDeals.Count != 0 && deal.abilityDeals[0].AbilityName == AbilityName.DEATH)
             deathCardsInDeck++;
 
+        UnityEngine.Debug.Log($"Loaded {deal.dealName}");
+
         Shuffle();
     }
 

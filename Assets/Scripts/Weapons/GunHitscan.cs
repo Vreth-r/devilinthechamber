@@ -203,11 +203,12 @@ public class GunHitscan : MonoBehaviour
         reloading = true;
         animator.SetTrigger("Reload");
         animator.speed = reloadSpeed * StatModManager.GetStatModifier(StatName.RELOAD_SPEED);
+        currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
+        UIEvents.SetAmmo();
         yield return new WaitForSeconds(reloadSpeed / StatModManager.GetStatModifier(StatName.RELOAD_SPEED));
 
         animator.speed = 1;
-        currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
-        UIEvents.SetAmmo();
+        
         reloading = false;
         PlayerManager.Instance.willpower.AddWillpower(2);
         if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
