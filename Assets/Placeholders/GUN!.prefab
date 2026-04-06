@@ -286,9 +286,35 @@ MonoBehaviour:
   muzzle: {fileID: 6249866615138648727}
   animator: {fileID: 0}
   cam: {fileID: 0}
+  gunshot:
+    Guid:
+      Data1: -1485703340
+      Data2: 1109952339
+      Data3: -1241049671
+      Data4: -860870306
+    Path: event:/SFX/Gunshot
+  reload:
+    Guid:
+      Data1: -545069982
+      Data2: 1228361621
+      Data3: 1644523690
+      Data4: -1699390082
+    Path: event:/SFX/Reload
+  jam:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   fireRate: 1.5
   range: 20
   damage: 5
+  headShotDamageBonus: 2
+  magazineSize: 10
+  currentMagazine: 10
+  reloading: 0
+  reloadSpeed: 1.25
   muzzleFlash: {fileID: 4773830327569332351}
   muzzleLight: {fileID: 4309392035030592321}
   tracerPrefab: {fileID: 3154345273569087551, guid: 548e270ceaf6de34fba27edb8ff7bac8, type: 3}
@@ -296,6 +322,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  consecutiveJams: 0
 --- !u!95 &2063976853361272615
 Animator:
   serializedVersion: 7

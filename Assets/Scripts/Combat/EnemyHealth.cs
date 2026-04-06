@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [Header("Hit Feedback")]
     public Renderer[] renderersToFlash;
     public float flashTime = 0.06f;
+    public GameObject hitParticleFX;
     public GameObject deathParticleFX;
 
     int hp;
@@ -36,10 +37,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         hp -= amount;
         hp = Mathf.Max(hp, 0);
 
-        if (!AbilityModManager.abilityFlags[AbilityName.NO_ENEMY_HIT_INDICATOR]) Flash();
-
         if (hp <= 0)
+        {
             Die();
+            return;
+        }
+        if (AbilityModManager.abilityFlags[AbilityName.NO_ENEMY_HIT_INDICATOR]) return;
+        Debug.Log("Hello");
+        Instantiate(hitParticleFX, hitPoint, Quaternion.LookRotation(hitNormal));
+        Flash();
     }
 
     public void Stun (float duration)
@@ -58,7 +64,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         foreach (var r in renderersToFlash)
         {
-            Debug.Log("Flash");
             if (!r) continue;
 
             foreach (var mat in r.materials)

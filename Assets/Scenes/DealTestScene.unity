@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DealTester
   dealTests:
-  - deal: {fileID: 11400000, guid: efd8c8c3370981f42adbfdee5803b505, type: 2}
+  - deal: {fileID: 11400000, guid: a0ebc59f3f8c6ab40975003090593b7e, type: 2}
     activationDelay: 0
 --- !u!4 &393968249
 Transform:
@@ -971,6 +971,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4247206799374861027, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838609939432716964, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: autotick
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

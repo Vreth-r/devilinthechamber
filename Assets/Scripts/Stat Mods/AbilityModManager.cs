@@ -56,7 +56,8 @@ public enum AbilityName {
     DAMAGE_BONUS_LOW_HEALTH,
     WHERES_GUN,
     THREE_GUNS_IN_ONE,
-    FROG_LEGS
+    FROG_LEGS,
+    IN_A_JAM
 }
 public class AbilityModManager {
 
@@ -144,6 +145,7 @@ public class AbilityModManager {
         { AbilityName.WHERES_GUN, false },
         { AbilityName.THREE_GUNS_IN_ONE, false },
         { AbilityName.FROG_LEGS, false },
+        { AbilityName.IN_A_JAM, false },
     };
 
     public static void StartAbility (AbilityName abilityName, float duration)
