@@ -15,7 +15,9 @@ MonoBehaviour:
   dealName: 3 Guns In 1!
   dealDescription: Three in one? Even if they can't shoot very far, that sounds like
     a good deal to me!
-  statDeals: []
+  statDeals:
+  - statName: 4
+    modifier: 1.25
   abilityDeals:
   - AbilityName: 52
     duration: 0

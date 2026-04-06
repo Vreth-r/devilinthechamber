@@ -16,4 +16,6 @@ MonoBehaviour:
   dealDescription: Propel yourself with a burst of speed when you jump. Do you feel
     like a frog yet?
   statDeals: []
-  abilityDeals: []
+  abilityDeals:
+  - AbilityName: 53
+    duration: 0

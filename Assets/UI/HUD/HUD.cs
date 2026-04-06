@@ -7,11 +7,6 @@ using Unity.VisualScripting;
 
 public class HUD : MonoBehaviour
 {
-    public int hp = 10;
-    public int hpMax = 10;
-    public int ammoInMag = 10;
-    public int ammoReserve = 10;
-
     bool uiReady;
 
     public Texture2D oneEyedImage;
@@ -24,8 +19,8 @@ public class HUD : MonoBehaviour
     VisualElement backgroundVignette;
     VisualElement oneEyePanel;
     VisualElement healthBar;
+    VisualElement willpowerBar;
     VisualElement ammoPanel;
-    VisualElement ammoBullet;
     Label livesText;
     Label ammoText;
 
@@ -42,6 +37,7 @@ public class HUD : MonoBehaviour
     void OnEnable()
     {
         UIEvents.UpdateHealth += SetHealth;
+        UIEvents.UpdateWillpower += SetWillpower;
         UIEvents.UpdateAmmo += SetAmmo;
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
@@ -76,12 +72,12 @@ public class HUD : MonoBehaviour
         backgroundVignette = root.Q<VisualElement>("vignette-panel");
         oneEyePanel        = root.Q<VisualElement>("one-eye-panel");
         healthBar          = root.Q<VisualElement>("health-bar");
+        willpowerBar       = root.Q<VisualElement>("willpower-bar");
         ammoPanel          = root.Q<VisualElement>("ammo-panel");
         livesText          = root.Q<Label>("lives-text");
-        //ammoText           = root.Q<Label>("ammo-text");
 
         // Minimum needed for Refresh to run safely
-        uiReady = healthBar != null && ammoPanel != null;
+        uiReady = healthBar != null && ammoPanel != null && willpowerBar != null;
 
         if (!uiReady)
         {
@@ -103,6 +99,10 @@ public class HUD : MonoBehaviour
         RefreshHealth();
     }
 
+    public void SetWillpower ()
+    {
+        RefreshWillpower();
+    }
 
     public void SetAmmo()
     {
@@ -213,56 +213,43 @@ public class HUD : MonoBehaviour
         if (!uiReady) return;
         if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
         {
-            healthBar.visible = false;
             healthBar.parent.visible = false;
             return;
         }
         healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))));
     }
 
+    void RefreshWillpower ()
+    {
+        if (!uiReady) return;
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
+        {
+            willpowerBar.parent.visible = false;
+            return;
+        }
+        willpowerBar.style.width = Length.Percent(100 * (PlayerManager.Instance.willpower.currentWillpower / (float)PlayerManager.Instance.willpower.maxWillpower));
+    }
+
     void RefreshAmmo ()
     {
         if (!uiReady) return;
-        if (AbilityModManager.abilityFlags[AbilityName.WHERES_GUN] || !AbilityModManager.abilityFlags[AbilityName.RELOAD])
-        {
-            ammoPanel.visible = false;
-            return;
-        }
         ammoPanel.Clear();
-        if (PlayerManager.Instance.gunHitscan.magazineSize == int.MaxValue)
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_GUN] || !AbilityModManager.abilityFlags[AbilityName.RELOAD] || AbilityModManager.abilityFlags[AbilityName.INFINITE_MAG]) return;
+
+        for (int i = 0; i < PlayerManager.Instance.gunHitscan.currentMagazine; i++)
         {
-            ammoPanel.visible = false;
-            return;
+            VisualElement bullet = new VisualElement();
+            bullet.AddToClassList("bullet-img");
+            ammoPanel.Add(bullet);
         }
-        else
-        {
-            for (int i = 0; i < PlayerManager.Instance.gunHitscan.currentMagazine; i++)
-            {
-                VisualElement bullet = new VisualElement();
-                bullet.AddToClassList("bullet-img");
-                ammoPanel.Add(bullet);
-            }
             
-        }
     }
 
     void RefreshAll()
     {
         RefreshHealth();
+        RefreshWillpower();
         RefreshAmmo();
-
-        // lives text is OPTIONAL: only set it if it exists + player manager exists
-        /*
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "DITC_level1.0" && livesText != null)
-        {
-            if (pm != null && pm.health != null)
-                livesText.text = $"Time of Death: {NumToRoman(pm.health.lives)}";
-            else
-                livesText.text = "Time of Death: ?";
-        }
-        */
-
     }
 
     // tried to be smart, ended up with more work lol

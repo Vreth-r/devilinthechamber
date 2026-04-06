@@ -67,6 +67,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Debug.Log(currentHealth);
         UIEvents.SetHealth();
 
+        PlayerManager.Instance.willpower.AddWillpower(-1);
+
         if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])
         {
             UIEvents.Hit();
@@ -83,15 +85,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         deaths += 1;
         DeckManager.Instance.AddDeathCard(1);
         UIEvents.DoDeathAnim();
-        AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] = true;
+        DealMenu.Instance.OpenMenu();
         currentHealth = maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH);
     }
     void DiePart2()
-    {
-        AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] = false;
-
+    {   
         CheckpointManager.Instance.RespawnPlayer(gameObject);
-        DealMenu.Instance.OpenMenu();
         
     }
 }

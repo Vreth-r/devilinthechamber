@@ -4,6 +4,7 @@ using System.Collections;
 using FMODUnity;
 using FMOD.Studio;
 using System;
+using Unity.VisualScripting;
 
 public class GunHitscan : MonoBehaviour
 {
@@ -117,6 +118,7 @@ public class GunHitscan : MonoBehaviour
 
                 if (UnityEngine.Random.value <= StatModManager.GetStatModifier(StatName.CRITICAL_HIT_CHANCE)) finalDamage *= 2;
 
+                if (AbilityModManager.abilityFlags[AbilityName.NEAR_SIGHTED] && Vector3.Distance(hit.point, cam.transform.position) >= 8) finalDamage = (int)(finalDamage * 1.5);
 
 
                 dmg.TakeDamage(finalDamage, hit.point, hit.normal);
@@ -195,6 +197,7 @@ public class GunHitscan : MonoBehaviour
         currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
         UIEvents.SetAmmo();
         reloading = false;
+        PlayerManager.Instance.willpower.AddWillpower(2);
         if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
         {
             PlayerManager.Instance.health.TakeDamage(5, Vector3.zero, Vector3.zero);

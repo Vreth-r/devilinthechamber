@@ -55,7 +55,8 @@ public enum AbilityName {
     NO_ENEMY_HIT_INDICATOR,
     DAMAGE_BONUS_LOW_HEALTH,
     WHERES_GUN,
-    THREE_GUNS_IN_ONE
+    THREE_GUNS_IN_ONE,
+    FROG_LEGS
 }
 public class AbilityModManager {
 
@@ -78,7 +79,7 @@ public class AbilityModManager {
         { AbilityName.KNOCKBACK_ABILITY, new KnockbackAbilty()},
         { AbilityName.DEATH, new DeathAbility() },
         { AbilityName.CRAWLING_HEALTH_GAIN, new CrawlingHealthGainAbility() },
-        { AbilityName.DAMAGE_ON_RELOAD, new ReloadAbility() },
+        { AbilityName.RELOAD, new ReloadAbility() },
         { AbilityName.NO_CROSSHAIR, new HideCrosshairAbility() },
         { AbilityName.HOP, new HopAbility() },
         { AbilityName.BACKWARDS_LOGIC, new BackwardsLogicAbility() },
@@ -87,6 +88,8 @@ public class AbilityModManager {
         { AbilityName.WHERES_GUN, new WheresMyGunAbility() },
         { AbilityName.WHERES_ME, new WheresMeAbility() },
         { AbilityName.SLOW_ENEMY_ON_HIT, new TazerAbility() },
+        { AbilityName.NEAR_SIGHTED, new NearSigtedAbility() },
+        { AbilityName.REMOVE_DEATH_CARD, new RemoveDeathCardAbility() },
     };
 
     public static Dictionary<AbilityName, bool> abilityFlags = new Dictionary<AbilityName, bool> ()
@@ -140,6 +143,7 @@ public class AbilityModManager {
         { AbilityName.DAMAGE_BONUS_LOW_HEALTH, false },
         { AbilityName.WHERES_GUN, false },
         { AbilityName.THREE_GUNS_IN_ONE, false },
+        { AbilityName.FROG_LEGS, false },
     };
 
     public static void StartAbility (AbilityName abilityName, float duration)

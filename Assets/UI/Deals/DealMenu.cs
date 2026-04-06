@@ -86,6 +86,10 @@ public class DealMenu : MonoBehaviour
 
         dealsDoc.sortingOrder = 1;
 
+        for (int i = 0; i < 3; i++)
+            dealButtons[i].visible = true;
+
+        dealPicked = false;
         deals = DeckManager.Instance.DrawDeals();
 
         SetDealsText();
@@ -110,27 +114,30 @@ public class DealMenu : MonoBehaviour
         DeckManager.Instance.AddDeathCard(2);
         
         //hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
-        dealsDoc.sortingOrder = 1;
+        dealsDoc.sortingOrder = 0;
         SetVisible(false);
     }
 
     void ChooseDeal1 ()
     {
+        if (dealPicked) return;
         dealPicked = true;
         deals[0].ApplyDeal();
-        CloseMenu();
+        HighlightDeal(0);
     }
     void ChooseDeal2 ()
     {
+        if (dealPicked) return;
         dealPicked = true;
         deals[1].ApplyDeal();
-        CloseMenu();
+        HighlightDeal(1);
     }
     void ChooseDeal3 ()
     {
+        if (dealPicked) return;
         dealPicked = true;
         deals[2].ApplyDeal(); 
-        CloseMenu();
+        HighlightDeal(2);
     }
 
     void SetVisible(bool visible)
@@ -152,7 +159,7 @@ public class DealMenu : MonoBehaviour
         }
         for (int i = 0; i < deals.Count; i++)
         {
-            if (Random.value < DeckManager.Instance.cardFlipChance * StatModManager.GetStatModifier(StatName.FLIPPED_CARD_CHANCE))
+            if (Random.value < DeckManager.Instance.cardFlipChance + StatModManager.GetStatModifier(StatName.FLIPPED_CARD_CHANCE))
             {
                 flippedCards++;
                 dealButtons[i].style.backgroundImage = new StyleBackground(cardBack);
@@ -197,5 +204,20 @@ public class DealMenu : MonoBehaviour
         dealCardInfo.Add(dealDesc);
 
         dealButtons[i].Add(dealCardInfo);
+    }
+
+    void HighlightDeal (int i)
+    {
+
+        for (int j = 0; j < 3; j++)
+            if (i != j) dealButtons[j].visible = false;
+
+        dealButtons[i].Clear();
+        populateDealData(i);
+
+        root.schedule.Execute(() =>
+        {
+            CloseMenu();
+        }).StartingIn(3000);
     }
 }

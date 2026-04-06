@@ -29,6 +29,7 @@ public class PauseMenu : MonoBehaviour
     Button exitButton;
 
     public bool isPaused;
+    float oldTimeScale;
     float toggleBlockUntil;
 
     void Awake()
@@ -98,8 +99,9 @@ public class PauseMenu : MonoBehaviour
     {
         if (isPaused) return;
         isPaused = true;
+        oldTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-
+        pauseDoc.sortingOrder = 3;
         GameManager.Instance.SetPauseBGM(true);
 
         if (hudDoc != null) hudDoc.rootVisualElement.style.display = DisplayStyle.None;
@@ -124,11 +126,11 @@ public class PauseMenu : MonoBehaviour
         GameManager.Instance.SetPauseBGM(false);
 
         toggleBlockUntil = Time.unscaledTime + 0.15f;
-
+        pauseDoc.sortingOrder = 0;
         SetVisible(false);
         if (hudDoc != null) hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
 
-        Time.timeScale = 1f;
+        Time.timeScale = oldTimeScale;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;

@@ -223,7 +223,13 @@ public class PlayerMotor : MonoBehaviour
             }
             else
             {
-                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult *  StatModManager.GetStatModifier(StatName.MOVEMENT_SPEED), airAcceleration, Time.deltaTime);
+                float aa = airAcceleration;
+                if (AbilityModManager.abilityFlags[AbilityName.FROG_LEGS]) 
+                { 
+                    aa = 50;
+                    speedMult *= 1.3f;
+                }
+                planarVelocity = Accelerate(planarVelocity, wishDir, maxAirSpeed * speedMult *  StatModManager.GetStatModifier(StatName.MOVEMENT_SPEED), aa, Time.deltaTime);
             }
         }
 

@@ -58,6 +58,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         foreach (var r in renderersToFlash)
         {
+            Debug.Log("Flash");
             if (!r) continue;
 
             foreach (var mat in r.materials)
@@ -80,7 +81,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         GameManager.Instance.enemyKilled(this.gameObject);
-
+        PlayerManager.Instance.willpower.AddWillpower(1);
+        PlayerManager.Instance.willpower.AddWillpowerTime(0.5f);
         if (deathParticleFX != null)
         {
             Debug.Log("explode");
