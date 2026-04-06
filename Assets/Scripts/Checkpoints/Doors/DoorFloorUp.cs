@@ -4,7 +4,7 @@ using UnityEngine;
 public class DoorFloorUp : Door
 {
     public float duration = 0.5f;
-    public float moveDistance = 3f;
+    public float moveDistance = 4f;
 
     protected override IEnumerator PlayAnimation(bool forward)
     {
