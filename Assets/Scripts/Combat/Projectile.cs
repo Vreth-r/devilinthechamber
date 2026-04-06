@@ -75,16 +75,18 @@ public class Projectile : MonoBehaviour
 
         IDamageable dmg =
             col.GetComponentInParent<IDamageable>() ??
-            col.GetComponent<IDamageable>() ??
-            col.transform.root.GetComponentInChildren<IDamageable>();
+            col.GetComponent<IDamageable>();// ??
+            //col.transform.root.GetComponentInChildren<IDamageable>();
 
         if (dmg != null && damage > 0)
         {
             dmg.TakeDamage(damage, hitPoint, hitNormal);
+            Debug.Log("thing");
         }
 
         if (impactPrefab)
         {
+            Debug.Log("floor");
             GameObject fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
             Destroy(fx, 2f);
         }

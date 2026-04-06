@@ -10,7 +10,7 @@ public class DeckManager : MonoBehaviour
     public List<Deal> chosenDeals = new List<Deal>();
     public Deal deathCardPrefab;
     
-    public float cardFlipChance = 0.05f;
+    public float cardFlipChance = 0.0f;
     public int deathCardsInDeck = 0;
 
     void Awake()

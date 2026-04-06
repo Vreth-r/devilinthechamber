@@ -189,6 +189,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0ebc59f3f8c6ab40975003090593b7e
+    m_Address: Assets/Scripts/Deals/Cards/InAJam.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a3f328c235f5d134f8c1717f9e007e66
     m_Address: Assets/Scripts/Deals/Cards/DeadEye.asset
     m_ReadOnly: 0

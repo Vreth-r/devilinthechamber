@@ -16,6 +16,7 @@ public class GunHitscan : MonoBehaviour
     [Header("Sound")]
     public EventReference gunshot;
     public EventReference reload;
+    public EventReference jam;
 
     [Header("Fire")]
     public float fireRate = 3f;
@@ -41,6 +42,8 @@ public class GunHitscan : MonoBehaviour
     PlayerControls controls;
     float nextFireTime;
 
+    public int consecutiveJams = 0;
+
     void Awake() => controls = new PlayerControls();
     void OnEnable() => controls.Player.Enable();
     void OnDisable() => controls.Player.Disable();
@@ -61,7 +64,14 @@ public class GunHitscan : MonoBehaviour
         if ((controls.Player.Fire.IsPressed() || AbilityModManager.abilityFlags[AbilityName.FULL_AUTO]) && Time.time >= nextFireTime && !reloading)
         {
             nextFireTime = Time.time + (1f / (fireRate * StatModManager.GetStatModifier(StatName.FIRE_SPEED)));
-            Fire();
+            if (AbilityModManager.abilityFlags[AbilityName.IN_A_JAM] && UnityEngine.Random.value <= 0.2)
+            {
+                animator.SetTrigger("Jam");
+                RuntimeManager.PlayOneShotAttached(jam, gameObject);
+                consecutiveJams++;
+            }
+            else
+                Fire();
         }
     }
 
@@ -120,6 +130,8 @@ public class GunHitscan : MonoBehaviour
 
                 if (AbilityModManager.abilityFlags[AbilityName.NEAR_SIGHTED] && Vector3.Distance(hit.point, cam.transform.position) >= 8) finalDamage = (int)(finalDamage * 1.5);
 
+                finalDamage = (int)(finalDamage * (1 + consecutiveJams * 0.2));
+                consecutiveJams = 0;
 
                 dmg.TakeDamage(finalDamage, hit.point, hit.normal);
 

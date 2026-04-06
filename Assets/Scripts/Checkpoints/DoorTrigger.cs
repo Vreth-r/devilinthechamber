@@ -2,16 +2,29 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
-    public Door door;
-    public bool closeDoor = true;
+    Door door;
+    public bool isOpen = true;
+    public bool oneTime = true;
+    int triggers = 0;
+    void Start()
+    {
+        if (door == null)
+        {
+            door = GetComponentInChildren<Door>();
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
+        triggers++;
+        if (oneTime && triggers > 1) return;
         if (door != null)
         {
-            if (closeDoor)
+            if (isOpen)
                 door.Close();
             else
                 door.Open();
+
+            isOpen = !isOpen;
         }
     }
 }

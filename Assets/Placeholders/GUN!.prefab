@@ -296,12 +296,19 @@ MonoBehaviour:
   cam: {fileID: 0}
   gunshot:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1485703340
+      Data2: 1109952339
+      Data3: -1241049671
+      Data4: -860870306
+    Path: event:/SFX/Gunshot
   reload:
+    Guid:
+      Data1: -545069982
+      Data2: 1228361621
+      Data3: 1644523690
+      Data4: -1699390082
+    Path: event:/SFX/Reload
+  jam:
     Guid:
       Data1: 0
       Data2: 0
@@ -323,6 +330,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  consecutiveJams: 0
 --- !u!95 &2063976853361272615
 Animator:
   serializedVersion: 7
