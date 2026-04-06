@@ -107,6 +107,7 @@ public class GunHitscan : MonoBehaviour
         foreach (var hit in hits)
         {
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
+            bool isHeadshot = hit.collider.CompareTag("EnemyHead");
             if (dmg != null)
             {
                 int finalDamage = (int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT));
@@ -133,7 +134,16 @@ public class GunHitscan : MonoBehaviour
                 finalDamage = (int)(finalDamage * (1 + consecutiveJams * 0.2));
                 consecutiveJams = 0;
 
-                dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                if (isHeadshot)
+                {
+                    finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
+                    Debug.Log("HEADSHOT");
+                }
+
+                if ((AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) || !AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS])
+                {
+                    dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                }
 
                 if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
                 {

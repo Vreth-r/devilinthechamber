@@ -21,8 +21,8 @@ public class PlayerMotor : MonoBehaviour
     public float jumpBuffer = 0.08f;
 
     [Header("Crouch")]
-    public float standingHeight = 1.8f;
-    public float crouchHeight = 1.1f;
+    public float standingHeight = 3f;
+    public float crouchHeight = 1.8f;
     public float crouchSpeedMultiplier = 0.75f;
 
     [Header("Slide")]

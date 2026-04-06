@@ -73,7 +73,6 @@ public class PlayerLook : MonoBehaviour
         pitch -= look.y * sensitivity;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
-
         ApplyRotation();
     }
 

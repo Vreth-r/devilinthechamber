@@ -72,6 +72,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             UIEvents.Hit();
         }
         sound.PlayPlayerDamage();
+        PlayerManager.Instance.cameraMovement.Shake();
         if (currentHealth <= 0)
         {
             Die();
@@ -89,6 +90,5 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     void DiePart2()
     {   
         CheckpointManager.Instance.RespawnPlayer(gameObject);
-        
     }
 }
