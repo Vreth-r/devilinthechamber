@@ -22,13 +22,10 @@ public class TutorialHandler : MonoBehaviour
 
     bool devilIgnored = false;
 
-    public
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controls = new PlayerControls();
-        controls.Player.Enable();
-        OnEnable();
+        controls = GameManager.Instance.controls;
     }
 
     // Update is called once per frame
@@ -78,12 +75,6 @@ public class TutorialHandler : MonoBehaviour
         controls.Player.Disable();
         GameManager.Instance.controls.Player.Disable();
         await SceneFader.Instance.FadeToScene("DITC_level1.0");
-    }
-
-    void OnEnable()
-    {
-        controls.Enable();
-        //controls.Player.SkipTutorial.performed += SkipTutorial;
     }
     async void SkipTutorial()
     {

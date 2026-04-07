@@ -53,56 +53,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.7, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3826580721877915821
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7297718692889182665}
-  - component: {fileID: 1796441193250844543}
-  m_Layer: 7
-  m_Name: Outline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7297718692889182665
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3826580721877915821}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.40000153, y: 1.1732788, z: 0.20436096}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1194539561234325966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1796441193250844543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3826580721877915821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Outline
-  outlineMode: 1
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 3
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &7547240879553611530
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,9 +499,6 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 5700592731536448992}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 7297718692889182665}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7831975565888927440}
     m_AddedComponents:
@@ -566,13 +513,13 @@ PrefabInstance:
       addedObject: {fileID: 7800068546288498979}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4560941744314634684}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7530001062295190559}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7926551655629421302}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9217540106249177129}
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3018919788408790549}
@@ -629,6 +576,13 @@ MonoBehaviour:
   projectileHitMask:
     serializedVersion: 2
     m_Bits: 576
+  attack:
+    Guid:
+      Data1: -156298646
+      Data2: 1133313133
+      Data3: -1225031746
+      Data4: -1726421786
+    Path: event:/SFX/NunAttack
 --- !u!114 &7800068546288498979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,25 +606,6 @@ MonoBehaviour:
   flashTime: 0.06
   hitParticleFX: {fileID: 2405915955513778904, guid: 3cf2731018d153c45a061ffc3b9ce949, type: 3}
   deathParticleFX: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
---- !u!114 &4560941744314634684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006366598137756532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0802a735691fb84469a93f9eb84764ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectileWeapon
-  firePoint: {fileID: 7831975565888927440}
-  projectilePrefab: {fileID: 2021965342627534742, guid: db797da0c4add054cbdacd339989c817, type: 3}
-  projectileHitMask:
-    serializedVersion: 2
-    m_Bits: 576
-  muzzleFlash: {fileID: 0}
-  muzzleLight: {fileID: 0}
 --- !u!95 &7530001062295190559
 Animator:
   serializedVersion: 7
@@ -705,6 +640,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce09dbc78e97bc4da9b3c3f8a155f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimDriver
+--- !u!114 &9217540106249177129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006366598137756532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2059554155105268801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 016b02ba7998d734491f9aa2f48068b3, type: 3}

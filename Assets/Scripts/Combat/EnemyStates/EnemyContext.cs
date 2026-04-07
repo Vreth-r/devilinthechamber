@@ -12,6 +12,8 @@ public class EnemyContext
     public LayerMask projectileHitMask;
     public EnemyStats stats;
 
+    public System.Action OnAttack;
+
     public EnemyContext(
         Transform self,
         NavMeshAgent agent,
@@ -19,7 +21,8 @@ public class EnemyContext
         Transform firePoint,
         Projectile projectilePrefab,
         LayerMask projectileHitMask,
-        EnemyStats stats)
+        EnemyStats stats,
+        System.Action OnAttack = null)
     {
         this.self = self;
         this.agent = agent;
@@ -28,6 +31,7 @@ public class EnemyContext
         this.projectilePrefab = projectilePrefab;
         this.projectileHitMask = projectileHitMask;
         this.stats = stats;
+        this.OnAttack = OnAttack;
     }
 
     public bool HasTarget => target != null;

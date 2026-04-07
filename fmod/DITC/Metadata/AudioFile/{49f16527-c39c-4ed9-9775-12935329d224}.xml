@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{49f16527-c39c-4ed9-9775-12935329d224}">
+		<property name="assetPath">
+			<value>DITC_PLAYER_LAND_00 (1).wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.40997916666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b20af26-18f1-4719-a88a-65d0109b3c59}</destination>
+		</relationship>
+	</object>
+</objects>

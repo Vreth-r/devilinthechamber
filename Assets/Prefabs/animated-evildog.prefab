@@ -743,6 +743,13 @@ MonoBehaviour:
   projectileHitMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  attack:
+    Guid:
+      Data1: -301421846
+      Data2: 1076471682
+      Data3: -1636161389
+      Data4: 1174380160
+    Path: event:/SFX/DogAttack
 --- !u!114 &5174947433759290317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,6 +784,18 @@ MonoBehaviour:
   agent: {fileID: 1698955030572117038}
   moveSpeedParam: MoveSpeed
   dampTime: 0.08
+  footstepEvent:
+    Guid:
+      Data1: 1743963823
+      Data2: 1244218338
+      Data3: 1994356874
+      Data4: -1231595921
+    Path: event:/SFX/DogFootstep
+  speedForMinInterval: 9
+  speedForMaxInterval: 2
+  minMoveSpeed: 0.1
+  minInterval: 0.28
+  maxInterval: 0.5
 --- !u!4 &2230796504251231232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b745c3f95fb3b53498db85b158e7d8f4, type: 3}

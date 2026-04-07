@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd77ae15e81e5d4bb05ca56a040bb4d, type: 3}
   m_Name: EnemyMelee
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeBehaviour
+  meleeAttack:
+    Guid:
+      Data1: -301421846
+      Data2: 1076471682
+      Data3: -1636161389
+      Data4: 1174380160
+    Path: event:/SFX/DogAttack

@@ -1,4 +1,6 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 [CreateAssetMenu(menuName = "Enemies/Behaviours/Melee Chaser")]
 public class EnemyMeleeBehaviour : EnemyBehaviour

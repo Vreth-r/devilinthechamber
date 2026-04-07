@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
+using FMOD.Studio;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBrain : MonoBehaviour
@@ -17,6 +19,9 @@ public class EnemyBrain : MonoBehaviour
     public Transform firePoint;
     public Projectile projectilePrefab;
     public LayerMask projectileHitMask = ~0;
+
+    [Header("Sounds")]
+    public EventReference attack;
 
     EnemyStateMachine fsm;
     EnemyContext ctx;
@@ -39,11 +44,17 @@ public class EnemyBrain : MonoBehaviour
             firePoint: firePoint,
             projectilePrefab: projectilePrefab,
             projectileHitMask: projectileHitMask,
-            stats: stats
+            stats: stats,
+            OnAttack: HandleAttack
         );
 
         fsm = new EnemyStateMachine();
         ApplyStatsToAgent();
+    }
+
+    private void HandleAttack()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(attack, gameObject.transform.position);
     }
 
     void OnEnable()

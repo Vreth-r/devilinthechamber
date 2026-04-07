@@ -12,17 +12,6 @@ public class LadyEnemySound : MonoBehaviour
     public float minInterval = 0.18f;
     public float maxInterval = 0.50f;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void PlayShootSound()
     {
         if (nunShootEvent.IsNull) return;

@@ -1,95 +1,87 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Damage")]
     public int damage = 10;
-    public LayerMask hitMask = ~0;
-
-    [Header("Motion")]
     public float speed = 25f;
-    public bool useGravity = false;
+    public float lifetime = 3f;
+    public LayerMask hitMask;
 
-    [Header("Fallback Lifetime")]
-    public float lifetime = 5f;
-
-    [Header("Impact FX (optional)")]
     public GameObject impactPrefab;
 
-    private Rigidbody rb;
+    [Header("Sound")]
+    public EventReference travelSound;
+    private EventInstance travelInstance;
 
-    private Vector3 spawnPosition;
-    private float maxTravelDistance;
-    private float dieAt;
+    private Vector3 direction;
+    private Vector3 lastPosition;
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-    }
-
-    public void Launch(
-        Vector3 position,
-        Vector3 direction,
-        float speedOverride = -1f,
-        float maxDistanceOverride = -1f,
-        float safetyBuffer = 0.25f)
+    public void Launch(Vector3 position, Vector3 dir, float speedOverride = -1f)
     {
         transform.position = position;
-        transform.rotation = Quaternion.LookRotation(direction);
+        direction = dir.normalized;
 
-        float finalSpeed = speedOverride > 0f ? speedOverride : speed;
-        speed = finalSpeed;
+        if (speedOverride > 0f)
+            speed = speedOverride;
 
-        rb.useGravity = useGravity;
-        rb.linearVelocity = direction.normalized * finalSpeed;
+        lastPosition = position;
 
-        spawnPosition = position;
-        maxTravelDistance = maxDistanceOverride > 0f ? maxDistanceOverride : finalSpeed * lifetime;
+        if (!travelSound.IsNull)
+        {
+            travelInstance = RuntimeManager.CreateInstance(travelSound);
+            RuntimeManager.AttachInstanceToGameObject(travelInstance, gameObject);
+            travelInstance.start();
+        }
 
-        float derivedLifetime = maxTravelDistance / Mathf.Max(0.01f, finalSpeed);
-        dieAt = Time.time + derivedLifetime + Mathf.Max(0f, safetyBuffer);
-        Debug.DrawRay(spawnPosition, direction * 2f, Color.red, 1f);
-        gameObject.SetActive(true);
+        Destroy(gameObject, lifetime);
     }
 
     void Update()
     {
-        float traveled = Vector3.Distance(spawnPosition, transform.position);
+        float step = speed * Time.deltaTime;
+        Vector3 newPosition = transform.position + direction * step;
 
-        if (traveled >= maxTravelDistance || Time.time >= dieAt)
-            Destroy(gameObject);
+        if (Physics.Raycast(lastPosition, direction, out RaycastHit hit, step, hitMask))
+        {
+            OnHit(hit);
+            return;
+        }
+
+        transform.position = newPosition;
+        lastPosition = newPosition;
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnHit(RaycastHit hit)
     {
-        if (((1 << col.gameObject.layer) & hitMask) == 0)
-            return;
+        IDamageable dmg = hit.collider.GetComponentInParent<IDamageable>();
 
-        Vector3 hitPoint = col.ClosestPoint(transform.position);
-        Vector3 hitNormal = (transform.position - hitPoint).normalized;
-        if (hitNormal.sqrMagnitude < 0.0001f)
-            hitNormal = -transform.forward;
-
-        IDamageable dmg =
-            col.GetComponentInParent<IDamageable>() ??
-            col.GetComponent<IDamageable>();// ??
-            //col.transform.root.GetComponentInChildren<IDamageable>();
-
-        if (dmg != null && damage > 0)
+        if (dmg != null)
         {
-            dmg.TakeDamage(damage, hitPoint, hitNormal);
-            Debug.Log("thing");
+            dmg.TakeDamage(damage, hit.point, hit.normal);
         }
 
         if (impactPrefab)
         {
-            Debug.Log("floor");
-            GameObject fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
-            Destroy(fx, 2f);
+            Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         }
+
+        StopSound();
         Destroy(gameObject);
+    }
+
+    void StopSound()
+    {
+        if (travelInstance.isValid())
+        {
+            travelInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            travelInstance.release();
+        }
+    }
+
+    void OnDestroy()
+    {
+        StopSound();
     }
 }

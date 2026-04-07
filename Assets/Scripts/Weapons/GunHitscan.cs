@@ -17,6 +17,9 @@ public class GunHitscan : MonoBehaviour
     public EventReference gunshot;
     public EventReference reload;
     public EventReference jam;
+    public EventReference headshot;
+    public EventReference hitSound;
+    public EventReference missSound;
 
     [Header("Fire")]
     public float fireRate = 3f;
@@ -44,11 +47,9 @@ public class GunHitscan : MonoBehaviour
 
     public int consecutiveJams = 0;
 
-    void Awake() => controls = new PlayerControls();
-    void OnEnable() => controls.Player.Enable();
-    void OnDisable() => controls.Player.Disable();
     void Start()
     {
+        controls = GameManager.Instance.controls;
         UIEvents.SetAmmo();
     }
 
@@ -81,6 +82,8 @@ public class GunHitscan : MonoBehaviour
         if (reloading) return;
         if (!cam) cam = Camera.main;
 
+        bool hitEnemy = false;
+
 
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
@@ -99,6 +102,7 @@ public class GunHitscan : MonoBehaviour
         Vector3 dir = (aimPoint - camOrigin).normalized;
 
         Vector3 endPoint = camOrigin + dir * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic 2!
+        Vector3 hitPoint = endPoint;
 
         RaycastHit[] hits = Physics.RaycastAll(camOrigin, dir, AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000, hitMask, QueryTriggerInteraction.Ignore);
 
@@ -110,6 +114,8 @@ public class GunHitscan : MonoBehaviour
             bool isHeadshot = hit.collider.CompareTag("EnemyHead");
             if (dmg != null)
             {
+                hitEnemy = true;
+                hitPoint = hit.point;
                 int finalDamage = (int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT));
 
                 if (AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP] &&
@@ -138,10 +144,15 @@ public class GunHitscan : MonoBehaviour
                 {
                     finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
                     Debug.Log("HEADSHOT");
+                    RuntimeManager.PlayOneShotAttached(headshot, gameObject);
                 }
 
                 if ((AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) || !AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS])
                 {
+                    if(!isHeadshot)
+                    {
+                        RuntimeManager.PlayOneShotAttached(hitSound, gameObject);
+                    }
                     dmg.TakeDamage(finalDamage, hit.point, hit.normal);
                 }
 
@@ -153,11 +164,16 @@ public class GunHitscan : MonoBehaviour
             }
 
             endPoint = hit.point;
+            hitPoint = hit.point;
         }
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
         RuntimeManager.PlayOneShotAttached(gunshot, gameObject);
+        if(!hitEnemy)
+        {
+            RuntimeManager.PlayOneShot(missSound, hitPoint);
+        }
         animator.SetTrigger("Fire");
         animator.speed = fireRate * StatModManager.GetStatModifier(StatName.FIRE_SPEED);
 

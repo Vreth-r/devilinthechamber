@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public bool bulletRestoreMod = false;
 
     public float enemyProjectileSpeedMod = 1f;
-    public GameObject pauseMenu;
     public bool gamePaused;
     public PlayerControls controls;
     List<GameObject> cathedralEnemies = new List<GameObject>();
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
         }
         controls = new PlayerControls();
         controls.Player.Enable();
-        //DontDestroyOnLoad(this);
+        controls.UI.Disable();
     }
 
     void Start()
@@ -50,15 +49,6 @@ public class GameManager : MonoBehaviour
     {
         _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _musicInstance.release();
-    }
-
-    void Update()
-    {
-        if (controls.Player.Pause.WasPressedThisFrame())
-        {
-            if (pauseMenu != null)
-                Instantiate(pauseMenu);
-        }
     }
 
     public void enemyKilled (GameObject enemy)
@@ -81,6 +71,22 @@ public class GameManager : MonoBehaviour
         if (cathedralEnemies.Count <= 0)
         {
             //await SceneFader.Instance.FadeToScene("Credits-Animation");
+        }
+    }
+
+    public void SetInputMap(bool gameplay)
+    {
+        if (controls == null) return;
+
+        if (gameplay)
+        {
+            controls.UI.Disable();
+            controls.Player.Enable();
+        }
+        else
+        {
+            controls.Player.Disable();
+            controls.UI.Enable();
         }
     }
 
