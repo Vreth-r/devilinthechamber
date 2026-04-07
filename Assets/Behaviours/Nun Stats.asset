@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   type: 0
   maxHealth: 15
-  damage: 2
+  damage: 5
   aggroRange: 25
   leashRange: 30
   moveSpeed: 10

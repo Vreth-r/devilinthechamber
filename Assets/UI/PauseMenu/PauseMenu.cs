@@ -195,7 +195,7 @@ public class PauseMenu : MonoBehaviour
 
         if (controls == null)
         {
-            controls = GameManager.Instance.controls;
+            return;
         }
         if (visible)
         {

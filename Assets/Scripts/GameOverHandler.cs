@@ -8,7 +8,7 @@ public class GameOverHandler : MonoBehaviour
     PlayerControls controls;
     void Start()
     {
-        controls = GameManager.Instance.controls;
+        controls = new PlayerControls();
         controls.Player.Jump.performed += BackToMainMenu;
     }
 
@@ -20,7 +20,6 @@ public class GameOverHandler : MonoBehaviour
 
     private void BackToMainMenu(InputAction.CallbackContext context)
     {
-        GameManager.Instance.StopMusic();
         transition_scene();
     }
 

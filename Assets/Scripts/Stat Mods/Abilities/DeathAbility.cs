@@ -6,13 +6,11 @@ public class DeathAbility : AbilityBase
         base.startFunction();
         Die();
     }
-    async void Die()
+    void Die()
     {
         if (AbilityModManager.abilityFlags[AbilityName.SURVIVOR]) return;
         StatModManager.ResetStatMods();
         GameManager.Instance.StopMusic();
-        Object.Destroy(GameManager.Instance.gameObject);
-        await SceneFader.Instance.FadeToScene("GameOver");
-        return;
+        SceneFader.Instance.FadeToScene("GameOver");
     }
 }
