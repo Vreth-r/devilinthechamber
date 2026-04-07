@@ -68,3 +68,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d545551f40e8f1489edc8ebbe7c021d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+  uiClick:
+    Guid:
+      Data1: -1432008688
+      Data2: 1157120431
+      Data3: 1761530267
+      Data4: 107085987
+    Path: event:/UI/Click
+  pauseDoc: {fileID: 0}
+  hudDoc: {fileID: 0}
+  playerLook: {fileID: 0}
+  mainMenuSceneName: MainMenu
+  dealMenu: {fileID: 0}
+  musicLoop:
+    Guid:
+      Data1: 2077169528
+      Data2: 1153702088
+      Data3: -594701913
+      Data4: -1535170031
+    Path: event:/Music/PauseBGM
+  isPaused: 0
