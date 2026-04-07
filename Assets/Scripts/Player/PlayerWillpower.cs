@@ -15,8 +15,11 @@ public class PlayerWillpower : MonoBehaviour
     void Awake()
     {
         currentWillpower = maxWillpower;
-        controls = new PlayerControls();
-        controls.Player.Enable();
+    }
+
+    void Start()
+    {
+        controls = GameManager.Instance.controls;
     }
 
     // Update is called once per frame

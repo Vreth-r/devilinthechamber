@@ -629,6 +629,13 @@ MonoBehaviour:
   projectileHitMask:
     serializedVersion: 2
     m_Bits: 576
+  attack:
+    Guid:
+      Data1: -156298646
+      Data2: 1133313133
+      Data3: -1225031746
+      Data4: -1726421786
+    Path: event:/SFX/NunAttack
 --- !u!114 &7800068546288498979
 MonoBehaviour:
   m_ObjectHideFlags: 0

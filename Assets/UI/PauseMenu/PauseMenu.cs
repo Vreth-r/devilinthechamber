@@ -22,6 +22,10 @@ public class PauseMenu : MonoBehaviour
     [Header("DealMenu (for correct pausing behaviour)")]
     [SerializeField] DealMenu dealMenu;
 
+    [Header("Pause BGM")]
+    public EventReference musicLoop;
+    private EventInstance _musicInstance;
+
     PlayerControls controls;
 
     VisualElement root;
@@ -56,14 +60,20 @@ public class PauseMenu : MonoBehaviour
         if (resumeButton != null) resumeButton.clicked += Resume;
         if (exitButton != null)   exitButton.clicked += ExitToMainMenu;
 
-        controls = new PlayerControls();
-
         SetVisible(false);
     }
 
     void OnEnable()
     {
-        controls.Enable();
+        if(controls != null)
+        {
+            controls.Player.Pause.performed += OnPause;
+        }
+    }
+
+    void Start()
+    {
+        controls = GameManager.Instance.controls;
         controls.Player.Pause.performed += OnPause;
     }
 
@@ -77,8 +87,10 @@ public class PauseMenu : MonoBehaviour
 
     void OnDisable()
     {
-        //controls.Player.Pause.performed -= OnPause;
-        //controls.Disable();
+        if(controls != null)
+        {
+            controls.Player.Pause.performed -= OnPause;
+        }
     }
 
     void OnPause(InputAction.CallbackContext _)
@@ -87,6 +99,11 @@ public class PauseMenu : MonoBehaviour
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
         if (!dealMenu.dealMenuOpen) Toggle();
+        if (!musicLoop.IsNull)
+        {
+            _musicInstance = RuntimeManager.CreateInstance(musicLoop);
+            _musicInstance.start();
+        }
     }
 
     public void Toggle()
@@ -107,13 +124,14 @@ public class PauseMenu : MonoBehaviour
         if (hudDoc != null) hudDoc.rootVisualElement.style.display = DisplayStyle.None;
         SetVisible(true);
 
+        GameManager.Instance.SetInputMap(false);
+
         //if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
         if (playerLook != null) 
         {
-            playerLook.enabled = false;
             playerLook.allowCursorRelockOnClick = false;
         }
     }
@@ -132,6 +150,7 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = oldTimeScale;
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
+        GameManager.Instance.SetInputMap(true);
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
@@ -139,9 +158,10 @@ public class PauseMenu : MonoBehaviour
 
         if (playerLook != null) 
         {
-            playerLook.enabled = true;
             playerLook.allowCursorRelockOnClick = true;
         }
+        _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _musicInstance.release();
     }
 
     async void ExitToMainMenu()

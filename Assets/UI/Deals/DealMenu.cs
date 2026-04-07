@@ -57,15 +57,29 @@ public class DealMenu : MonoBehaviour
         deal1.clicked += ChooseDeal1;
         deal2.clicked += ChooseDeal2;
         deal3.clicked += ChooseDeal3;
-
-        controls = new PlayerControls();
         
         SetVisible(false);
     }
 
     void OnEnable()
     {
-        controls.Enable();
+        if(controls != null)
+        {
+            controls.Player.OpenDeals.performed += MenuCheck;
+        }
+    }
+
+    void OnDisable()
+    {
+        if(controls != null)
+        {
+            controls.Player.OpenDeals.performed -= MenuCheck;
+        }
+    }
+
+    void Start()
+    {
+        controls = GameManager.Instance.controls;
         controls.Player.OpenDeals.performed += MenuCheck;
     }
 

@@ -265,6 +265,7 @@ public class EnemyMeleeState : IEnemyState
 
         if (!didHitThisLunge && phaseTimer <= ctx.stats.meleeLungeHitTime)
         {
+            ctx.OnAttack?.Invoke();
             didHitThisLunge = true;
             PerformMeleeHit();
         }
@@ -493,6 +494,7 @@ public class EnemyMeleeState : IEnemyState
                     : -attackDir;
 
             damageable.TakeDamage((int)(ctx.stats.damage * StatModManager.GetStatModifier(StatName.DOG_DAMAGE)), hitPoint, normal);
+            
             return;
         }
     }

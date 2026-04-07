@@ -22,13 +22,9 @@ public class PlayerLook : MonoBehaviour
     float yaw;
     float pitch;
 
-    void Awake()
-    {
-        controls = new PlayerControls();
-    }
-
     void Start()
     {
+        controls = GameManager.Instance.controls;
         LockCursor(true);
 
         if (yawPivot && pitchPivot)
@@ -48,9 +44,6 @@ public class PlayerLook : MonoBehaviour
 
         ApplyRotation();
     }
-
-    void OnEnable() => controls.Enable();
-    void OnDisable() => controls.Disable();
 
     void Update()
     {

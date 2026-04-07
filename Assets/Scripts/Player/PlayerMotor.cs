@@ -90,7 +90,6 @@ public class PlayerMotor : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        controls = new PlayerControls();
 
         if (standingHeight <= 0.01f) standingHeight = cc.height;
         if (cc.height > 0.01f && Mathf.Abs(cc.height - standingHeight) < 0.001f)
@@ -100,8 +99,10 @@ public class PlayerMotor : MonoBehaviour
         stance = Stance.Stand;
     }
 
-    void OnEnable() => controls.Player.Enable();
-    void OnDisable() => controls.Player.Disable();
+    void Start()
+    {
+        controls = GameManager.Instance.controls;
+    }
 
     void Update()
     {

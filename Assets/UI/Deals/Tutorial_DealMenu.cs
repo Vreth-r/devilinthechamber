@@ -53,9 +53,6 @@ public class Tutorial_DealMenu : MonoBehaviour
             return;
         }
 
-        // Create controls once
-        controls = new PlayerControls();
-
         // Ensure doc is enabled (so it can build the panel)
         dealsDoc.enabled = true;
 
@@ -64,6 +61,16 @@ public class Tutorial_DealMenu : MonoBehaviour
 
         // IMPORTANT: don't touch rootVisualElement in Awake in builds
         StartCoroutine(InitUIWhenReady());
+    }
+
+    void Start()
+    {
+        controls = GameManager.Instance.controls;
+        if (!inputHooked && controls != null)
+        {
+            controls.Player.OpenDeals.performed += MenuCheck;
+            inputHooked = true;
+        }
     }
 
     IEnumerator InitUIWhenReady()
@@ -100,9 +107,6 @@ public class Tutorial_DealMenu : MonoBehaviour
 
     void OnEnable()
     {
-        // Controls can enable immediately
-        controls?.Enable();
-
         // But don't hook callbacks multiple times
         if (!inputHooked && controls != null)
         {
@@ -118,8 +122,6 @@ public class Tutorial_DealMenu : MonoBehaviour
             controls.Player.OpenDeals.performed -= MenuCheck;
             inputHooked = false;
         }
-
-        controls?.Disable();
     }
 
     void MenuCheck(InputAction.CallbackContext _)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{5c4c7030-1214-42a1-9e7a-14c3619ccddb}">
+		<property name="assetPath">
+			<value>DITC_DOG_WALK_03.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.10933333333333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b20af26-18f1-4719-a88a-65d0109b3c59}</destination>
+		</relationship>
+	</object>
+</objects>

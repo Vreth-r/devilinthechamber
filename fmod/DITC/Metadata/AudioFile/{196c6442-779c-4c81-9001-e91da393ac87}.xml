@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{196c6442-779c-4c81-9001-e91da393ac87}">
+		<property name="assetPath">
+			<value>DITC_TRACK01_LOOP.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>96</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b20af26-18f1-4719-a88a-65d0109b3c59}</destination>
+		</relationship>
+	</object>
+</objects>

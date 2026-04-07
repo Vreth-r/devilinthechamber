@@ -225,6 +225,7 @@ public class EnemyRangedKiteState : IEnemyState
             return;
 
         anim?.PlayShoot();
+        ctx.OnAttack?.Invoke();
 ;
         float finalSpeed = ctx.stats.projectileSpeed * StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
 

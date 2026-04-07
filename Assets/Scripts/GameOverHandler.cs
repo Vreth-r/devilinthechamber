@@ -8,7 +8,7 @@ public class GameOverHandler : MonoBehaviour
     PlayerControls controls;
     void Start()
     {
-        controls = new PlayerControls();
+        controls = GameManager.Instance.controls;
         controls.Player.Jump.performed += BackToMainMenu;
     }
 

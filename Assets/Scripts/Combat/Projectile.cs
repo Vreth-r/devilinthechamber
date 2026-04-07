@@ -1,4 +1,6 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Projectile : MonoBehaviour
@@ -16,6 +18,10 @@ public class Projectile : MonoBehaviour
 
     [Header("Impact FX (optional)")]
     public GameObject impactPrefab;
+
+    [Header("Sound")]
+    public EventReference travelSound;
+    public EventInstance travelInstance;
 
     private Rigidbody rb;
 
@@ -37,6 +43,13 @@ public class Projectile : MonoBehaviour
         float maxDistanceOverride = -1f,
         float safetyBuffer = 0.25f)
     {
+        if (!travelSound.IsNull)
+        {
+            travelInstance = RuntimeManager.CreateInstance(travelSound);
+            RuntimeManager.AttachInstanceToGameObject(travelInstance, gameObject, rb);
+            travelInstance.start();
+            travelInstance.setParameterByName("Speed", speed);
+        }
         transform.position = position;
         transform.rotation = Quaternion.LookRotation(direction);
 
@@ -60,7 +73,19 @@ public class Projectile : MonoBehaviour
         float traveled = Vector3.Distance(spawnPosition, transform.position);
 
         if (traveled >= maxTravelDistance || Time.time >= dieAt)
+        {
+            StopTravelSound();
             Destroy(gameObject);
+        }
+    }
+
+    void StopTravelSound()
+    {
+        if (travelInstance.isValid())
+        {
+            travelInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            travelInstance.release();
+        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -90,6 +115,7 @@ public class Projectile : MonoBehaviour
             GameObject fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
             Destroy(fx, 2f);
         }
+        StopTravelSound();
         Destroy(gameObject);
     }
 }

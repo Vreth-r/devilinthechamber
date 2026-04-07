@@ -8,6 +8,7 @@ public class PlayerSound : MonoBehaviour
 {
     [Header("FMOD")]
     public EventReference footstepEvent;
+    public EventReference balloonstepEvent;
     public EventReference slide;
     public EventReference land;
     public EventReference jump;
