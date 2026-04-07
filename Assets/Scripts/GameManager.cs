@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
         Scene scene = SceneManager.GetActiveScene();
 
-        if (scene.name == "DITC_level1.0")
+        if (scene.name == "DITC_level2.0")
         {
             cathedralEnemies.AddRange(GameObject.FindGameObjectsWithTag("Cathedral Enemy"));
         }

@@ -76,6 +76,9 @@ public class EnemyRangedKiteState : IEnemyState
 
     private void UpdateFire(float dt)
     {
+        if (!IsTargetInFireRange() || !HasLineOfSight())
+            return;
+            
         shotTimer -= dt;
 
         if (!IsTargetInFireRange())
@@ -231,7 +234,7 @@ public class EnemyRangedKiteState : IEnemyState
             StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
             
         Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 1.0f;
-        Vector3 direction = ctx.firePoint.forward;
+        Vector3 direction = (ctx.target.position - ctx.firePoint.position).normalized;
 
         Projectile projectile = Object.Instantiate(ctx.projectilePrefab);
 
@@ -301,6 +304,21 @@ public class EnemyRangedKiteState : IEnemyState
 
         totalSeparation.Normalize();
         return totalSeparation * ctx.stats.allySeparationStrength;
+    }
+
+    bool HasLineOfSight()
+    {
+        Vector3 origin = ctx.firePoint.position;
+        Vector3 targetPos = ctx.target.position;
+        Vector3 dir = (targetPos - origin).normalized;
+        float dist = Vector3.Distance(origin, targetPos);
+
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, dist, ctx.projectileHitMask))
+        {
+            return hit.transform == ctx.target || hit.transform.IsChildOf(ctx.target);
+        }
+
+        return false;
     }
 
     private static Vector3 GetAimPoint(Transform target, float fallbackAimHeight)

@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e008edf920192ec43839d1dfafb5e84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cutscene_ender
-  scene: DITC_level1.0
+  scene: DITC_level2.0
 --- !u!1 &624804084
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,11 +20,12 @@ public class CameraMovement : MonoBehaviour
     void LateUpdate()
     {
         if (!cameraPivot) return;
+
         float target = isCrouching ? crouchY : standY;
         Vector3 p = cameraPivot.localPosition;
         p.y = Mathf.Lerp(p.y, target, 1f - Mathf.Exp(-lerpSpeed * Time.deltaTime));
 
-        if (shakeTime > 0)
+        if (shakeTime > 0f)
         {
             shakeOffset = new Vector3(
                 Random.Range(-1f, 1f),
@@ -43,6 +44,13 @@ public class CameraMovement : MonoBehaviour
         else
         {
             shakeOffset = Vector3.zero;
+
+            Vector3 resetPos = cameraPivot.localPosition;
+            resetPos.x = 0f;
+            resetPos.z = 0f;
+            cameraPivot.localPosition = resetPos;
+
+            cameraPivot.localRotation = Quaternion.identity;
         }
 
         cameraPivot.localPosition = p + shakeOffset;

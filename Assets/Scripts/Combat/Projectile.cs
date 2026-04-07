@@ -43,10 +43,17 @@ public class Projectile : MonoBehaviour
         float step = speed * Time.deltaTime;
         Vector3 newPosition = transform.position + direction * step;
 
-        if (Physics.Raycast(lastPosition, direction, out RaycastHit hit, step, hitMask))
+        RaycastHit[] hits = Physics.RaycastAll(lastPosition, direction, step, hitMask);
+
+        if (hits.Length > 0)
         {
-            OnHit(hit);
-            return;
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+            foreach (var hit in hits)
+            {
+                OnHit(hit);
+                return;
+            }
         }
 
         transform.position = newPosition;
