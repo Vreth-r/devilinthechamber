@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(cathedralEnemies.Count);
         if (cathedralEnemies.Count <= 0)
         {
+            StopMusic();
             await SceneFader.Instance.FadeToScene("Credits-Animation");
         }
     }
