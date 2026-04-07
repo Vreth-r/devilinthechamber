@@ -20,6 +20,7 @@ public class GameOverHandler : MonoBehaviour
 
     private void BackToMainMenu(InputAction.CallbackContext context)
     {
+        GameManager.Instance.StopMusic();
         transition_scene();
     }
 

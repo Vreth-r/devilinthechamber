@@ -50,6 +50,11 @@ public class PlayerSound : MonoBehaviour
 
     void Update()
     {
+        // holy jank
+        if (DealMenu.Instance.dealMenuOpen)
+        {
+            StopSlideLoop(immediate: false);
+        }
         // Only in Stand stance
         if (!motor.IsStanding) { timer = 0f; return; }
 
