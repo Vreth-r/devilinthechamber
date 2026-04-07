@@ -54,7 +54,7 @@ public class EnemyBrain : MonoBehaviour
 
     private void HandleAttack()
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached(attack, gameObject);
+        FMODUnity.RuntimeManager.PlayOneShot(attack, gameObject.transform.position);
     }
 
     void OnEnable()

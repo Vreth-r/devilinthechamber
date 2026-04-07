@@ -221,35 +221,26 @@ public class EnemyRangedKiteState : IEnemyState
 
     private void FireProjectile()
     {
-        if (!ctx.firePoint || !ctx.projectilePrefab || !ctx.target)
+        if (!ctx.firePoint || !ctx.projectilePrefab)
             return;
 
         anim?.PlayShoot();
         ctx.OnAttack?.Invoke();
-;
-        float finalSpeed = ctx.stats.projectileSpeed * StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
 
-        Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 0.4f;
-        Vector3 aimPoint = GetAimPoint(ctx.target, ctx.stats.projectileAimHeight);
-        Vector3 direction = aimPoint - origin;
-
-        if (direction.sqrMagnitude < 0.0001f)
-            direction = ctx.firePoint.forward;
-
-        direction.Normalize();
+        float finalSpeed = ctx.stats.projectileSpeed * 
+            StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
+            
+        Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 1.0f;
+        Vector3 direction = ctx.firePoint.forward;
 
         Projectile projectile = Object.Instantiate(ctx.projectilePrefab);
+
         IgnoreShooterCollisions(projectile.gameObject, ctx.self);
 
         projectile.damage = ctx.stats.damage;
         projectile.hitMask = ctx.projectileHitMask;
-        projectile.Launch(
-            origin,
-            direction,
-            finalSpeed,
-            ctx.stats.projectileMaxTravelDistance,
-            ctx.stats.projectileLifetimeSafetyBuffer
-        );
+
+        projectile.Launch(origin, direction, finalSpeed);
     }
 
     private bool ReadyToRepath()
