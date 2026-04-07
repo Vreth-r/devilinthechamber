@@ -10,6 +10,7 @@ public class DeathAbility : AbilityBase
     {
         if (AbilityModManager.abilityFlags[AbilityName.SURVIVOR]) return;
         StatModManager.ResetStatMods();
+        AbilityModManager.ResetAbilities();
         GameManager.Instance.StopMusic();
         SceneFader.Instance.FadeToScene("GameOver");
     }

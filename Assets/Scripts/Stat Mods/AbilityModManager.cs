@@ -158,4 +158,19 @@ public class AbilityModManager {
                 TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), abilities[abilityName].duration, abilities[abilityName].endFunction); // set timer to remove effect
         }
     }
+
+    public static void ResetAbilities()
+    {
+        foreach (AbilityName k in abilityFlags.Keys)
+        {
+            if (abilityFlags[k])
+            {
+                if (abilities.ContainsKey(k))
+                {
+                    abilities[k].endFunction();
+                }
+                abilityFlags[k] = false;
+            }
+        }
+    }
 }
