@@ -71,6 +71,27 @@ MonoBehaviour:
   cardFront: {fileID: 2800000, guid: 197acad7887379a41a7bc6b54ce48a47, type: 3}
   cardBack: {fileID: 2800000, guid: 4f0dad7b83df9c74890ad71ad5572639, type: 3}
   deathCard: {fileID: 2800000, guid: ee6bd117ab97add4eba0c6cf80986650, type: 3}
+  StartDealSFX:
+    Guid:
+      Data1: 277955439
+      Data2: 1234976946
+      Data3: -882300746
+      Data4: 1677087851
+    Path: event:/UI/StartDeal
+  SelectDealSFX:
+    Guid:
+      Data1: 1441540815
+      Data2: 1286086369
+      Data3: 101122744
+      Data4: 586636958
+    Path: event:/UI/SelectDeal
+  ChooseDealSFX:
+    Guid:
+      Data1: 827903992
+      Data2: 1339053436
+      Data3: -1927624825
+      Data4: -978539670
+    Path: event:/UI/ChooseDeal
   dealsDoc: {fileID: 7561635846338231625}
   hudDoc: {fileID: 0}
   cameraScript: {fileID: 0}

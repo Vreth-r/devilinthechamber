@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
 using UnityEditor.MPE;
+using FMODUnity;
 
 public class DealMenu : MonoBehaviour
 {  
@@ -12,6 +13,9 @@ public class DealMenu : MonoBehaviour
     public Texture2D cardFront;
     public Texture2D cardBack;
     public Texture2D deathCard;
+    public EventReference StartDealSFX;
+    public EventReference SelectDealSFX;
+    public EventReference ChooseDealSFX;
 
     int flippedCards = 0;
 
@@ -130,6 +134,7 @@ public class DealMenu : MonoBehaviour
         controls.UI.UIMove.performed += NavMenuController;
         controls.UI.UISelect.performed += SelectButtonMenuController;
         SetDealsText();
+        RuntimeManager.PlayOneShot(StartDealSFX);
 
         SetVisible(true);
     }
@@ -180,8 +185,9 @@ public class DealMenu : MonoBehaviour
                     SelectDeal3();
                     return;
             }
+            RuntimeManager.PlayOneShot(SelectDealSFX);
         }
-        else
+        else 
             ChooseDeal();
     }
 
@@ -262,6 +268,7 @@ public class DealMenu : MonoBehaviour
         if (!dealPicked) return;
         deals[pickedIndex].ApplyDeal();
         HighlightDeal(pickedIndex);
+        RuntimeManager.PlayOneShot(ChooseDealSFX);
     }
 
     void SetVisible(bool visible)
