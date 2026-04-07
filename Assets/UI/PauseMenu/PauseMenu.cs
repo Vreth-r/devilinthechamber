@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using FMODUnity;
 using FMOD.Studio;
+using System.Collections.Generic;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class PauseMenu : MonoBehaviour
     VisualElement root;
     Button resumeButton;
     Button exitButton;
+    List<Button> buttons;
 
     public bool isPaused;
     float oldTimeScale;
@@ -53,6 +54,7 @@ public class PauseMenu : MonoBehaviour
         root = pauseDoc.rootVisualElement;
         resumeButton = root.Q<Button>("Resume");
         exitButton   = root.Q<Button>("Exit");
+        buttons = new List<Button>{ resumeButton, exitButton };
 
         if (resumeButton == null) Debug.LogError("PauseMenu: Button name='Resume' not found.");
         if (exitButton == null)   Debug.LogError("PauseMenu: Button name='Exit' not found.");
@@ -95,6 +97,7 @@ public class PauseMenu : MonoBehaviour
 
     void OnPause(InputAction.CallbackContext _)
     {
+        Debug.Log("Open pause");
         if (Time.unscaledTime < toggleBlockUntil) return;
         toggleBlockUntil = Time.unscaledTime + 0.15f;
 
@@ -128,8 +131,16 @@ public class PauseMenu : MonoBehaviour
 
         //if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
 
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;
+        if (GameManager.Instance.lastInputDevice is Keyboard)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+        }
+        else
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+        }
         if (playerLook != null) 
         {
             playerLook.allowCursorRelockOnClick = false;
@@ -152,8 +163,11 @@ public class PauseMenu : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
         GameManager.Instance.SetInputMap(true);
 
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        UnityEngine.Cursor.visible = false;
+        if (GameManager.Instance.lastInputDevice is Keyboard)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+        }
         PlayUIClick();
 
         if (playerLook != null) 
@@ -178,5 +192,64 @@ public class PauseMenu : MonoBehaviour
     void SetVisible(bool visible)
     {
         root.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+
+        if (controls == null)
+        {
+            controls = GameManager.Instance.controls;
+        }
+        if (visible)
+        {
+            controls.UI.UIMove.performed += NavMenuController;
+            controls.UI.UISelect.performed += SelectButtonMenuController;
+            if (GameManager.Instance.lastInputDevice is Gamepad)
+            {
+                buttons[buttonIndex].AddToClassList("hover");
+            }
+        }
+        else
+        {
+            controls.UI.UIMove.performed -= NavMenuController;
+            controls.UI.UISelect.performed -= SelectButtonMenuController;
+        }
+    }
+
+    int buttonIndex = 0;
+    private void NavMenuController(InputAction.CallbackContext context)
+    {
+        Vector2 move = context.ReadValue<Vector2>();
+
+        if (move.y > 0 && buttonIndex == 1) 
+        {
+            exitButton.RemoveFromClassList("hover");
+            resumeButton.AddToClassList("hover");
+            buttonIndex = 0;
+        }
+        else if (move.y < 0 && buttonIndex == 0)
+        {
+            resumeButton.RemoveFromClassList("hover");
+            exitButton.AddToClassList("hover");
+            buttonIndex = 1;
+        }
+    }
+
+    private void SelectButtonMenuController(InputAction.CallbackContext context)
+    {
+        if (buttonIndex == 0)
+        {
+            Resume();
+            DeselectAll();
+        }
+        else if (buttonIndex == 1)
+        {
+            ExitToMainMenu();
+            DeselectAll();
+        }
+    }
+
+    void DeselectAll()
+    {
+        resumeButton.RemoveFromClassList("hover");
+        exitButton.RemoveFromClassList("hover");
+        buttonIndex = 0;
     }
 }

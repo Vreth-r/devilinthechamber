@@ -5,6 +5,8 @@ using FMOD.Studio;
 using Unity.Mathematics;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
     public float enemyProjectileSpeedMod = 1f;
     public bool gamePaused;
     public PlayerControls controls;
+    public InputDevice lastInputDevice;
     List<GameObject> cathedralEnemies = new List<GameObject>();
 
     public EventReference musicLoop;
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
         controls = new PlayerControls();
         controls.Player.Enable();
         controls.UI.Disable();
+        SetControlContextUpdate();
     }
 
     void Start()
@@ -102,4 +106,18 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Too many negative deals {statName}");
     }
 
+
+    void SetControlContextUpdate ()
+    {
+        controls.Player.Crouch.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.DrainWP.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Fire.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Jump.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Look.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Reload.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Pause.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Move.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.UI.UIMove.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.UI.UISelect.performed += ctx => lastInputDevice = ctx.control.device;
+    }
 }
