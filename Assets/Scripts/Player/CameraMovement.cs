@@ -24,6 +24,11 @@ public class CameraMovement : MonoBehaviour
         float target = isCrouching ? crouchY : standY;
         Vector3 p = cameraPivot.localPosition;
         p.y = Mathf.Lerp(p.y, target, 1f - Mathf.Exp(-lerpSpeed * Time.deltaTime));
+        if(shakeTime <= 0f) 
+        {
+            p.x = 0f;
+            p.z = 0f;
+        }
 
         if (shakeTime > 0f)
         {
@@ -50,7 +55,6 @@ public class CameraMovement : MonoBehaviour
             resetPos.z = 0f;
             cameraPivot.localPosition = resetPos;
 
-            cameraPivot.localRotation = Quaternion.identity;
         }
 
         cameraPivot.localPosition = p + shakeOffset;
