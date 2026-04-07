@@ -16,6 +16,7 @@ public class DoorTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         triggers++;
+        Debug.Log("JE");
         if (oneTime && triggers > 1) return;
         if (door != null)
         {
