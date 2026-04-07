@@ -17,6 +17,7 @@ public class DealMenu : MonoBehaviour
     Button deal1;
     Button deal2;
     Button deal3;
+    Button chooseButton;
     List<Button> dealButtons;
     List<Deal> deals;
 
@@ -30,6 +31,7 @@ public class DealMenu : MonoBehaviour
     PlayerControls controls;
     
     public bool dealMenuOpen;
+    int pickedIndex = -1;
     public bool dealPicked = false;
 
     void Awake()
@@ -51,12 +53,14 @@ public class DealMenu : MonoBehaviour
         deal1 = root.Q<Button>("Deal1");
         deal2 = root.Q<Button>("Deal2");
         deal3 = root.Q<Button>("Deal3");
+        chooseButton = root.Q<Button>("ChooseButton");
 
         dealButtons = new List<Button>{deal1, deal2, deal3};
 
-        deal1.clicked += ChooseDeal1;
-        deal2.clicked += ChooseDeal2;
-        deal3.clicked += ChooseDeal3;
+        deal1.clicked += SelectDeal1;
+        deal2.clicked += SelectDeal2;
+        deal3.clicked += SelectDeal3;
+        chooseButton.clicked += ChooseDeal;
         
         SetVisible(false);
     }
@@ -106,6 +110,15 @@ public class DealMenu : MonoBehaviour
         dealPicked = false;
         deals = DeckManager.Instance.DrawDeals();
 
+        deal1.RemoveFromClassList("DealSelected");
+        deal1.AddToClassList("DealNotSelected");
+
+        deal2.RemoveFromClassList("DealSelected");
+        deal2.AddToClassList("DealSelected");
+
+        deal3.RemoveFromClassList("DealSelected");
+        deal3.AddToClassList("DealNotSelected");
+
         SetDealsText();
 
         SetVisible(true);
@@ -132,26 +145,54 @@ public class DealMenu : MonoBehaviour
         SetVisible(false);
     }
 
-    void ChooseDeal1 ()
+    void SelectDeal1 ()
     {
-        if (dealPicked) return;
+        pickedIndex = 0;
         dealPicked = true;
-        deals[0].ApplyDeal();
-        HighlightDeal(0);
+        deal1.RemoveFromClassList("DealNotSelected");
+        deal1.AddToClassList("DealSelected");
+
+        deal2.RemoveFromClassList("DealSelected");
+        deal2.AddToClassList("DealNotSelected");
+
+        deal3.RemoveFromClassList("DealSelected");
+        deal3.AddToClassList("DealNotSelected");
+        chooseButton.SetEnabled(true);
     }
-    void ChooseDeal2 ()
+    void SelectDeal2 ()
     {
-        if (dealPicked) return;
+        pickedIndex = 1;
         dealPicked = true;
-        deals[1].ApplyDeal();
-        HighlightDeal(1);
+        deal1.RemoveFromClassList("DealSelected");
+        deal1.AddToClassList("DealNotSelected");
+
+        deal2.RemoveFromClassList("DealNotSelected");
+        deal2.AddToClassList("DealSelected");
+
+        deal3.RemoveFromClassList("DealSelected");
+        deal3.AddToClassList("DealNotSelected");
+        chooseButton.SetEnabled(true);
     }
-    void ChooseDeal3 ()
+    void SelectDeal3 ()
     {
-        if (dealPicked) return;
+        pickedIndex = 2;
         dealPicked = true;
-        deals[2].ApplyDeal(); 
-        HighlightDeal(2);
+        deal1.RemoveFromClassList("DealSelected");
+        deal1.AddToClassList("DealNotSelected");
+
+        deal2.RemoveFromClassList("DealSelected");
+        deal2.AddToClassList("DealNotSelected");
+
+        deal3.RemoveFromClassList("DealNotSelected");
+        deal3.AddToClassList("DealSelected");
+        chooseButton.SetEnabled(true);
+    }
+
+    void ChooseDeal ()
+    {
+        if (!dealPicked) return;
+        deals[pickedIndex].ApplyDeal();
+        HighlightDeal(pickedIndex);
     }
 
     void SetVisible(bool visible)
