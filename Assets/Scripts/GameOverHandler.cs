@@ -6,10 +6,12 @@ using Yarn.Unity;
 public class GameOverHandler : MonoBehaviour
 {
     PlayerControls controls;
+    public GameObject ys;
     void Start()
     {
         controls = new PlayerControls();
         controls.Player.Jump.performed += BackToMainMenu;
+        ys.SetActive(true);
     }
 
     [YarnCommand("mm")]
