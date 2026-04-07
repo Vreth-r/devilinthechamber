@@ -83,6 +83,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         deaths += 1;
         DeckManager.Instance.AddDeathCard(1);
+        PlayerManager.Instance.willpower.currentWillpower = PlayerManager.Instance.willpower.maxWillpower;
         UIEvents.DoDeathAnim();
         DealMenu.Instance.OpenMenu();
         currentHealth = maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH);
