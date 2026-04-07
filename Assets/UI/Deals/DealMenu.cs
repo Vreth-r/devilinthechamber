@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cursor = UnityEngine.Cursor;
+using UnityEditor.MPE;
 
 public class DealMenu : MonoBehaviour
 {  
@@ -33,6 +34,9 @@ public class DealMenu : MonoBehaviour
     public bool dealMenuOpen;
     int pickedIndex = -1;
     public bool dealPicked = false;
+
+    int col = 0;
+    int row = 0;
 
     void Awake()
     {
@@ -97,8 +101,19 @@ public class DealMenu : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = true;
         
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+
+        GameManager.Instance.SetInputMap(false);
+
+        if (GameManager.Instance.lastInputDevice is not Gamepad)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         if (cameraScript!=null) cameraScript.enabled = false;
         dealMenuOpen = true;
 
@@ -110,19 +125,66 @@ public class DealMenu : MonoBehaviour
         dealPicked = false;
         deals = DeckManager.Instance.DrawDeals();
 
-        deal1.RemoveFromClassList("DealSelected");
-        deal1.AddToClassList("DealNotSelected");
+        DeselectAll();
 
-        deal2.RemoveFromClassList("DealSelected");
-        deal2.AddToClassList("DealSelected");
-
-        deal3.RemoveFromClassList("DealSelected");
-        deal3.AddToClassList("DealNotSelected");
-
+        controls.UI.UIMove.performed += NavMenuController;
+        controls.UI.UISelect.performed += SelectButtonMenuController;
         SetDealsText();
 
         SetVisible(true);
     }
+
+    private void NavMenuController(InputAction.CallbackContext context)
+    {
+        Vector2 move = context.ReadValue<Vector2>();
+
+        if (col == 0 && move.y < 0 && dealPicked)
+        {
+            row = -1;
+            col = 1;
+            chooseButton.AddToClassList("hovered");
+        }
+        else if (col == 1 && move.y > 0)
+        {
+            row = 1;
+            col = 0;
+            chooseButton.RemoveFromClassList("hovered");
+        }
+        else if (row < dealButtons.Count - 1 && col == 0 && move.x > 0)
+        {
+            row += 1;
+            HoverButton();
+        }
+        else if (row > 0 && col == 0 && move.x < 0)
+        {
+            row -= 1;
+            for (int i = 0; i < dealButtons.Count; i++)
+            HoverButton();
+        }
+        
+    }
+
+    private void SelectButtonMenuController(InputAction.CallbackContext context)
+    {
+        if (col == 0)
+        {
+            switch (row)
+            {
+                case 0:
+                    SelectDeal1();
+                    return;
+                case 1:
+                    SelectDeal2();
+                    return;
+                case 2:
+                    SelectDeal3();
+                    return;
+            }
+        }
+        else
+            ChooseDeal();
+    }
+
 
     void CloseMenu()
     {
@@ -133,12 +195,19 @@ public class DealMenu : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.gamePaused = false;
         
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (GameManager.Instance.lastInputDevice is not Gamepad)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         if (cameraScript!=null) cameraScript.enabled = true;
         dealMenuOpen = false;
 
         DeckManager.Instance.AddDeathCard(2);
+        controls.UI.UIMove.performed -= NavMenuController;
+        controls.UI.UISelect.performed -= SelectButtonMenuController;
+        GameManager.Instance.SetInputMap(true);
+        DeselectAll();
         
         //hudDoc.rootVisualElement.style.display = DisplayStyle.Flex;
         dealsDoc.sortingOrder = 0;
@@ -274,5 +343,30 @@ public class DealMenu : MonoBehaviour
         {
             CloseMenu();
         }).StartingIn(3000);
+    }
+    void HoverButton ()
+    {
+        for (int i = 0; i < dealButtons.Count; i++)
+        {
+            if (i == row)
+                dealButtons[i].AddToClassList("hovered");
+            else
+                dealButtons[i].RemoveFromClassList("hovered");
+        }
+    }
+
+    void DeselectAll ()
+    {
+        foreach (Button b in dealButtons)
+        {
+            b.RemoveFromClassList("hovered");
+            b.RemoveFromClassList("DealSelected");
+            b.AddToClassList("DealNotSelected");
+        }
+        chooseButton.SetEnabled(false);
+        chooseButton.RemoveFromClassList("hovered");
+        dealPicked = false;
+        row = 0;
+        col = 0;
     }
 }
