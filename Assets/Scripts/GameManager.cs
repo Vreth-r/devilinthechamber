@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public EventReference musicLoop;
     private EventInstance _musicInstance;
+
+    public bool gameOverFlag = false;
     void Awake()
     {
         if (Instance == null)
@@ -47,6 +49,20 @@ public class GameManager : MonoBehaviour
             _musicInstance = RuntimeManager.CreateInstance(musicLoop);
             _musicInstance.start();
         }
+    }
+
+    void Update()
+    {
+        if(gameOverFlag)
+        {
+            Lose();
+        }
+    }
+
+    async void Lose()
+    {
+        StopMusic();
+        await SceneFader.Instance.FadeToScene("GameOver");
     }
 
     public void StopMusic()

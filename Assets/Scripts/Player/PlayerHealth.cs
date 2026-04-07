@@ -64,7 +64,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         int dmg = AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? 2 * amount : amount;
         currentHealth -= AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
         currentHealth = Mathf.Max(0, currentHealth);
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
         UIEvents.SetHealth();
 
         if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])

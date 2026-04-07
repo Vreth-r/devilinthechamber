@@ -29,7 +29,7 @@ public class DeckManager : MonoBehaviour
         if (deal.abilityDeals.Count != 0 && deal.abilityDeals[0].AbilityName == AbilityName.DEATH)
             deathCardsInDeck++;
 
-        UnityEngine.Debug.Log($"Loaded {deal.dealName}");
+        //UnityEngine.Debug.Log($"Loaded {deal.dealName}");
 
         Shuffle();
     }
@@ -102,7 +102,7 @@ public class DeckManager : MonoBehaviour
             if (AbilityModManager.abilities.ContainsKey(abilityDeal.AbilityName)) AbilityModManager.abilities[abilityDeal.AbilityName].endFunction();
             AbilityModManager.abilityFlags[abilityDeal.AbilityName] = false;
         }
-        UnityEngine.Debug.Log($"Removed {d.dealName}");
+        //UnityEngine.Debug.Log($"Removed {d.dealName}");
         chosenDeals.RemoveAt(chosenDeals.Count - 1);
     }
     
