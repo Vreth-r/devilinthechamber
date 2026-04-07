@@ -161,16 +161,18 @@ public class AbilityModManager {
 
     public static void ResetAbilities()
     {
-        foreach (AbilityName k in abilityFlags.Keys)
+        var keys = new List<AbilityName>(abilityFlags.Keys);
+
+        foreach (var key in keys)
         {
-            if (abilityFlags[k])
+            bool isActive = abilityFlags[key];
+
+            if (isActive && abilities.TryGetValue(key, out var ability))
             {
-                if (abilities.ContainsKey(k))
-                {
-                    abilities[k].endFunction();
-                }
-                abilityFlags[k] = false;
+                ability.endFunction();
             }
+
+            abilityFlags[key] = false;
         }
     }
 }
