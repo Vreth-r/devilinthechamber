@@ -236,14 +236,18 @@ public class EnemyRangedKiteState : IEnemyState
         Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 1.0f;
         Vector3 direction = (ctx.target.position - ctx.firePoint.position).normalized;
 
-        Projectile projectile = Object.Instantiate(ctx.projectilePrefab);
+        if (GameManager.Instance.numBullets < 75)
+        {
+            Projectile projectile = Object.Instantiate(ctx.projectilePrefab);
+            GameManager.Instance.numBullets++;
+            IgnoreShooterCollisions(projectile.gameObject, ctx.self);
 
-        IgnoreShooterCollisions(projectile.gameObject, ctx.self);
+            projectile.damage = ctx.stats.damage;
+            projectile.hitMask = ctx.projectileHitMask;
 
-        projectile.damage = ctx.stats.damage;
-        projectile.hitMask = ctx.projectileHitMask;
+            projectile.Launch(origin, direction, finalSpeed);
+        } 
 
-        projectile.Launch(origin, direction, finalSpeed);
     }
 
     private bool ReadyToRepath()

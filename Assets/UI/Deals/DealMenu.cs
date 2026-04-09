@@ -134,7 +134,7 @@ public class DealMenu : MonoBehaviour
         controls.UI.UIMove.performed += NavMenuController;
         controls.UI.UISelect.performed += SelectButtonMenuController;
         SetDealsText();
-        RuntimeManager.PlayOneShot(StartDealSFX);
+        RuntimeManager.PlayOneShotAttached(StartDealSFX, PlayerManager.Instance.gameObject);
 
         SetVisible(true);
     }
@@ -185,7 +185,6 @@ public class DealMenu : MonoBehaviour
                     SelectDeal3();
                     return;
             }
-            RuntimeManager.PlayOneShot(SelectDealSFX);
         }
         else 
             ChooseDeal();
@@ -233,6 +232,7 @@ public class DealMenu : MonoBehaviour
         deal3.RemoveFromClassList("DealSelected");
         deal3.AddToClassList("DealNotSelected");
         chooseButton.SetEnabled(true);
+        RuntimeManager.PlayOneShotAttached(SelectDealSFX, PlayerManager.Instance.gameObject);
     }
     void SelectDeal2 ()
     {
@@ -247,6 +247,7 @@ public class DealMenu : MonoBehaviour
         deal3.RemoveFromClassList("DealSelected");
         deal3.AddToClassList("DealNotSelected");
         chooseButton.SetEnabled(true);
+        RuntimeManager.PlayOneShotAttached(SelectDealSFX, PlayerManager.Instance.gameObject);
     }
     void SelectDeal3 ()
     {
@@ -261,14 +262,15 @@ public class DealMenu : MonoBehaviour
         deal3.RemoveFromClassList("DealNotSelected");
         deal3.AddToClassList("DealSelected");
         chooseButton.SetEnabled(true);
+        RuntimeManager.PlayOneShotAttached(SelectDealSFX, PlayerManager.Instance.gameObject);
     }
 
     void ChooseDeal ()
     {
         if (!dealPicked) return;
+        RuntimeManager.PlayOneShotAttached(ChooseDealSFX, PlayerManager.Instance.gameObject);
         deals[pickedIndex].ApplyDeal();
         HighlightDeal(pickedIndex);
-        RuntimeManager.PlayOneShot(ChooseDealSFX);
     }
 
     void SetVisible(bool visible)

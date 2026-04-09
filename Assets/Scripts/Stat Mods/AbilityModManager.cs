@@ -167,9 +167,9 @@ public class AbilityModManager {
         {
             bool isActive = abilityFlags[key];
 
-            if (isActive && abilities.TryGetValue(key, out var ability))
+            if (isActive && abilities.ContainsKey(key))
             {
-                ability.endFunction();
+                abilities[key].endFunction();
             }
 
             abilityFlags[key] = false;

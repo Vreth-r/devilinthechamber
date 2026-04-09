@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public bool bulletRestoreMod = false;
 
     public float enemyProjectileSpeedMod = 1f;
+    public int numBullets = 0;
     public bool gamePaused;
     public PlayerControls controls;
     public InputDevice lastInputDevice;
@@ -47,6 +48,10 @@ public class GameManager : MonoBehaviour
             _musicInstance = RuntimeManager.CreateInstance(musicLoop);
             _musicInstance.start();
         }
+        StatModManager.ResetStatMods();
+        AbilityModManager.ResetAbilities();
+        Time.timeScale = 1f;
+        SetInputMap(true);
     }
 
     public void StopMusic()
