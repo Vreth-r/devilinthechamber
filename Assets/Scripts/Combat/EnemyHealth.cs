@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [Header("Hit Feedback")]
     public Renderer[] renderersToFlash;
     public float flashTime = 0.06f;
+    public GameObject hitParticleFX;
+    public GameObject deathParticleFX;
 
     int hp;
     float flashTimer;
@@ -35,10 +37,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         hp -= amount;
         hp = Mathf.Max(hp, 0);
 
-        Flash();
-
         if (hp <= 0)
+        {
             Die();
+            return;
+        }
+        if (AbilityModManager.abilityFlags[AbilityName.NO_ENEMY_HIT_INDICATOR]) return;
+        Instantiate(hitParticleFX, hitPoint, Quaternion.LookRotation(hitNormal));
+        Flash();
     }
 
     public void Stun (float duration)
@@ -79,7 +85,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         GameManager.Instance.enemyKilled(this.gameObject);
-        // later play death animation or smth
+        PlayerManager.Instance.willpower.AddWillpower(3);
+        PlayerManager.Instance.willpower.AddWillpowerTime(0.5f);
+        if (deathParticleFX != null)
+        {
+            Instantiate(deathParticleFX, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        }
+
+        if (AbilityModManager.abilityFlags[AbilityName.KILL_BULLET_RESTORE])
+            PlayerManager.Instance.gunHitscan.AddBulletToMagazine();
+
         if (destroyOnDeath)
             Destroy(gameObject);
         else

@@ -15,4 +15,10 @@ public class CutsceneManager : MonoBehaviour
             _musicInstance.start();
         }
     }
+
+    void OnDestroy()
+    {
+        _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _musicInstance.release();
+    }
 }

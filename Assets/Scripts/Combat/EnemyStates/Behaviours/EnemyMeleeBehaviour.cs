@@ -1,8 +1,12 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 [CreateAssetMenu(menuName = "Enemies/Behaviours/Melee Chaser")]
 public class EnemyMeleeBehaviour : EnemyBehaviour
 {
     public override IEnemyState CreateInitialState(EnemyContext ctx, EnemyStateMachine fsm)
-        => new EnemyIdleState(ctx, fsm, nextOnAggro: () => new EnemyMeleeChaseState(ctx, fsm));
+    {
+        return new EnemyIdleState(ctx, fsm, () => new EnemyMeleeState(ctx, fsm));
+    }
 }

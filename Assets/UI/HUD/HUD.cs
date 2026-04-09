@@ -7,14 +7,7 @@ using Unity.VisualScripting;
 
 public class HUD : MonoBehaviour
 {
-    public int hp = 10;
-    public int hpMax = 10;
-    public int ammoInMag = 10;
-    public int ammoReserve = 10;
-
     bool uiReady;
-
-    public bool showHitIndicator = true;
 
     public Texture2D oneEyedImage;
 
@@ -25,9 +18,9 @@ public class HUD : MonoBehaviour
 
     VisualElement backgroundVignette;
     VisualElement oneEyePanel;
-    VisualElement healthContainer;
-    VisualElement bulletContainer;
-    VisualElement ammoBullet;
+    VisualElement healthBar;
+    VisualElement willpowerBar;
+    VisualElement ammoPanel;
     Label livesText;
     Label ammoText;
 
@@ -44,12 +37,13 @@ public class HUD : MonoBehaviour
     void OnEnable()
     {
         UIEvents.UpdateHealth += SetHealth;
+        UIEvents.UpdateWillpower += SetWillpower;
         UIEvents.UpdateAmmo += SetAmmo;
         UIEvents.SetBlind += SetBlind;
         UIEvents.IndicateHit += IndicateHit;
-        UIEvents.UpdateShowHitIndicator += SetShowHitIndicator;
         UIEvents.blink += BlinkWrapper;
         UIEvents.OneEye += SetOneEyed;
+        UIEvents.ForceRefresh += ForceRefreshAll;
 
         uiReady = false;
         StartCoroutine(InitUIWhenReady());
@@ -61,9 +55,9 @@ public class HUD : MonoBehaviour
         UIEvents.UpdateAmmo -= SetAmmo;
         UIEvents.SetBlind -= SetBlind;
         UIEvents.IndicateHit -= IndicateHit;
-        UIEvents.UpdateShowHitIndicator -= SetShowHitIndicator;
         UIEvents.blink -= BlinkWrapper;
         UIEvents.OneEye -= SetOneEyed;
+        UIEvents.ForceRefresh -= ForceRefreshAll;
     }
 
     IEnumerator InitUIWhenReady()
@@ -77,41 +71,42 @@ public class HUD : MonoBehaviour
 
         backgroundVignette = root.Q<VisualElement>("vignette-panel");
         oneEyePanel        = root.Q<VisualElement>("one-eye-panel");
-        healthContainer    = root.Q<VisualElement>("health-container");
+        healthBar          = root.Q<VisualElement>("health-bar");
+        willpowerBar       = root.Q<VisualElement>("willpower-bar");
+        ammoPanel          = root.Q<VisualElement>("ammo-panel");
         livesText          = root.Q<Label>("lives-text");
-        ammoText           = root.Q<Label>("ammo-text");
 
         // Minimum needed for Refresh to run safely
-        uiReady = (healthContainer != null && ammoText != null);
+        uiReady = healthBar != null && ammoPanel != null && willpowerBar != null;
 
         if (!uiReady)
         {
             Debug.LogError(
                 $"[HUD] Missing required UI elements. " +
-                $"healthContainer={(healthContainer != null)} ammoText={(ammoText != null)} " +
-                $"vignette={(backgroundVignette != null)} livesText={(livesText != null)} " +
+                $"healthContainer={healthBar != null} ammoText={ammoText != null} " +
+                $"vignette={backgroundVignette != null} livesText={livesText != null} " +
                 $"(Check UXML names for this scene.)",
                 this
             );
             yield break;
         }
 
-        Refresh();
+        RefreshAll();
     }
 
-    public void SetHealth(int current, int max)
+    public void SetHealth()
     {
-        hp = current;
-        hpMax = Mathf.Max(1, max);
-        Refresh();
+        RefreshHealth();
     }
 
-
-    public void SetAmmo(int mag, int reserve)
+    public void SetWillpower ()
     {
-        ammoInMag = Mathf.Max(0, mag);
-        ammoReserve = Mathf.Max(0, reserve);
-        Refresh();
+        RefreshWillpower();
+    }
+
+    public void SetAmmo()
+    {
+        RefreshAmmo();
     }
 
     public void SetBlind (bool isBlind)
@@ -195,7 +190,6 @@ public class HUD : MonoBehaviour
 
     public void IndicateHit()
     {
-        if (!showHitIndicator) return;
         if (!uiReady) return;
         if (backgroundVignette == null) return;
 
@@ -208,42 +202,54 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void SetShowHitIndicator (bool showHitIndicator)
+
+    void ForceRefreshAll ()
     {
-        this.showHitIndicator = showHitIndicator;
+        RefreshAll();
     }
 
-    void Refresh()
+    void RefreshHealth ()
     {
         if (!uiReady) return;
-
-        // health
-        healthContainer.Clear();
-        for (int i = 0; i < hpMax; i++)
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
         {
-            Image hpImage = new Image();
-            hpImage.sprite = (i < hp) ? filledHP : emptyHP;
-            hpImage.style.width = 75;
-            hpImage.style.height = 25;
-            healthContainer.Add(hpImage);
+            healthBar.parent.visible = false;
+            return;
         }
+        healthBar.style.width = Length.Percent(100 * (PlayerManager.Instance.health.currentHealth / (float)(PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH))));
+    }
 
-        // lives text is OPTIONAL: only set it if it exists + player manager exists
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "DITC_level1.0" && livesText != null)
+    void RefreshWillpower ()
+    {
+        if (!uiReady) return;
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_ME])
         {
-            var pm = PlayerManager.Instance;
-            if (pm != null && pm.health != null)
-                livesText.text = $"Time of Death: {NumToRoman(pm.health.lives)}";
-            else
-                livesText.text = "Time of Death: ?";
+            willpowerBar.parent.visible = false;
+            return;
         }
+        willpowerBar.style.width = Length.Percent(100 * (PlayerManager.Instance.willpower.currentWillpower / (float)PlayerManager.Instance.willpower.maxWillpower));
+    }
 
-        // ammo (ammoText required, so safe)
-        if (ammoReserve == int.MaxValue)
-            ammoText.text = "inf / inf";
-        else
-            ammoText.text = $"{ammoInMag} / {ammoReserve}";
+    void RefreshAmmo ()
+    {
+        if (!uiReady) return;
+        ammoPanel.Clear();
+        if (AbilityModManager.abilityFlags[AbilityName.WHERES_GUN] || !AbilityModManager.abilityFlags[AbilityName.RELOAD] || AbilityModManager.abilityFlags[AbilityName.INFINITE_MAG]) return;
+
+        for (int i = 0; i < PlayerManager.Instance.gunHitscan.currentMagazine; i++)
+        {
+            VisualElement bullet = new VisualElement();
+            bullet.AddToClassList("bullet-img");
+            ammoPanel.Add(bullet);
+        }
+            
+    }
+
+    void RefreshAll()
+    {
+        RefreshHealth();
+        RefreshWillpower();
+        RefreshAmmo();
     }
 
     // tried to be smart, ended up with more work lol
@@ -264,37 +270,4 @@ public class HUD : MonoBehaviour
         backgroundVignette.style.unityBackgroundImageTintColor = new StyleColor(newColor);
     }
 
-    string NumToRoman (int num)
-    {
-        switch (num)
-        {
-            case 0:
-                return "0";
-            case 1:
-                return "I";
-            case 2:
-                return "II";
-            case 3:
-                return "III";
-            case 4:
-                return "IV";
-            case 5:
-                return "V";
-            case 6:
-                return "VI";
-            case 7:
-                return "VII";
-            case 8:
-                return "VIII";
-            case 9:
-                return "IX";
-            case 10:
-                return "X";
-            case 11:
-                return "XI";
-            default:
-                return "";
-            
-        }
-    }
 }

@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DeathScreen/DeathScreen.uss?fileID=7433441132597879392&amp;guid=54f1270fa7ff20948b66f75ff043781e&amp;type=3#DeathScreen" />
+    <ui:VisualElement name="Background" class="background">
+        <ui:VisualElement name="DeathMarker" class="background" style="flex-grow: 1; align-self: stretch; background-image: url(&quot;project://database/Assets/skull_PNG64-614232380.png?fileID=2800000&amp;guid=80c7614776827944c8ab7025aa7c9333&amp;type=3#skull_PNG64-614232380&quot;); -unity-background-image-tint-color: rgba(171, 38, 38, 0.06); flex-shrink: 1; align-content: auto; background-size: 32% 66%; background-position-y: center;">
+            <ui:Label text="X" name="Text" class="text" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

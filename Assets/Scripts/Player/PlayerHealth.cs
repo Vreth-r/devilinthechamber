@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,50 +8,42 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public PlayerSound sound;
-    public int maxHealth = 15;
-    public int maxHealthMod = 0;
+    public int maxHealth = 100;
     public int currentHealth;
-    public int lives = 10;
+    public int deaths = 0;
 
-    public bool takesKnockback = false;
     private float knockbackForce = 10f;
     private Vector3 knockbackVelocity;
     private float knockbackDuration = 0.2f;
     private float knockbackTimer;
 
-    public bool invincible = false;
-    public bool doubleHeal = false;
-    public bool AOEOnDamage = false;
-
     void Awake()
     {
         currentHealth = maxHealth;
+        UIEvents.DeathAnimFinished += DiePart2;
     }
     void Start()
     {
-        UIEvents.SetHealth(currentHealth, maxHealth); // timing thing
+        UIEvents.SetHealth(); // timing thing
         
     }
 
     public void ForceUpdateHealth ()
     {
-        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
+        UIEvents.SetHealth();
     }
 
     public void Heal (int amount)
     {
-        if (doubleHeal)
-            currentHealth += amount * 2;
-        else
-            currentHealth += amount;
+        currentHealth += amount;
 
-        currentHealth = math.min(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.UpdateHealth(currentHealth, maxHealth + maxHealthMod);
+        currentHealth = math.min(currentHealth, maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH));
+        UIEvents.SetHealth();
     }
 
     void Update()
     {
-        if (takesKnockback && knockbackTimer > 0)
+        if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY] && knockbackTimer > 0)
         {
             PlayerManager.Instance.controller.Move(knockbackVelocity * Time.deltaTime);
             knockbackTimer -= Time.deltaTime;
@@ -58,56 +52,44 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount, Vector3 hitPoint, Vector3 hitNormal)
     {
-
-        if (takesKnockback)
+        if (AbilityModManager.abilityFlags[AbilityName.NO_DAMAGE_CHANCE] && UnityEngine.Random.value <= 0.1) return; 
+        if (AbilityModManager.abilityFlags[AbilityName.KNOCKBACK_ABILITY])
         {
             Vector3 knockbackDirection = hitNormal.normalized;
             knockbackVelocity = -knockbackDirection * knockbackForce;
             knockbackTimer = knockbackDuration;
         }
         
-        if (invincible) return;
-        currentHealth -= amount;
+        if (AbilityModManager.abilityFlags[AbilityName.INVINCIBILITY]) return;
+        int dmg = AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? 2 * amount : amount;
+        currentHealth -= AbilityModManager.abilityFlags[AbilityName.HALF_DAMAGE_TAKEN_LOW_HP] && currentHealth / (maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH)) <= 0.15 ? (int)(0.5f * dmg) : dmg;
         currentHealth = Mathf.Max(0, currentHealth);
+        //Debug.Log(currentHealth);
+        UIEvents.SetHealth();
 
-        if (AOEOnDamage)
+        if (!AbilityModManager.abilityFlags[AbilityName.NO_PLAYER_HIT_INDICATOR])
         {
-            Collider[] enemies = Physics.OverlapSphere(transform.position, 100, 7);
-
-            foreach (Collider enemy in enemies)
-            {
-                Debug.Log(enemy.gameObject.name);
-                if (enemy.gameObject.TryGetComponent(out IDamageable damageable))
-                    damageable.Stun(2f); // stun for 2 seconds
-            }
+            UIEvents.Hit();
         }
-
-        UIEvents.SetHealth(currentHealth, maxHealth + maxHealthMod);
-        UIEvents.IndicateHit();
         sound.PlayPlayerDamage();
+        PlayerManager.Instance.cameraMovement.Shake();
         if (currentHealth <= 0)
         {
-            Die(true);
+            Die();
         }
     }
 
-    public void Stun (float f) {}
-
-    public async void Die(bool respawn)
+    public void Die()
     {
-        Debug.Log("died");
-        if (respawn)
-        {
-            lives -= 1;
-            CheckpointManager.Instance.RespawnPlayer(gameObject);
-            DealMenu.Instance.OpenMenu();
-        }
-        else
-        {
-            StatModManager.ResetStatMods();
-            GameManager.Instance.StopMusic();
-            Destroy(GameManager.Instance.gameObject);
-            await SceneFader.Instance.FadeToScene("GameOver");
-        }
+        deaths += 1;
+        DeckManager.Instance.AddDeathCard(1);
+        PlayerManager.Instance.willpower.currentWillpower = PlayerManager.Instance.willpower.maxWillpower;
+        UIEvents.DoDeathAnim();
+        DealMenu.Instance.OpenMenu();
+        currentHealth = maxHealth + (int)StatModManager.GetStatModifier(StatName.PERMA_HEALTH);
+    }
+    void DiePart2()
+    {   
+        CheckpointManager.Instance.RespawnPlayer(gameObject);
     }
 }

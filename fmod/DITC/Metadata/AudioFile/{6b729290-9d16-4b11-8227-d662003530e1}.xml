@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{6b729290-9d16-4b11-8227-d662003530e1}">
+		<property name="assetPath">
+			<value>DITC_TRACK01_MUFFLED_LOOP.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>96</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b20af26-18f1-4719-a88a-65d0109b3c59}</destination>
+		</relationship>
+	</object>
+</objects>

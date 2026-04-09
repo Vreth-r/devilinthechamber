@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
+using FMOD.Studio;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBrain : MonoBehaviour
@@ -7,29 +9,19 @@ public class EnemyBrain : MonoBehaviour
     [Header("Behaviour")]
     public EnemyBehaviour behaviour;
 
+    [Header("Stats")]
+    public EnemyStats stats;
+
     [Header("Target")]
     public Transform target;
 
-    [Header("Ranges")]
-    public float aggroRange = 25f;
-    public float attackRange = 2.0f;
-    public float stopRange = 1.8f;
-
-    [Header("Chase")]
-    public float repathRateHz = 10f;
-
-    [Header("Facing")]
-    public bool faceTargetWhenStopped = true;
-    public float faceTurnSpeed = 12f;
-
-    [Header("Combat")]
+    [Header("Projectile")]
     public Transform firePoint;
-    public float fireRate = 3f;
-    public int damage = 10;
+    public Projectile projectilePrefab;
+    public LayerMask projectileHitMask = ~0;
 
-    [Header("Ranged Spacing")]
-    public float preferredRange = 12f;
-    public float rangeTolerance = 2f;
+    [Header("Sounds")]
+    public EventReference attack;
 
     EnemyStateMachine fsm;
     EnemyContext ctx;
@@ -41,63 +33,59 @@ public class EnemyBrain : MonoBehaviour
 
         if (!target)
         {
-            var go = GameObject.FindGameObjectWithTag("Player");
-            if (go) target = go.transform;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player) target = player.transform;
         }
 
         ctx = new EnemyContext(
             self: transform,
             agent: agent,
             target: target,
-            aggroRange: aggroRange,
-            attackRange: attackRange,
-            stopRange: stopRange,
-            repathRateHz: repathRateHz,
-            faceTargetWhenStopped: faceTargetWhenStopped,
-            faceTurnSpeed: faceTurnSpeed
+            firePoint: firePoint,
+            projectilePrefab: projectilePrefab,
+            projectileHitMask: projectileHitMask,
+            stats: stats,
+            OnAttack: HandleAttack
         );
 
         fsm = new EnemyStateMachine();
+        ApplyStatsToAgent();
+    }
+
+    private void HandleAttack()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(attack, gameObject.transform.position);
     }
 
     void OnEnable()
     {
-        if (!behaviour)
+        if (!behaviour || !stats)
         {
-            Debug.LogError($"{name}: No EnemyBehaviour assigned #stupidbitch");
+            Debug.LogError($"{name}: Missing EnemyBehaviour or EnemyStats.");
+            enabled = false;
             return;
         }
+
         fsm.SetState(behaviour.CreateInitialState(ctx, fsm));
     }
 
     void Update()
     {
         ctx.target = target;
-        ctx.aggroRange = aggroRange;
-        ctx.attackRange = attackRange;
-        ctx.stopRange = stopRange;
-        ctx.repathRateHz = repathRateHz;
-        ctx.faceTargetWhenStopped = faceTargetWhenStopped;
-        ctx.faceTurnSpeed = faceTurnSpeed;
-
         ctx.firePoint = firePoint;
-        ctx.fireRate = fireRate;
-        ctx.damage = damage;
+        ctx.projectilePrefab = projectilePrefab;
+        ctx.projectileHitMask = projectileHitMask;
+        ctx.stats = stats;
 
-        ctx.preferredRange = preferredRange;
-        ctx.rangeTolerance = rangeTolerance;
-
+        ApplyStatsToAgent();
         fsm.Tick(Time.deltaTime);
     }
 
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
+    void ApplyStatsToAgent()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, aggroRange);
+        if (!agent || stats == null) return;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        agent.speed = stats.moveSpeed * (stats.type == EnemyType.LADY ? StatModManager.GetStatModifier(StatName.LADY_MOVEMENT_SPEED) : StatModManager.GetStatModifier(StatName.DOG_MOVEMENT_SPEED));
+        agent.stoppingDistance = stats.stopRange;
     }
-#endif
 }

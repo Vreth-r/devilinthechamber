@@ -5,6 +5,8 @@ using FMOD.Studio;
 using Unity.Mathematics;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,13 +16,16 @@ public class GameManager : MonoBehaviour
     public bool bulletRestoreMod = false;
 
     public float enemyProjectileSpeedMod = 1f;
-    public GameObject pauseMenu;
+    public int numBullets = 0;
     public bool gamePaused;
     public PlayerControls controls;
+    public InputDevice lastInputDevice;
     List<GameObject> cathedralEnemies = new List<GameObject>();
 
     public EventReference musicLoop;
     private EventInstance _musicInstance;
+
+    public bool gameOverFlag = false;
     void Awake()
     {
         if (Instance == null)
@@ -28,13 +33,14 @@ public class GameManager : MonoBehaviour
 
         Scene scene = SceneManager.GetActiveScene();
 
-        if (scene.name == "DITC_level1.0")
+        if (scene.name == "DITC_level2.0")
         {
             cathedralEnemies.AddRange(GameObject.FindGameObjectsWithTag("Cathedral Enemy"));
         }
         controls = new PlayerControls();
         controls.Player.Enable();
-        //DontDestroyOnLoad(this);
+        controls.UI.Disable();
+        SetControlContextUpdate();
     }
 
     void Start()
@@ -44,21 +50,30 @@ public class GameManager : MonoBehaviour
             _musicInstance = RuntimeManager.CreateInstance(musicLoop);
             _musicInstance.start();
         }
+        StatModManager.ResetStatMods();
+        AbilityModManager.ResetAbilities();
+        Time.timeScale = 1f;
+        SetInputMap(true);
+    }
+
+    void Update()
+    {
+        if(gameOverFlag)
+        {
+            Lose();
+        }
+    }
+
+    async void Lose()
+    {
+        StopMusic();
+        await SceneFader.Instance.FadeToScene("GameOver");
     }
 
     public void StopMusic()
     {
         _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _musicInstance.release();
-    }
-
-    void Update()
-    {
-        if (controls.Player.Pause.WasPressedThisFrame())
-        {
-            if (pauseMenu != null)
-                Instantiate(pauseMenu);
-        }
     }
 
     public void enemyKilled (GameObject enemy)
@@ -75,12 +90,29 @@ public class GameManager : MonoBehaviour
         if (cathedralEnemies.Contains(enemy)) cathedralEnemies.Remove(enemy);
     }
 
-    public void WinCheck()
+    public async void WinCheck()
     {
         Debug.Log(cathedralEnemies.Count);
         if (cathedralEnemies.Count <= 0)
         {
-            SceneFader.Instance.FadeToScene("Credits-Animation");
+            StopMusic();
+            await SceneFader.Instance.FadeToScene("Credits-Animation");
+        }
+    }
+
+    public void SetInputMap(bool gameplay)
+    {
+        if (controls == null) return;
+
+        if (gameplay)
+        {
+            controls.UI.Disable();
+            controls.Player.Enable();
+        }
+        else
+        {
+            controls.Player.Disable();
+            controls.UI.Enable();
         }
     }
 
@@ -96,84 +128,18 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Too many negative deals {statName}");
     }
 
-    // not good! idk where to put this lol
-    // MOVEMENT_SPEED,
-    // DAMAGE_OUTPUT,
-    // FIRE_SPEED,
-    // RELOAD_SPEED,
-    // MAGAZINE_SIZE,
-    // JUMP_HEIGHT,
-    // SLIDE_DISTANCE,
-    // HEADSHOT_BONUS,
-    // LADY_PROJECTILE_SPEED,
-    // DOG_RECOVERY_SPEED
-    public void SetStatMod(StatName stat)
+
+    void SetControlContextUpdate ()
     {
-        switch (stat)
-        {
-            case StatName.MOVEMENT_SPEED:
-                PlayerManager.Instance.playerMotor.movementSpeedMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.DAMAGE_OUTPUT:
-                PlayerManager.Instance.gunHitscan.damageMod = StatModManager.GetStatModifier(stat);
-
-                return;
-
-            case StatName.FIRE_SPEED:
-                PlayerManager.Instance.gunHitscan.fireRate = StatModManager.GetStatModifier(stat);
-                return;
-            
-            case StatName.RELOAD_SPEED:
-                PlayerManager.Instance.gunHitscan.reloadSpeedMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.MAGAZINE_SIZE:
-                PlayerManager.Instance.gunHitscan.magazineSizeMod = (int)StatModManager.GetStatModifier(stat);
-                PlayerManager.Instance.gunHitscan.currentMagazine = math.min(PlayerManager.Instance.gunHitscan.currentMagazine + PlayerManager.Instance.gunHitscan.magazineSizeMod, PlayerManager.Instance.gunHitscan.magazineSize + PlayerManager.Instance.gunHitscan.magazineSizeMod);
-                PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
-                return;
-
-            case StatName.PERMA_HEALTH:
-                PlayerManager.Instance.health.maxHealthMod = (int)StatModManager.GetStatModifier(stat);
-                PlayerManager.Instance.health.currentHealth += (int)StatModManager.GetStatModifier(stat);
-                PlayerManager.Instance.health.ForceUpdateHealth();
-                return;
-                
-            case StatName.JUMP_HEIGHT:
-                PlayerManager.Instance.playerMotor.jumpHeightMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.SLIDE_DISTANCE:
-                PlayerManager.Instance.playerMotor.slideDistMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.SLIDE_SPEED:
-                PlayerManager.Instance.playerMotor.slideSpeedMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.SLIDE_COOLDOWN:
-                PlayerManager.Instance.playerMotor.slideCooldownMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.HEADSHOT_BONUS:
-                PlayerManager.Instance.gunHitscan.headShotDamageMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.BULLET_RANGE:
-                PlayerManager.Instance.gunHitscan.rangeMod = StatModManager.GetStatModifier(stat);
-                return;
-
-            case StatName.LADY_MOVEMENT_SPEED:
-                Debug.Log("enemy sat");
-                return;
-
-            case StatName.DOG_MOVEMENT_SPEED:
-                Debug.Log("enemy sat");
-                return;
-            
-            default:
-                break;
-        }
+        controls.Player.Crouch.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.DrainWP.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Fire.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Jump.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Look.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Reload.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Pause.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.Player.Move.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.UI.UIMove.performed += ctx => lastInputDevice = ctx.control.device;
+        controls.UI.UISelect.performed += ctx => lastInputDevice = ctx.control.device;
     }
 }

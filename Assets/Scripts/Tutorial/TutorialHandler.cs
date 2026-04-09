@@ -16,16 +16,16 @@ public class TutorialHandler : MonoBehaviour
     bool dialogueStarted = false;
     bool dealTakenDialogueStarted = false;
 
+
+
     public Image whiteImage;
 
     bool devilIgnored = false;
 
-    public
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controls = new PlayerControls();
-        controls.Player.Enable();
+        controls = GameManager.Instance.controls;
     }
 
     // Update is called once per frame
@@ -74,7 +74,10 @@ public class TutorialHandler : MonoBehaviour
         //whiteImage.DOFade(1f, 2f);
         controls.Player.Disable();
         GameManager.Instance.controls.Player.Disable();
-        await SceneFader.Instance.FadeToScene("DITC_level1.0");
+        await SceneFader.Instance.FadeToScene("DITC_level2.0");
     }
-
+    async void SkipTutorial()
+    {
+        await SceneFader.Instance.FadeToScene("DITC_level2.0");
+    }
 }

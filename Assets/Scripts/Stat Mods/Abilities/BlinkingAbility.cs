@@ -1,31 +1,36 @@
 using UnityEngine;
 using System.Collections;
+//using UnityEditor.ShaderGraph.Internal;
 
 public class BlinkingAbility : AbilityBase
 {
-    public override void initialize (float duration)
+    public override void startFunction()
     {
-        abilityName = AbilityName.BLINKING;
-        this.duration = duration;
-    }
-    public override bool startFunction()
-    {
-        float t = Random.Range(2, 5);
+        //float t = CalculateBlinkTime();
+        float t = Random.Range(0.5f, 2.5f);
         TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), t, DoBlink);
-        Debug.Log($"START: {abilityName}");
-        return true;
+        base.startFunction();
     }
-    bool DoBlink ()
+    void DoBlink ()
     {
         UIEvents.DoBlink();
-        float t = Random.Range(2, 5);
+        //float t = CalculateBlinkTime();
+        float t = Random.Range(0.5f, 2.5f);
         TimerHandler.Instance.CreateTimerHandle(abilityName.ToString(), t, DoBlink);
-        return true;
     }
 
-    public override bool endFunction()
+    float CalculateBlinkTime ()
     {
-        Debug.Log($"STOP: {abilityName}");
-        return true;
+        float minBlinkInterval = 0.5f;
+        float maxBlinkInterval = 2.5f;
+        float speedPerc;
+        if (PlayerManager.Instance.playerMotor.GetComponent<CharacterController>().isGrounded)
+            speedPerc = PlayerManager.Instance.playerMotor.PlanarVelocity.magnitude / PlayerManager.Instance.playerMotor.maxGroundSpeed;
+        else
+            speedPerc = PlayerManager.Instance.playerMotor.PlanarVelocity.magnitude / PlayerManager.Instance.playerMotor.maxAirSpeed;
+
+        speedPerc = 1 - speedPerc;
+        return Mathf.Lerp(minBlinkInterval, maxBlinkInterval, speedPerc);
+        
     }
 }

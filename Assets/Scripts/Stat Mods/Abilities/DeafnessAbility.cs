@@ -1,26 +1,18 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public class DeafnessAbility : AbilityBase
 {
-    private float normalGameplayVolume;
-    public override void initialize (float duration)
+    public override void startFunction()
     {
-        abilityName = AbilityName.DEAFNESS;
-        this.duration = duration;
+        RuntimeManager.GetBus("bus:/").setVolume(0);
+        base.startFunction();
     }
-    public override bool startFunction()
+    public override void endFunction()
     {
-        //normalGameplayVolume = AudioManager.Instance.gameplayVolume;
-        //AudioManager.Instance.SetGameplayVolume(0f);
-        Debug.Log($"START: {abilityName}");
-        return true;
-    }
-
-    public override bool endFunction()
-    {
-        //AudioManager.Instance.SetGameplayVolume(normalGameplayVolume);
-        //Debug.Log($"STOP: {abilityName}");
-        return true;
+        RuntimeManager.GetBus("bus:/").setVolume(1f);
+        base.endFunction();
     }
 }
 

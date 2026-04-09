@@ -69,9 +69,11 @@ public class CheckpointManager : MonoBehaviour
         }
 
         PlayerManager.Instance.gunHitscan.currentMagazine = checkpointData.currentMag;
-        PlayerManager.Instance.health.currentHealth = checkpointData.currentHealth;
-        PlayerManager.Instance.gunHitscan.ForceUpdateMagazine();
+        PlayerManager.Instance.health.currentHealth = PlayerManager.Instance.health.maxHealth;
+        PlayerManager.Instance.willpower.currentWillpower = PlayerManager.Instance.willpower.maxWillpower;
+        UIEvents.UpdateAmmo();
         PlayerManager.Instance.health.ForceUpdateHealth();
+        UIEvents.ForceHUDRefresh();
     }
 
     public IEnumerator PauseLook ()
@@ -80,4 +82,6 @@ public class CheckpointManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         PlayerManager.Instance.playerLook.enabled = true;
     }
+
+    
 }

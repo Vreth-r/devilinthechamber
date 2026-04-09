@@ -87,3 +87,50 @@
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.15);
 }
+
+.fill {
+    flex-direction: row;
+    width: 100%;
+    height: 20px;
+}
+
+.fill-left {
+    justify-content: flex-end;
+    align-items: stretch;
+    align-content: flex-start;
+    bottom: auto;
+    flex-direction: column;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    overflow: visible;
+    font-size: 0;
+}
+
+.bullet-img {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/UI/Assets/BulletStyled2.png?fileID=2800000&guid=9134596d0a48ed9589227a2ba8166c44&type=3#BulletStyled2");
+    background-color: rgba(255, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: 62px;
+    height: 35px;
+    background-position-x: center;
+    background-position-y: center;
+    align-items: stretch;
+    align-self: center;
+}
+
+.health-bar {
+    flex-grow: 0.025;
+    justify-content: flex-start;
+    align-self: center;
+    align-content: auto;
+    align-items: stretch;
+    flex-shrink: 1;
+    flex-direction: column;
+    background-color: rgb(179, 0, 0);
+    width: 60%;
+    background-image: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}

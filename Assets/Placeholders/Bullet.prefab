@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3409973013541317194}
   - component: {fileID: 5317248636711527586}
   - component: {fileID: 4014207836176115268}
-  - component: {fileID: 6755529254949167870}
   - component: {fileID: 6873007495049795472}
   - component: {fileID: 2021965342627534742}
+  - component: {fileID: -1832351022036954224}
+  - component: {fileID: 2903768144295393680}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -30,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 5441187341332188329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01973, y: 4.72777, z: 2.844}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -92,27 +93,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6755529254949167870
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5441187341332188329}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6873007495049795472
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +112,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -153,10 +133,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 2
+  speed: 25
+  lifetime: 3000
   hitMask:
     serializedVersion: 2
-    m_Bits: 576
-  speed: 25
-  useGravity: 0
-  lifetime: 3
-  impactPrefab: {fileID: 0}
+    m_Bits: 577
+  impactPrefab: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
+  travelSound:
+    Guid:
+      Data1: -2140012493
+      Data2: 1143671684
+      Data3: 1744394628
+      Data4: 1728046534
+    Path: event:/SFX/NunBulletTravel
+--- !u!114 &-1832351022036954224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441187341332188329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e71fe8823c6864985038ce3547d64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextureScroller
+  scrollX: 1
+  scrollSpeedX: 1
+  scrollY: 1
+  scrollSpeedY: 1
+--- !u!65 &2903768144295393680
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441187341332188329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

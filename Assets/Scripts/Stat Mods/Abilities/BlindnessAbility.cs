@@ -2,22 +2,15 @@ using UnityEngine;
 
 public class BlindnessAbility : AbilityBase
 {
-    public override void initialize (float duration)
+    public override void startFunction()
     {
-        abilityName = AbilityName.BLINDNESS;
-        this.duration = duration;
-    }
-    public override bool startFunction()
-    {
-        UIEvents.SetBlind(true);
-        Debug.Log($"START: {abilityName}");
-        return true;
+        base.startFunction();
+        UIEvents.SetIsBlind(true);
     }
 
-    public override bool endFunction()
+    public override void endFunction()
     {
-        UIEvents.SetBlind(false);
-        Debug.Log($"STOP: {abilityName}");
-        return true;
+        base.endFunction();
+        UIEvents.SetIsBlind(false);
     }
 }

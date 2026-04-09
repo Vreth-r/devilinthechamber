@@ -2,21 +2,14 @@ using UnityEngine;
 
 public class OneEyedAbility : AbilityBase
 {
-    public override void initialize (float duration)
+    public override void startFunction()
     {
-        abilityName = AbilityName.ONE_EYED;
-        this.duration = duration;
-    }
-    public override bool startFunction()
-    {
-        UIEvents.OneEye();
+        UIEvents.SetOneEyed();
         Debug.Log($"START: {abilityName}");
-        return true;
     }
 
-    public override bool endFunction()
+    public override void endFunction()
     {
         Debug.Log($"STOP: {abilityName}");
-        return true;
     }
 }

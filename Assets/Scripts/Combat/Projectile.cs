@@ -1,72 +1,95 @@
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Damage")]
     public int damage = 10;
-    public LayerMask hitMask = ~0;
-
-    [Header("Motion")]
     public float speed = 25f;
-    public bool useGravity = false;
+    public float lifetime = 3f;
+    public LayerMask hitMask;
 
-    [Header("Lifetime")]
-    public float lifetime = 5f;
-
-    [Header("Impact FX (optional)")]
     public GameObject impactPrefab;
 
-    Rigidbody rb;
-    float dieAt;
+    [Header("Sound")]
+    public EventReference travelSound;
+    private EventInstance travelInstance;
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-    }
+    private Vector3 direction;
+    private Vector3 lastPosition;
 
-    public void Launch(Vector3 position, Vector3 direction, float speedOverride = -1f)
+    public void Launch(Vector3 position, Vector3 dir, float speedOverride = -1f)
     {
         transform.position = position;
-        transform.rotation = Quaternion.LookRotation(direction);
+        direction = dir.normalized;
 
-        float spd = speedOverride > 0f ? speedOverride : speed;
-        rb.useGravity = useGravity;
-        rb.linearVelocity = direction.normalized * spd;
+        if (speedOverride > 0f)
+            speed = speedOverride;
 
-        dieAt = Time.time + lifetime;
-        gameObject.SetActive(true);
+        lastPosition = position;
+
+        if (!travelSound.IsNull)
+        {
+            travelInstance = RuntimeManager.CreateInstance(travelSound);
+            RuntimeManager.AttachInstanceToGameObject(travelInstance, gameObject);
+            travelInstance.start();
+        }
+
+        Destroy(gameObject, lifetime);
     }
 
     void Update()
     {
-        if (Time.time >= dieAt)
-            Destroy(gameObject);
+        float step = speed * Time.deltaTime;
+        Vector3 newPosition = transform.position + direction * step;
+
+        RaycastHit[] hits = Physics.RaycastAll(lastPosition, direction, step, hitMask);
+
+        if (hits.Length > 0)
+        {
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+            foreach (var hit in hits)
+            {
+                OnHit(hit);
+                return;
+            }
+        }
+
+        transform.position = newPosition;
+        lastPosition = newPosition;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnHit(RaycastHit hit)
     {
-        var col = collision.collider;
+        IDamageable dmg = hit.collider.GetComponentInParent<IDamageable>();
 
-        Vector3 hitPoint = collision.GetContact(0).point;
-        Vector3 hitNormal = collision.GetContact(0).normal;
-
-        var dmg =
-            col.GetComponentInParent<IDamageable>() ??
-            col.GetComponent<IDamageable>() ??
-            col.transform.root.GetComponentInChildren<IDamageable>();
-
-        if (dmg != null && damage > 0)
-            dmg.TakeDamage(damage, hitPoint, hitNormal);
+        if (dmg != null)
+        {
+            dmg.TakeDamage(damage, hit.point, hit.normal);
+        }
 
         if (impactPrefab)
         {
-            var fx = Instantiate(impactPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
-            Destroy(fx, 2f);
+            Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         }
 
+        StopSound();
+        GameManager.Instance.numBullets--;
         Destroy(gameObject);
+    }
+
+    void StopSound()
+    {
+        if (travelInstance.isValid())
+        {
+            travelInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            travelInstance.release();
+        }
+    }
+
+    void OnDestroy()
+    {
+        StopSound();
     }
 }

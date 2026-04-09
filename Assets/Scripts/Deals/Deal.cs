@@ -6,19 +6,19 @@ public class StatMod
 {
     public StatName statName;
     public float modifier;
-    public DealType dealType;
 }
 [System.Serializable]
 public class Ability
 {
     public AbilityName AbilityName;
     public float duration;
-    public DealType dealType;
 }
 
 [CreateAssetMenu(menuName = "Deals/Deal")]
 public class Deal : ScriptableObject
 {
+    public string dealName;
+    public string dealDescription;
     public List<StatMod> statDeals;
     public List<Ability> abilityDeals;
 
@@ -31,13 +31,10 @@ public class Deal : ScriptableObject
 
         foreach (Ability abilityDeal in abilityDeals)
         {
-            if (abilityDeal.AbilityName == AbilityName.DEATH)
-            {
-                // do thing
-                PlayerManager.Instance.health.Die(false);
-                return;
-            }
             AbilityModManager.StartAbility(abilityDeal.AbilityName, abilityDeal.duration);
+            AbilityModManager.abilityFlags[abilityDeal.AbilityName] = true;
         }
+        Debug.Log($"START: {dealName}");
+        DeckManager.Instance.AddToChosenDeals(this);
     }
 }

@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public GunHitscan gunHitscan;
     public PlayerHealth health;
     public CharacterController controller;
+    public PlayerWillpower willpower;
 
     void Awake()
     {
@@ -17,5 +18,6 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
 
         controller = gameObject.GetComponent<CharacterController>();
+        gunHitscan = GetComponentInChildren<GunHitscan>();
     }
 }

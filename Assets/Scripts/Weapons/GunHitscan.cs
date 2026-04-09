@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using FMODUnity;
 using FMOD.Studio;
+using System;
+using Unity.VisualScripting;
 
 public class GunHitscan : MonoBehaviour
 {
@@ -14,27 +16,22 @@ public class GunHitscan : MonoBehaviour
     [Header("Sound")]
     public EventReference gunshot;
     public EventReference reload;
+    public EventReference jam;
+    public EventReference headshot;
+    public EventReference hitSound;
+    public EventReference missSound;
 
     [Header("Fire")]
     public float fireRate = 3f;
     public float range = 120f;
-    public float rangeMod = 1f;
     public int damage = 25;
     public float headShotDamageBonus = 2f;
-    public float fireRateMod = 1f; // stat mods
-    public float damageMod = 1f; // stat mods
-    public float headShotDamageMod = 1f; // stat mods
 
-    public int magazineSize = 3;
-    public int currentMagazine = 3;
-    public int magazineSizeMod = 0; // stat mods
+    public int magazineSize = 10;
+    public int currentMagazine = 10;
 
     public bool reloading = false;
     public float reloadSpeed = 1.25f;
-    public float reloadSpeedMod = 1f; // stat mods
-    public bool autoFireMod = false; // stat mods
-    public bool aoeOnReload = false;
-    public bool ddLowHPMod = false;
 
 
     [Header("FX")]
@@ -48,79 +45,153 @@ public class GunHitscan : MonoBehaviour
     PlayerControls controls;
     float nextFireTime;
 
-    void Awake() => controls = new PlayerControls();
-    void OnEnable() => controls.Player.Enable();
-    void OnDisable() => controls.Player.Disable();
+    public int consecutiveJams = 0;
+
     void Start()
     {
-        UIEvents.SetAmmo(currentMagazine, magazineSize);
+        controls = GameManager.Instance.controls;
+        UIEvents.SetAmmo();
     }
 
     void Update()
     {
         if (GameManager.Instance.gamePaused) return;
         
-        if (controls.Player.Reload.IsPressed() && !reloading)
+        if (AbilityModManager.abilityFlags[AbilityName.RELOAD] && controls.Player.Reload.IsPressed() && !reloading)
         {
             //PlayerManager.Instance.health.Die(true);
             StartCoroutine(Reload());
         }
-        if ((controls.Player.Fire.IsPressed() || autoFireMod) && Time.time >= nextFireTime && !reloading)
+        if ((controls.Player.Fire.IsPressed() || AbilityModManager.abilityFlags[AbilityName.FULL_AUTO]) && Time.time >= nextFireTime && !reloading)
         {
-            nextFireTime = Time.time + (1f / (fireRate * fireRateMod));
-            Fire();
+            nextFireTime = Time.time + (1f / (fireRate * StatModManager.GetStatModifier(StatName.FIRE_SPEED)));
+            if (AbilityModManager.abilityFlags[AbilityName.IN_A_JAM] && UnityEngine.Random.value <= 0.2)
+            {
+                animator.SetTrigger("Jam");
+                RuntimeManager.PlayOneShotAttached(jam, gameObject);
+                consecutiveJams++;
+            }
+            else
+                Fire();
         }
     }
 
-    public void ForceUpdateMagazine ()
-    {
-        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
-    }
 
-    void Fire()
+    void Fire(float offset = 0)
     {
         if (reloading) return;
         if (!cam) cam = Camera.main;
 
+        bool hitEnemy = false;
+
+
         Ray aimRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 aimPoint;
-        if (Physics.Raycast(aimRay, out RaycastHit aimHit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
-            aimPoint = aimHit.point;
-        else
-            aimPoint = aimRay.origin + aimRay.direction * range * rangeMod;
 
-        Vector3 origin = muzzle.position;
-        Vector3 dir = (aimPoint - origin).normalized;
+        Vector3 right = Camera.main.transform.right;
 
-        Vector3 endPoint = origin + dir * range * rangeMod;
+        aimPoint = aimRay.origin + aimRay.direction * 
+                    (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] 
+                    ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) 
+                    : 100000)
+                + right * offset;
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, range * rangeMod, hitMask, QueryTriggerInteraction.Ignore))
+        Vector3 gunOrigin = muzzle.position;
+        Vector3 camOrigin = cam.transform.position;
+        Vector3 dir = (aimPoint - camOrigin).normalized;
+
+        Vector3 endPoint = camOrigin + dir * (AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000); // Magic 2!
+        Vector3 hitPoint = endPoint;
+
+        RaycastHit[] hits = Physics.RaycastAll(camOrigin, dir, AbilityModManager.abilityFlags[AbilityName.BULLET_RANGED] ? range * StatModManager.GetStatModifier(StatName.BULLET_RANGE) : 100000, hitMask, QueryTriggerInteraction.Ignore);
+
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (var hit in hits)
         {
-            endPoint = hit.point;
-
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
+            bool isHeadshot = hit.collider.CompareTag("EnemyHead");
             if (dmg != null)
             {
-                if (ddLowHPMod && PlayerManager.Instance.health.currentHealth <= 2)
-                    dmg.TakeDamage((int)(damage * damageMod * 2), hit.point, hit.normal);
-                else
-                    dmg.TakeDamage((int)(damage * damageMod), hit.point, hit.normal);
-                
+                hitEnemy = true;
+                hitPoint = hit.point;
+                int finalDamage = (int)(damage * StatModManager.GetStatModifier(StatName.DAMAGE_OUTPUT));
+
+                if (AbilityModManager.abilityFlags[AbilityName.DOUBLE_DAMAGE_OUTPUT_LOW_HP] &&
+                    PlayerManager.Instance.health.currentHealth <= 0.15f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                    finalDamage *= 2;
+
+                if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_BONUS_LOW_HEALTH] &&
+                    PlayerManager.Instance.health.currentHealth <= 0.15f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                    finalDamage = (int)(finalDamage * 1.15f);
+
+                if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_BONUS_HIGH_HEALTH] &&
+                    PlayerManager.Instance.health.currentHealth >= 0.75f *
+                    (PlayerManager.Instance.health.maxHealth + StatModManager.GetStatModifier(StatName.PERMA_HEALTH)))
+                    finalDamage = (int)(finalDamage * 1.25f);
+
+                if (UnityEngine.Random.value <= StatModManager.GetStatModifier(StatName.CRITICAL_HIT_CHANCE)) finalDamage *= 2;
+
+                if (AbilityModManager.abilityFlags[AbilityName.NEAR_SIGHTED] && Vector3.Distance(hit.point, cam.transform.position) >= 8) finalDamage = (int)(finalDamage * 1.5);
+
+                finalDamage = (int)(finalDamage * (1 + consecutiveJams * 0.2));
+                consecutiveJams = 0;
+
+                if (isHeadshot)
+                {
+                    finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
+                    Debug.Log("HEADSHOT");
+                    RuntimeManager.PlayOneShotAttached(headshot, gameObject);
+                }
+
+                if ((AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) || !AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS])
+                {
+                    if(!isHeadshot)
+                    {
+                        RuntimeManager.PlayOneShotAttached(hitSound, gameObject);
+                    }
+                    dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                }
+
+                if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
+                {
+                    endPoint = hit.point;
+                    break;
+                }
             }
+
+            endPoint = hit.point;
+            hitPoint = hit.point;
         }
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
         RuntimeManager.PlayOneShotAttached(gunshot, gameObject);
+        if(!hitEnemy)
+        {
+            RuntimeManager.PlayOneShot(missSound, hitPoint);
+        }
         animator.SetTrigger("Fire");
-        animator.speed = fireRate * fireRateMod;
+        animator.speed = fireRate * StatModManager.GetStatModifier(StatName.FIRE_SPEED);
 
-        if (tracerPrefab) SpawnTracer(origin, endPoint);
+        if (tracerPrefab) SpawnTracer(gunOrigin, endPoint);
 
-        currentMagazine -= 1;
-        UIEvents.SetAmmo(currentMagazine, magazineSize);
-        if (currentMagazine == 0) StartCoroutine(Reload());
+        if (AbilityModManager.abilityFlags[AbilityName.THREE_GUNS_IN_ONE] && offset == 0)
+        {
+            Fire(-5);
+            Fire(5);
+        }
+
+        if (AbilityModManager.abilityFlags[AbilityName.INFINITE_MAG]) return;
+        if (AbilityModManager.abilityFlags[AbilityName.RELOAD])
+        {
+            currentMagazine -= 1;
+            UIEvents.SetAmmo();
+            if (currentMagazine == 0) StartCoroutine(Reload());   
+        }
     }
 
     IEnumerator FlashLight()
@@ -153,23 +224,28 @@ public class GunHitscan : MonoBehaviour
 
     IEnumerator Reload()
     {
-        if (currentMagazine == magazineSize + magazineSizeMod) yield break;
+        if (currentMagazine == magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE)) yield break;
         RuntimeManager.PlayOneShotAttached(reload, gameObject);
         reloading = true;
         animator.SetTrigger("Reload");
-        animator.speed = reloadSpeed * reloadSpeedMod;
-        yield return new WaitForSeconds(reloadSpeed / reloadSpeedMod);
-        if (aoeOnReload)
-        {
-            RaycastHit hit;
-            if (Physics.SphereCast(gameObject.transform.position, 10, Vector3.zero, out hit))
-            {   
-            }
-            Debug.Log("boom!");
-        }
+        animator.speed = reloadSpeed * StatModManager.GetStatModifier(StatName.RELOAD_SPEED);
+        currentMagazine = magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE);
+        UIEvents.SetAmmo();
+        yield return new WaitForSeconds(reloadSpeed / StatModManager.GetStatModifier(StatName.RELOAD_SPEED));
+
         animator.speed = 1;
-        currentMagazine = magazineSize + magazineSizeMod;
-        UIEvents.SetAmmo(currentMagazine, magazineSize + magazineSizeMod);
+        
         reloading = false;
+        PlayerManager.Instance.willpower.AddWillpower(2);
+        if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_ON_RELOAD])
+        {
+            PlayerManager.Instance.health.TakeDamage(5, Vector3.zero, Vector3.zero);
+        }
+    }
+
+    public void AddBulletToMagazine ()
+    {
+        if (currentMagazine == magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE)) return;
+        currentMagazine += 1;
     }
 }

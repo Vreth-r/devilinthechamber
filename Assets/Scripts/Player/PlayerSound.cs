@@ -8,9 +8,12 @@ public class PlayerSound : MonoBehaviour
 {
     [Header("FMOD")]
     public EventReference footstepEvent;
+    public EventReference balloonstepEvent;
     public EventReference slide;
     public EventReference land;
+    public EventReference balloonLand;
     public EventReference jump;
+    public EventReference balloonJump;
     public EventReference playerDamage;
 
     [Header("When to play")]
@@ -47,6 +50,11 @@ public class PlayerSound : MonoBehaviour
 
     void Update()
     {
+        // holy jank
+        if (DealMenu.Instance.dealMenuOpen)
+        {
+            StopSlideLoop(immediate: false);
+        }
         // Only in Stand stance
         if (!motor.IsStanding) { timer = 0f; return; }
 
@@ -72,8 +80,16 @@ public class PlayerSound : MonoBehaviour
 
     void PlayFootstep()
     {
-        if (footstepEvent.IsNull) return;
-        RuntimeManager.PlayOneShotAttached(footstepEvent, gameObject);
+        if(AbilityModManager.abilityFlags[AbilityName.BALLOON_SHOES])
+        {
+            if (balloonstepEvent.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(balloonstepEvent, gameObject);
+        }
+        else
+        {
+            if (footstepEvent.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(footstepEvent, gameObject);
+        }
     }
 
     public void StartSlideLoop()
@@ -99,19 +115,35 @@ public class PlayerSound : MonoBehaviour
 
     public void PlayJump()
     {
-        if (jump.IsNull) return;
-        RuntimeManager.PlayOneShotAttached(jump, gameObject);
+        if(AbilityModManager.abilityFlags[AbilityName.BALLOON_SHOES])
+        {
+            if (balloonJump.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(balloonJump, gameObject);
+        }
+        else
+        {
+            if (jump.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(jump, gameObject);
+        }
     }
 
     public void PlayLand()
     {
-        if (jump.IsNull) return;
-        RuntimeManager.PlayOneShotAttached(land, gameObject);
+        if(AbilityModManager.abilityFlags[AbilityName.BALLOON_SHOES])
+        {
+            if (balloonLand.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(balloonLand, gameObject);
+        }
+        else
+        {
+            if (land.IsNull) return;
+            RuntimeManager.PlayOneShotAttached(land, gameObject);
+        }
     }
 
     public void PlayPlayerDamage()
     {
-        if (jump.IsNull) return;
+        if (playerDamage.IsNull) return;
         RuntimeManager.PlayOneShotAttached(playerDamage, gameObject);
     }
 }
