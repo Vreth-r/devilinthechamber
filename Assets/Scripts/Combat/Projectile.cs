@@ -75,6 +75,7 @@ public class Projectile : MonoBehaviour
         }
 
         StopSound();
+        GameManager.Instance.numBullets--;
         Destroy(gameObject);
     }
 

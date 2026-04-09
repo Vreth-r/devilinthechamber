@@ -102,6 +102,7 @@ public class MainMenu : MonoBehaviour {
     {
         if (buttonIndex == 0)
         {
+            Debug.Log("st");
             startGame();
             DeselectAll();
         }
