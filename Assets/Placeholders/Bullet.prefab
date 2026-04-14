@@ -117,9 +117,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!114 &2021965342627534742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   lifetime: 3000
   hitMask:
     serializedVersion: 2
-    m_Bits: 577
+    m_Bits: 576
   impactPrefab: {fileID: 1603058003251038469, guid: f41b461d9de93364b97fdd277c747097, type: 3}
   travelSound:
     Guid:
@@ -177,7 +177,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

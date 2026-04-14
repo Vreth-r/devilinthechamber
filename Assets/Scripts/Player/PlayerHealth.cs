@@ -92,4 +92,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {   
         CheckpointManager.Instance.RespawnPlayer(gameObject);
     }
+
+    void OnDestroy()
+    {
+        // un sub to stop crash (idk why its only this one tho)
+        UIEvents.DeathAnimFinished -= DiePart2;        
+    }
 }

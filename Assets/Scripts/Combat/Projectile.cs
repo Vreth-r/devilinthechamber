@@ -42,7 +42,6 @@ public class Projectile : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         Vector3 newPosition = transform.position + direction * step;
-
         RaycastHit[] hits = Physics.RaycastAll(lastPosition, direction, step, hitMask);
 
         if (hits.Length > 0)
@@ -55,13 +54,13 @@ public class Projectile : MonoBehaviour
                 return;
             }
         }
-
         transform.position = newPosition;
         lastPosition = newPosition;
     }
 
     void OnHit(RaycastHit hit)
     {
+        Debug.Log("Raycast Hit");
         IDamageable dmg = hit.collider.GetComponentInParent<IDamageable>();
 
         if (dmg != null)

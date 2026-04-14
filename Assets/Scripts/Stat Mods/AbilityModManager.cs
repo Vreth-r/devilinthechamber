@@ -59,7 +59,8 @@ public enum AbilityName {
     FROG_LEGS,
     IN_A_JAM
 }
-public class AbilityModManager {
+public class AbilityModManager
+{
 
     // all abilities
     public static Dictionary<AbilityName, AbilityBase> abilities = new Dictionary<AbilityName, AbilityBase> ()

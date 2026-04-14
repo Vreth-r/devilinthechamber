@@ -230,8 +230,7 @@ public class EnemyRangedKiteState : IEnemyState
         anim?.PlayShoot();
         ctx.OnAttack?.Invoke();
 
-        float finalSpeed = ctx.stats.projectileSpeed * 
-            StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
+        float finalSpeed = ctx.stats.projectileSpeed * StatModManager.GetStatModifier(StatName.LADY_PROJECTILE_SPEED);
             
         Vector3 origin = ctx.firePoint.position + ctx.firePoint.forward * 1.0f;
         Vector3 direction = (ctx.target.position - ctx.firePoint.position).normalized;

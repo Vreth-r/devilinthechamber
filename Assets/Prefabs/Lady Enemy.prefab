@@ -575,7 +575,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2021965342627534742, guid: db797da0c4add054cbdacd339989c817, type: 3}
   projectileHitMask:
     serializedVersion: 2
-    m_Bits: 577
+    m_Bits: 576
   attack:
     Guid:
       Data1: -156298646

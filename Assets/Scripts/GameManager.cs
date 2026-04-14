@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
     public int enemiesKilled = 0;
 
     public bool bulletRestoreMod = false;
-
-    public float enemyProjectileSpeedMod = 1f;
     public int numBullets = 0;
     public bool gamePaused;
     public PlayerControls controls;

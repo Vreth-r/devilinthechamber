@@ -1,13 +1,16 @@
+using System.Threading.Tasks;
 using UnityEngine;
 public class DeathAbility : AbilityBase
 {
     public override void startFunction()
     {
         base.startFunction();
-        Die();
+        _ = Die();
     }
-    void Die()
+    async Task Die()
     {
-        GameManager.Instance.gameOverFlag = true;
+        if (AbilityModManager.abilityFlags[AbilityName.SURVIVOR]) return;
+        GameManager.Instance.StopMusic();
+        await SceneFader.Instance.FadeToScene("GameOver");
     }
 }

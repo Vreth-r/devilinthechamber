@@ -294,27 +294,48 @@ MonoBehaviour:
   muzzle: {fileID: 6249866615138648727}
   animator: {fileID: 0}
   cam: {fileID: 0}
-  gunshot:
+  gunshotSound:
     Guid:
       Data1: -1485703340
       Data2: 1109952339
       Data3: -1241049671
       Data4: -860870306
     Path: event:/SFX/Gunshot
-  reload:
+  reloadSound:
     Guid:
       Data1: -545069982
       Data2: 1228361621
       Data3: 1644523690
       Data4: -1699390082
     Path: event:/SFX/Reload
-  jam:
+  jamSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -341723599
+      Data2: 1330640467
+      Data3: 240376984
+      Data4: 123744377
+    Path: event:/SFX/Jam
+  headshotSound:
+    Guid:
+      Data1: 1884251634
+      Data2: 1331445246
+      Data3: -1679770986
+      Data4: -1331058770
+    Path: event:/SFX/Headshot
+  hitSound:
+    Guid:
+      Data1: 396807386
+      Data2: 1180234895
+      Data3: -750830941
+      Data4: 1537936015
+    Path: event:/SFX/Hitsound
+  missSound:
+    Guid:
+      Data1: 1117807297
+      Data2: 1281868481
+      Data3: 984613025
+      Data4: -950094207
+    Path: event:/SFX/Misssound
   fireRate: 1.5
   range: 20
   damage: 5

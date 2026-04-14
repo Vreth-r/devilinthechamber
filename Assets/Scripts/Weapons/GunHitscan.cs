@@ -14,10 +14,10 @@ public class GunHitscan : MonoBehaviour
     public Camera cam;
 
     [Header("Sound")]
-    public EventReference gunshot;
-    public EventReference reload;
-    public EventReference jam;
-    public EventReference headshot;
+    public EventReference gunshotSound;
+    public EventReference reloadSound;
+    public EventReference jamSound;
+    public EventReference headshotSound;
     public EventReference hitSound;
     public EventReference missSound;
 
@@ -68,7 +68,7 @@ public class GunHitscan : MonoBehaviour
             if (AbilityModManager.abilityFlags[AbilityName.IN_A_JAM] && UnityEngine.Random.value <= 0.2)
             {
                 animator.SetTrigger("Jam");
-                RuntimeManager.PlayOneShotAttached(jam, gameObject);
+                RuntimeManager.PlayOneShotAttached(jamSound, gameObject);
                 consecutiveJams++;
             }
             else
@@ -112,6 +112,10 @@ public class GunHitscan : MonoBehaviour
         {
             var dmg = hit.collider.GetComponentInParent<IDamageable>();
             bool isHeadshot = hit.collider.CompareTag("EnemyHead");
+
+            // up here so dmg doesn't have to be calculated 
+            if (AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) return;
+
             if (dmg != null)
             {
                 hitEnemy = true;
@@ -140,21 +144,11 @@ public class GunHitscan : MonoBehaviour
                 finalDamage = (int)(finalDamage * (1 + consecutiveJams * 0.2));
                 consecutiveJams = 0;
 
-                if (isHeadshot)
-                {
-                    finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
-                    Debug.Log("HEADSHOT");
-                    RuntimeManager.PlayOneShotAttached(headshot, gameObject);
-                }
+                if (isHeadshot) finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
+ 
+                RuntimeManager.PlayOneShotAttached(isHeadshot ? headshotSound : hitSound, gameObject);
 
-                if ((AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS] && !isHeadshot) || !AbilityModManager.abilityFlags[AbilityName.ONLY_HEADSHOTS])
-                {
-                    if(!isHeadshot)
-                    {
-                        RuntimeManager.PlayOneShotAttached(hitSound, gameObject);
-                    }
-                    dmg.TakeDamage(finalDamage, hit.point, hit.normal);
-                }
+                dmg.TakeDamage(finalDamage, hit.point, hit.normal);
 
                 if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
                 {
@@ -169,7 +163,7 @@ public class GunHitscan : MonoBehaviour
 
         if (muzzleFlash) muzzleFlash.Play();
         if (muzzleLight) StartCoroutine(FlashLight());
-        RuntimeManager.PlayOneShotAttached(gunshot, gameObject);
+        RuntimeManager.PlayOneShotAttached(gunshotSound, gameObject);
         if(!hitEnemy)
         {
             RuntimeManager.PlayOneShot(missSound, hitPoint);
@@ -225,7 +219,7 @@ public class GunHitscan : MonoBehaviour
     IEnumerator Reload()
     {
         if (currentMagazine == magazineSize + (int)StatModManager.GetStatModifier(StatName.MAGAZINE_SIZE)) yield break;
-        RuntimeManager.PlayOneShotAttached(reload, gameObject);
+        RuntimeManager.PlayOneShotAttached(reloadSound, gameObject);
         reloading = true;
         animator.SetTrigger("Reload");
         animator.speed = reloadSpeed * StatModManager.GetStatModifier(StatName.RELOAD_SPEED);
