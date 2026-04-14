@@ -5,6 +5,7 @@ public class Checkpoint : MonoBehaviour
 {
     public List<GameObject> loadEnemiesContainer;
     public List<GameObject> unloadEnemiesContainer;
+    public int WillPowerBump = 10;
     bool active = true;
     void OnTriggerEnter(Collider other)
     {
@@ -34,5 +35,7 @@ public class Checkpoint : MonoBehaviour
                 }
             }
         }
+
+        PlayerManager.Instance.willpower.AddWillpower(WillPowerBump);
     }
 }

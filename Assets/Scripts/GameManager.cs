@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public int enemiesKilled = 0;
-
-    public bool bulletRestoreMod = false;
     public int numBullets = 0;
     public bool gamePaused;
     public PlayerControls controls;
@@ -21,9 +19,8 @@ public class GameManager : MonoBehaviour
     List<GameObject> cathedralEnemies = new List<GameObject>();
 
     public EventReference musicLoop;
+    public bool checkForWin = true;
     private EventInstance _musicInstance;
-
-    public bool gameOverFlag = false;
     void Awake()
     {
         if (Instance == null)
@@ -53,21 +50,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SetInputMap(true);
     }
-
-    void Update()
-    {
-        if(gameOverFlag)
-        {
-            Lose();
-        }
-    }
-
-    async void Lose()
-    {
-        StopMusic();
-        await SceneFader.Instance.FadeToScene("GameOver");
-    }
-
     public void StopMusic()
     {
         _musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -76,11 +58,10 @@ public class GameManager : MonoBehaviour
 
     public void enemyKilled (GameObject enemy)
     {
-        if (bulletRestoreMod) PlayerManager.Instance.gunHitscan.currentMagazine += 1;
         enemiesKilled += 1;
         
         UnlistEnemy(enemy); 
-        WinCheck();
+        if (checkForWin) WinCheck();
     }
 
     public void UnlistEnemy(GameObject enemy)

@@ -2,7 +2,7 @@
     width: 35%;
     height: 15%;
     -unity-font-definition: url("project://database/Assets/Fonts/SpecialElite-Regular.ttf?fileID=12800000&guid=56966513ffd5dd249a39927fc40602ae&type=3#SpecialElite-Regular");
-    font-size: 45px;
+    font-size: 260%;
     background-color: rgba(0, 0, 0, 0);
     border-radius: 25px;
     color: rgb(213, 22, 22);

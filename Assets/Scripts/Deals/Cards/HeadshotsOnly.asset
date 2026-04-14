@@ -15,8 +15,6 @@ MonoBehaviour:
   dealName: Headshots Only
   dealDescription: Headshots Only.
   statDeals:
-  - statName: 1
-    modifier: 0.01
   - statName: 5
-    modifier: 200
+    modifier: 2
   abilityDeals: []

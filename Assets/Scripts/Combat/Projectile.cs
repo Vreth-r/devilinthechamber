@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
 
     public void Launch(Vector3 position, Vector3 dir, float speedOverride = -1f)
     {
-        transform.position = position;
+        GameManager.Instance.numBullets++;
         direction = dir.normalized;
 
         if (speedOverride > 0f)
@@ -74,7 +74,6 @@ public class Projectile : MonoBehaviour
         }
 
         StopSound();
-        GameManager.Instance.numBullets--;
         Destroy(gameObject);
     }
 
@@ -89,6 +88,7 @@ public class Projectile : MonoBehaviour
 
     void OnDestroy()
     {
+        GameManager.Instance.numBullets--;
         StopSound();
     }
 }

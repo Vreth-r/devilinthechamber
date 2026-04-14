@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
 using FMODUnity;
-using FMOD.Studio;
 using System;
-using Unity.VisualScripting;
 
 public class GunHitscan : MonoBehaviour
 {
@@ -145,10 +142,13 @@ public class GunHitscan : MonoBehaviour
                 consecutiveJams = 0;
 
                 if (isHeadshot) finalDamage = (int)(finalDamage * (headShotDamageBonus * StatModManager.GetStatModifier(StatName.HEADSHOT_BONUS)));
+                
+                if (AbilityModManager.abilityFlags[AbilityName.DAMAGE_BONUS_OUTSIDE_SIGHT_RANGE] && hit.distance > 12) finalDamage = (int)(finalDamage * 1.5);
  
                 RuntimeManager.PlayOneShotAttached(isHeadshot ? headshotSound : hitSound, gameObject);
 
                 dmg.TakeDamage(finalDamage, hit.point, hit.normal);
+                Debug.Log(finalDamage);
 
                 if (!AbilityModManager.abilityFlags[AbilityName.BULLET_PIERCE])
                 {

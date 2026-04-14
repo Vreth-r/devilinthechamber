@@ -273,6 +273,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - DealCard
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efd8c8c3370981f42adbfdee5803b505
+    m_Address: Assets/Scripts/Deals/Cards/SeeNoEvil.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DealCard
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f0121f85be654904d879cc39b4324a17
     m_Address: Assets/Scripts/Deals/Cards/WheresMyGun.asset
     m_ReadOnly: 0

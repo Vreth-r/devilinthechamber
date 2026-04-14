@@ -5,6 +5,12 @@ public class NearSigtedAbility : AbilityBase
     public override void startFunction()
     {
         base.startFunction();
+        ApplyFog();
+        ApplyFog();
+    }
+
+    void ApplyFog()
+    {
         RenderSettings.fog = true;
         RenderSettings.fogMode = FogMode.Linear;
         RenderSettings.fogEndDistance = 15;

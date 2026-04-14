@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DealTester
   dealTests:
-  - deal: {fileID: 11400000, guid: 525634bd7b6ca8d4494166ba13ba64e5, type: 2}
-    activationDelay: 1
+  - deal: {fileID: 11400000, guid: efd8c8c3370981f42adbfdee5803b505, type: 2}
+    activationDelay: 0
 --- !u!4 &393968249
 Transform:
   m_ObjectHideFlags: 0
@@ -929,6 +929,86 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: jamSound.Path
+      value: event:/SFX/Jam
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: reloadSound.Path
+      value: event:/SFX/Reload
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: gunshotSound.Path
+      value: event:/SFX/Gunshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: headshotSound.Path
+      value: event:/SFX/Headshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: jamSound.Guid.Data1
+      value: -341723599
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: jamSound.Guid.Data2
+      value: 1330640467
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: jamSound.Guid.Data3
+      value: 240376984
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: jamSound.Guid.Data4
+      value: 123744377
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: reloadSound.Guid.Data1
+      value: -545069982
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: reloadSound.Guid.Data2
+      value: 1228361621
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: reloadSound.Guid.Data3
+      value: 1644523690
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: reloadSound.Guid.Data4
+      value: -1699390082
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: gunshotSound.Guid.Data1
+      value: -1485703340
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: gunshotSound.Guid.Data2
+      value: 1109952339
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: gunshotSound.Guid.Data3
+      value: -1241049671
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: gunshotSound.Guid.Data4
+      value: -860870306
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: headshotSound.Guid.Data1
+      value: 1884251634
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: headshotSound.Guid.Data2
+      value: 1331445246
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: headshotSound.Guid.Data3
+      value: -1679770986
+      objectReference: {fileID: 0}
+    - target: {fileID: 977608839801101160, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
+      propertyPath: headshotSound.Guid.Data4
+      value: -1331058770
+      objectReference: {fileID: 0}
     - target: {fileID: 1481217437359390152, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -939,7 +1019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4247206799374861027, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000071525574
+      value: 2.35
       objectReference: {fileID: 0}
     - target: {fileID: 4247206799374861027, guid: 2fdbec5080073f445a60467e35f7ebf0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1104,6 +1184,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4582799955780026539, guid: 51691eb239a33f94ab820ac5f27ea986, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783962890918969521, guid: 51691eb239a33f94ab820ac5f27ea986, type: 3}
+      propertyPath: checkForWin
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

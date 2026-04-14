@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -40,13 +41,13 @@ public class EnemyRangedKiteState : IEnemyState
         shotTimer = GetFireInterval() * Mathf.Max(0f, ctx.stats.initialShotDelayMultiplier);
         repathTimer = 0f;
         orbitDecisionTimer = 0f;
-        dartDecisionTimer = Random.Range(
+        dartDecisionTimer = UnityEngine.Random.Range(
             ctx.stats.dartIntervalMin,
             ctx.stats.dartIntervalMax
         );
 
-        orbitDir = Random.value < 0.5f ? -1 : 1;
-        dartDir = Random.value < 0.5f ? -1 : 1;
+        orbitDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
+        dartDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
 
         anim?.PlayWindUp();
     }
@@ -80,9 +81,6 @@ public class EnemyRangedKiteState : IEnemyState
             return;
             
         shotTimer -= dt;
-
-        if (!IsTargetInFireRange())
-            return;
 
         float fireInterval = GetFireInterval();
 
@@ -168,19 +166,19 @@ public class EnemyRangedKiteState : IEnemyState
         {
             orbitDecisionTimer = 1f / Mathf.Max(0.01f, ctx.stats.orbitRecalcHz);
 
-            if (Random.value < ctx.stats.orbitFlipChance)
+            if (UnityEngine.Random.value < ctx.stats.orbitFlipChance)
                 orbitDir *= -1;
         }
 
         if (dartDecisionTimer <= 0f)
         {
-            dartDecisionTimer = Random.Range(
+            dartDecisionTimer = UnityEngine.Random.Range(
                 ctx.stats.dartIntervalMin,
                 ctx.stats.dartIntervalMax
             );
 
-            if (Random.value < ctx.stats.dartChance)
-                dartDir = Random.value < 0.5f ? -1 : 1;
+            if (UnityEngine.Random.value < ctx.stats.dartChance)
+                dartDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
         }
 
         Vector3 towardTarget = GetFlatDirection(
@@ -237,8 +235,8 @@ public class EnemyRangedKiteState : IEnemyState
 
         if (GameManager.Instance.numBullets < 75)
         {
-            Projectile projectile = Object.Instantiate(ctx.projectilePrefab);
-            GameManager.Instance.numBullets++;
+             // instantiates at pos, some bullets were spawning at (0, 0) before and not updating for some reason
+            Projectile projectile = UnityEngine.Object.Instantiate(ctx.projectilePrefab, origin, Quaternion.LookRotation(direction));
             IgnoreShooterCollisions(projectile.gameObject, ctx.self);
 
             projectile.damage = ctx.stats.damage;
@@ -318,7 +316,9 @@ public class EnemyRangedKiteState : IEnemyState
 
         if (Physics.Raycast(origin, dir, out RaycastHit hit, dist, ctx.projectileHitMask))
         {
-            return hit.transform == ctx.target || hit.transform.IsChildOf(ctx.target);
+            int layer = hit.collider.gameObject.layer;
+
+            return layer == LayerMask.NameToLayer("Player");
         }
 
         return false;

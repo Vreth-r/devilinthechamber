@@ -3420,28 +3420,28 @@ MonoBehaviour:
   muzzle: {fileID: 9041289928560567155}
   animator: {fileID: 7148345531069328992}
   cam: {fileID: 5280521359982948284}
-  gunshot:
+  gunshotSound:
     Guid:
       Data1: -1485703340
       Data2: 1109952339
       Data3: -1241049671
       Data4: -860870306
     Path: event:/SFX/Gunshot
-  reload:
+  reloadSound:
     Guid:
       Data1: -545069982
       Data2: 1228361621
       Data3: 1644523690
       Data4: -1699390082
     Path: event:/SFX/Reload
-  jam:
+  jamSound:
     Guid:
       Data1: -341723599
       Data2: 1330640467
       Data3: 240376984
       Data4: 123744377
     Path: event:/SFX/Jam
-  headshot:
+  headshotSound:
     Guid:
       Data1: 1884251634
       Data2: 1331445246
