@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ec5266dc40ba541bc854de9cb7c840, type: 3}
   m_Name: BalloonShoes
   m_EditorClassIdentifier: Assembly-CSharp::Deal
-  dealName: BalloonShoes
+  dealName: Balloon Shoes
   dealDescription: BALLOON SHOES!!!
   statDeals:
   - statName: 6

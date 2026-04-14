@@ -21,8 +21,6 @@ public class HUD : MonoBehaviour
     VisualElement healthBar;
     VisualElement willpowerBar;
     VisualElement ammoPanel;
-    Label livesText;
-    Label ammoText;
 
     [Header("Health bar sprites")]
     [SerializeField]Sprite filledHP;
@@ -64,7 +62,7 @@ public class HUD : MonoBehaviour
     {
         if (doc == null) doc = GetComponent<UIDocument>();
 
-        while (doc == null || doc.rootVisualElement == null)
+        while (doc == null || doc.rootVisualElement == null || PlayerManager.Instance == null || PlayerManager.Instance.health == null)
             yield return null;
 
         var root = doc.rootVisualElement;
@@ -74,22 +72,11 @@ public class HUD : MonoBehaviour
         healthBar          = root.Q<VisualElement>("health-bar");
         willpowerBar       = root.Q<VisualElement>("willpower-bar");
         ammoPanel          = root.Q<VisualElement>("ammo-panel");
-        livesText          = root.Q<Label>("lives-text");
 
         // Minimum needed for Refresh to run safely
         uiReady = healthBar != null && ammoPanel != null && willpowerBar != null;
 
-        if (!uiReady)
-        {
-            Debug.LogError(
-                $"[HUD] Missing required UI elements. " +
-                $"healthContainer={healthBar != null} ammoText={ammoText != null} " +
-                $"vignette={backgroundVignette != null} livesText={livesText != null} " +
-                $"(Check UXML names for this scene.)",
-                this
-            );
-            yield break;
-        }
+        if (!uiReady) yield break;
 
         RefreshAll();
     }
